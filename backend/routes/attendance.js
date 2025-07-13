@@ -1,0 +1,335 @@
+const express = require('express');
+const { authenticateToken, requireRole } = require('../middleware/auth');
+const { attendanceValidation, handleValidationErrors } = require('../utils/validation');
+const { executeQuery, executeProcedure, executeSingleQuery, sql } = require('../utils/database');
+
+const router = express.Router();
+
+// Mark attendance (Trainer/Admin only)
+router.post('/mark', authenticateToken, requireRole(['Trainer', 'Admin']), attendanceValidation, handleValidationErrors, async (req, res) => {
+    try {
+        const { memberId, classId, attendanceStatus } = req.body;
+
+        // Check if member is enrolled in the class
+        const enrollment = await executeSingleQuery(`
+            SELECT enrollmentId 
+            FROM Class_Enrollment 
+            WHERE memberId = @MemberId AND classId = @ClassId
+        `, [
+            { name: 'MemberId', type: sql.Int, value: memberId },
+            { name: 'ClassId', type: sql.Int, value: classId }
+        ]);
+
+        if (!enrollment) {
+            return res.status(400).json({ error: 'Member is not enrolled in this class' });
+        }
+
+        // Check if attendance already marked for today
+        const existingAttendance = await executeSingleQuery(`
+            SELECT attendanceId 
+            FROM Attendance 
+            WHERE enrollmentId = @EnrollmentId 
+            AND CAST(currDate AS DATE) = CAST(GETDATE() AS DATE)
+        `, [{ name: 'EnrollmentId', type: sql.Int, value: enrollment.enrollmentId }]);
+
+        if (existingAttendance) {
+            return res.status(400).json({ error: 'Attendance already marked for today' });
+        }
+
+        // Mark attendance using stored procedure
+        await executeProcedure('markAttendance', [
+            { name: 'memberId', type: sql.Int, value: memberId },
+            { name: 'classId', type: sql.Int, value: classId },
+            { name: 'attendanceStatus', type: sql.VarChar(2), value: attendanceStatus }
+        ]);
+
+        res.json({ message: 'Attendance marked successfully' });
+    } catch (error) {
+        console.error('Mark attendance error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Get attendance for a specific class (Trainer/Admin only)
+router.get('/class/:classId', authenticateToken, requireRole(['Trainer', 'Admin']), async (req, res) => {
+    try {
+        const { classId } = req.params;
+        const { date } = req.query;
+
+        let dateFilter = '';
+        let inputs = [{ name: 'ClassId', type: sql.Int, value: classId }];
+
+        if (date) {
+            dateFilter = 'AND CAST(a.currDate AS DATE) = @Date';
+            inputs.push({ name: 'Date', type: sql.Date, value: date });
+        }
+
+        const query = `
+            SELECT 
+                a.attendanceId,
+                u.userId,
+                u.fName,
+                u.lName,
+                u.email,
+                a.attendanceStatus,
+                a.currDate,
+                ce.enrollmentId
+            FROM Attendance a
+            JOIN Class_Enrollment ce ON a.enrollmentId = ce.enrollmentId
+            JOIN gymUser u ON ce.memberId = u.userId
+            WHERE ce.classId = @ClassId ${dateFilter}
+            ORDER BY u.fName, u.lName
+        `;
+
+        const attendance = await executeQuery(query, inputs);
+
+        res.json({ attendance });
+    } catch (error) {
+        console.error('Get class attendance error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Get member attendance history (Member can see own, Admin/Trainer can see any)
+router.get('/member/:memberId', authenticateToken, async (req, res) => {
+    try {
+        const { memberId } = req.params;
+        const { startDate, endDate, classId } = req.query;
+
+        // Check if user has permission to view this member's attendance
+        if (req.user.userRole === 'Member' && req.user.userId != memberId) {
+            return res.status(403).json({ error: 'Access denied' });
+        }
+
+        let whereConditions = ['ce.memberId = @MemberId'];
+        let inputs = [{ name: 'MemberId', type: sql.Int, value: memberId }];
+
+        if (startDate) {
+            whereConditions.push('CAST(a.currDate AS DATE) >= @StartDate');
+            inputs.push({ name: 'StartDate', type: sql.Date, value: startDate });
+        }
+
+        if (endDate) {
+            whereConditions.push('CAST(a.currDate AS DATE) <= @EndDate');
+            inputs.push({ name: 'EndDate', type: sql.Date, value: endDate });
+        }
+
+        if (classId) {
+            whereConditions.push('ce.classId = @ClassId');
+            inputs.push({ name: 'ClassId', type: sql.Int, value: classId });
+        }
+
+        const query = `
+            SELECT 
+                a.attendanceId,
+                a.attendanceStatus,
+                a.currDate,
+                c.className,
+                c.classTime,
+                t.fName as trainerFirstName,
+                t.lName as trainerLastName
+            FROM Attendance a
+            JOIN Class_Enrollment ce ON a.enrollmentId = ce.enrollmentId
+            JOIN Class c ON ce.classId = c.classId
+            JOIN gymUser t ON c.trainerId = t.userId
+            WHERE ${whereConditions.join(' AND ')}
+            ORDER BY a.currDate DESC
+        `;
+
+        const attendance = await executeQuery(query, inputs);
+
+        // Calculate attendance statistics
+        const totalClasses = attendance.length;
+        const presentCount = attendance.filter(a => a.attendanceStatus === 'P').length;
+        const absentCount = attendance.filter(a => a.attendanceStatus === 'A').length;
+        const lateCount = attendance.filter(a => a.attendanceStatus === 'L').length;
+        const attendanceRate = totalClasses > 0 ? (presentCount / totalClasses) * 100 : 0;
+
+        res.json({
+            attendance,
+            statistics: {
+                totalClasses,
+                presentCount,
+                absentCount,
+                lateCount,
+                attendanceRate: Math.round(attendanceRate * 100) / 100
+            }
+        });
+    } catch (error) {
+        console.error('Get member attendance error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Get attendance statistics (Admin only)
+router.get('/stats/overview', authenticateToken, requireRole(['Admin']), async (req, res) => {
+    try {
+        const { period = 'month' } = req.query;
+
+        let dateFilter = '';
+        switch (period) {
+            case 'week':
+                dateFilter = 'AND a.currDate >= DATEADD(WEEK, -1, GETDATE())';
+                break;
+            case 'month':
+                dateFilter = 'AND a.currDate >= DATEADD(MONTH, -1, GETDATE())';
+                break;
+            case 'year':
+                dateFilter = 'AND a.currDate >= DATEADD(YEAR, -1, GETDATE())';
+                break;
+        }
+
+        // Overall attendance statistics
+        const overallStatsQuery = `
+            SELECT 
+                COUNT(*) as totalAttendance,
+                SUM(CASE WHEN a.attendanceStatus = 'P' THEN 1 ELSE 0 END) as presentCount,
+                SUM(CASE WHEN a.attendanceStatus = 'A' THEN 1 ELSE 0 END) as absentCount,
+                SUM(CASE WHEN a.attendanceStatus = 'L' THEN 1 ELSE 0 END) as lateCount
+            FROM Attendance a
+            WHERE 1=1 ${dateFilter}
+        `;
+
+        // Attendance by class
+        const classStatsQuery = `
+            SELECT 
+                c.className,
+                COUNT(*) as totalAttendance,
+                SUM(CASE WHEN a.attendanceStatus = 'P' THEN 1 ELSE 0 END) as presentCount,
+                SUM(CASE WHEN a.attendanceStatus = 'A' THEN 1 ELSE 0 END) as absentCount,
+                (SUM(CASE WHEN a.attendanceStatus = 'P' THEN 1 ELSE 0 END) * 100.0) / COUNT(*) as attendanceRate
+            FROM Attendance a
+            JOIN Class_Enrollment ce ON a.enrollmentId = ce.enrollmentId
+            JOIN Class c ON ce.classId = c.classId
+            WHERE 1=1 ${dateFilter}
+            GROUP BY c.classId, c.className
+            ORDER BY attendanceRate DESC
+        `;
+
+        // Top attendees
+        const topAttendeesQuery = `
+            SELECT 
+                u.fName,
+                u.lName,
+                COUNT(*) as attendanceCount,
+                SUM(CASE WHEN a.attendanceStatus = 'P' THEN 1 ELSE 0 END) as presentCount
+            FROM Attendance a
+            JOIN Class_Enrollment ce ON a.enrollmentId = ce.enrollmentId
+            JOIN gymUser u ON ce.memberId = u.userId
+            WHERE a.attendanceStatus = 'P' ${dateFilter}
+            GROUP BY u.userId, u.fName, u.lName
+            ORDER BY attendanceCount DESC
+            OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
+        `;
+
+        const [overallStats, classStats, topAttendees] = await Promise.all([
+            executeSingleQuery(overallStatsQuery),
+            executeQuery(classStatsQuery),
+            executeQuery(topAttendeesQuery)
+        ]);
+
+        // Calculate overall attendance rate
+        const totalAttendance = overallStats.totalAttendance || 0;
+        const presentCount = overallStats.presentCount || 0;
+        const overallAttendanceRate = totalAttendance > 0 ? (presentCount / totalAttendance) * 100 : 0;
+
+        res.json({
+            period,
+            overallStats: {
+                ...overallStats,
+                attendanceRate: Math.round(overallAttendanceRate * 100) / 100
+            },
+            classStats,
+            topAttendees
+        });
+    } catch (error) {
+        console.error('Get attendance stats error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Update attendance (Trainer/Admin only)
+router.put('/:attendanceId', authenticateToken, requireRole(['Trainer', 'Admin']), async (req, res) => {
+    try {
+        const { attendanceId } = req.params;
+        const { attendanceStatus } = req.body;
+
+        if (!['P', 'A', 'L'].includes(attendanceStatus)) {
+            return res.status(400).json({ error: 'Invalid attendance status' });
+        }
+
+        await executeQuery(
+            'UPDATE Attendance SET attendanceStatus = @Status WHERE attendanceId = @AttendanceId',
+            [
+                { name: 'Status', type: sql.VarChar(2), value: attendanceStatus },
+                { name: 'AttendanceId', type: sql.Int, value: attendanceId }
+            ]
+        );
+
+        res.json({ message: 'Attendance updated successfully' });
+    } catch (error) {
+        console.error('Update attendance error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Get attendance report (Admin only)
+router.get('/report', authenticateToken, requireRole(['Admin']), async (req, res) => {
+    try {
+        const { startDate, endDate, classId, trainerId } = req.query;
+
+        let whereConditions = ['1=1'];
+        let inputs = [];
+
+        if (startDate) {
+            whereConditions.push('CAST(a.currDate AS DATE) >= @StartDate');
+            inputs.push({ name: 'StartDate', type: sql.Date, value: startDate });
+        }
+
+        if (endDate) {
+            whereConditions.push('CAST(a.currDate AS DATE) <= @EndDate');
+            inputs.push({ name: 'EndDate', type: sql.Date, value: endDate });
+        }
+
+        if (classId) {
+            whereConditions.push('ce.classId = @ClassId');
+            inputs.push({ name: 'ClassId', type: sql.Int, value: classId });
+        }
+
+        if (trainerId) {
+            whereConditions.push('c.trainerId = @TrainerId');
+            inputs.push({ name: 'TrainerId', type: sql.Int, value: trainerId });
+        }
+
+        const query = `
+            SELECT 
+                a.attendanceId,
+                u.fName + ' ' + u.lName as memberName,
+                c.className,
+                t.fName + ' ' + t.lName as trainerName,
+                a.attendanceStatus,
+                a.currDate,
+                CASE 
+                    WHEN a.attendanceStatus = 'P' THEN 'Present'
+                    WHEN a.attendanceStatus = 'A' THEN 'Absent'
+                    WHEN a.attendanceStatus = 'L' THEN 'Late'
+                END as statusText
+            FROM Attendance a
+            JOIN Class_Enrollment ce ON a.enrollmentId = ce.enrollmentId
+            JOIN gymUser u ON ce.memberId = u.userId
+            JOIN Class c ON ce.classId = c.classId
+            JOIN gymUser t ON c.trainerId = t.userId
+            WHERE ${whereConditions.join(' AND ')}
+            ORDER BY a.currDate DESC, u.fName, u.lName
+        `;
+
+        const report = await executeQuery(query, inputs);
+
+        res.json({ report });
+    } catch (error) {
+        console.error('Get attendance report error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+module.exports = router; 
