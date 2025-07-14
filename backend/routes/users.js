@@ -20,6 +20,9 @@ router.get('/:userId', authenticateToken, requireOwnershipOrAdmin, userIdValidat
 // Update user profile (Admin or own profile)
 router.put('/:userId', authenticateToken, requireOwnershipOrAdmin, userIdValidation, handleValidationErrors, userController.updateUser);
 
+// PUT /api/users/:userId
+router.put('/:userId', authenticateToken, userController.updateUser);
+
 // Deactivate/Activate user (Admin only)
 router.patch('/:userId/status', authenticateToken, requireRole(['Admin']), userIdValidation, handleValidationErrors, userController.updateUserStatus);
 
@@ -37,5 +40,8 @@ router.get('/user-payments', userController.getUserPayments);
 
 // Get user stats
 router.get('/user-stats', userController.getUserStats);
+
+// Add route for user to see their assigned classes
+router.get('/:userId/classes', authenticateToken, requireOwnershipOrAdmin, userController.getUserClasses);
 
 module.exports = router; 

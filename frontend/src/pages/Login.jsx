@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { showSuccessAlert, showErrorAlert, showConfirmAlert } from "../utils/sweetAlert";
+import { showErrorAlert, showConfirmAlert } from "../utils/sweetAlert";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../store/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -108,7 +111,8 @@ const Login = () => {
         // Store the access token and user data
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('userData', JSON.stringify(data.user));
-        
+        // Update Redux store
+        dispatch(loginSuccess({ user: data.user, token: data.accessToken }));
         // Show success message
         toast.success("Login successful! Welcome back!");
         

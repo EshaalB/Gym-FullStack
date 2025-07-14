@@ -72,18 +72,23 @@ router.post('/login', loginValidation, handleValidationErrors, async (req, res) 
 // Sign-up endpoint
 router.post('/signup', signupValidation, handleValidationErrors, async (req, res) => {
     try {
-        const {
-            firstName,
-            lastName,
-            email,
-            password,
-            dob,
-            gender,
-            userRole,
-            membershipType,
-            specialization,
-            experience
-        } = req.body;
+        // Accept both camelCase and snake_case for compatibility
+        const firstName = req.body.firstName || req.body.fName;
+        const lastName = req.body.lastName || req.body.lName;
+        const email = req.body.email;
+        const password = req.body.password;
+        const dob = req.body.dob || req.body.dateOfBirth || req.body.dateofBirth;
+        const gender = req.body.gender;
+        const userRole = req.body.userRole;
+        const membershipType = req.body.membershipType;
+        const specialization = req.body.specialization;
+        const experience = req.body.experience;
+        const salary = req.body.salary;
+
+        // Validate required fields
+        if (!firstName || !lastName || !email || !password || !dob || !gender || !userRole) {
+            return res.status(400).json({ error: 'All required fields must be provided.' });
+        }
 
         // Check if email already exists
         const existingUser = await executeSingleQuery(
@@ -110,7 +115,8 @@ router.post('/signup', signupValidation, handleValidationErrors, async (req, res
             { name: 'userrole', type: sql.VarChar(20), value: userRole },
             { name: 'membershiptype', type: sql.VarChar(10), value: membershipType || null },
             { name: 'specialization', type: sql.VarChar(100), value: specialization || null },
-            { name: 'experienceyears', type: sql.Int, value: experience || null }
+            { name: 'experienceyears', type: sql.Int, value: experience || null },
+            { name: 'salary', type: sql.Decimal(10,2), value: salary || null }
         ];
 
         await executeProcedure('registerUser', inputs);
@@ -126,7 +132,7 @@ router.post('/signup', signupValidation, handleValidationErrors, async (req, res
         });
     } catch (error) {
         console.error('Signup error:', error);
-        res.status(500).json({ error: 'Failed to register user' });
+        res.status(500).json({ error: error.message || (error.originalError && error.originalError.info && error.originalError.info.message) || 'Failed to register user' });
     }
 });
 

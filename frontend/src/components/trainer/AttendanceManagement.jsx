@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaCheck, FaTimes, FaCalendar, FaUsers, FaDumbbell } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
-import { selectTrainerAttendanceError, selectTrainerAttendanceLoading, markTrainerAttendance } from "../../store/dashboardSlice";
+import { selectTrainerAttendanceError, selectTrainerAttendanceLoading, markTrainerAttendance, updateTrainerAttendance } from "../../store/dashboardSlice";
 
 const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
   const dispatch = useDispatch();
@@ -10,6 +10,10 @@ const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
   const error = useSelector(selectTrainerAttendanceError);
   const [selectedClass, setSelectedClass] = useState(null);
   const [attendanceData, setAttendanceData] = useState({});
+  const [editingMember, setEditingMember] = useState(null);
+  const [editStatus, setEditStatus] = useState("");
+  const [updateLoading, setUpdateLoading] = useState(false);
+  const [updateError, setUpdateError] = useState("");
 
   const handleClassSelect = (classId) => {
     setSelectedClass(classId);
@@ -43,6 +47,34 @@ const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
       setAttendanceData({});
     } catch (error) {
       toast.error(error || "Failed to mark attendance");
+    }
+  };
+
+  const handleEditClick = (member) => {
+    setEditingMember(member);
+    setEditStatus(member.attendanceStatus || "");
+    setUpdateError("");
+  };
+
+  const handleUpdateAttendance = async () => {
+    if (!editingMember) return;
+    setUpdateLoading(true);
+    setUpdateError("");
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      await dispatch(updateTrainerAttendance({
+        accessToken,
+        enrollmentId: editingMember.enrollmentId,
+        currDate: editingMember.currDate,
+        attendanceStatus: editStatus
+      })).unwrap();
+      toast.success("Attendance updated!");
+      setEditingMember(null);
+      setEditStatus("");
+    } catch (error) {
+      setUpdateError(error || "Failed to update attendance");
+    } finally {
+      setUpdateLoading(false);
     }
   };
 
@@ -185,8 +217,48 @@ const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
                             <FaTimes className="mr-1" />
                             Absent
                           </button>
+                          {member.attendanceStatus && (
+                            <button
+                              onClick={() => handleEditClick(member)}
+                              className="px-4 py-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600 transition-all duration-200"
+                            >
+                              Edit
+                            </button>
+                          )}
                         </div>
                       </div>
+                      {/* Edit attendance modal/inline UI */}
+                      {editingMember && editingMember.enrollmentId === member.enrollmentId && (
+                        <div className="mt-4 p-4 bg-black/70 rounded-lg border border-yellow-500">
+                          <div className="flex items-center space-x-4">
+                            <span className="text-white">Update Status:</span>
+                            <button
+                              onClick={() => setEditStatus('P')}
+                              className={`px-4 py-2 rounded-lg ${editStatus === 'P' ? 'bg-green-600 text-white' : 'bg-gray-600 text-white hover:bg-green-600'}`}
+                            >Present</button>
+                            <button
+                              onClick={() => setEditStatus('A')}
+                              className={`px-4 py-2 rounded-lg ${editStatus === 'A' ? 'bg-red-600 text-white' : 'bg-gray-600 text-white hover:bg-red-600'}`}
+                            >Absent</button>
+                            <button
+                              onClick={() => setEditStatus('L')}
+                              className={`px-4 py-2 rounded-lg ${editStatus === 'L' ? 'bg-yellow-600 text-white' : 'bg-gray-600 text-white hover:bg-yellow-600'}`}
+                            >Late</button>
+                            <button
+                              onClick={handleUpdateAttendance}
+                              disabled={updateLoading}
+                              className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all duration-200"
+                            >
+                              {updateLoading ? 'Updating...' : 'Save'}
+                            </button>
+                            <button
+                              onClick={() => setEditingMember(null)}
+                              className="px-4 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-700 transition-all duration-200"
+                            >Cancel</button>
+                          </div>
+                          {updateError && <div className="text-red-400 mt-2">{updateError}</div>}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>

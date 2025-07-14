@@ -129,7 +129,7 @@ exports.getUserPayments = async (req, res) => {
     if (req.user.userRole === 'Member' && req.user.userId != userId) {
       return res.status(403).json({ error: 'Access denied' });
     }
-    let whereConditions = ['p.userId = @UserId'];
+    let whereConditions = ['p.memberId = @UserId'];
     let inputs = [{ name: 'UserId', type: sql.Int, value: userId }];
     if (startDate) {
       whereConditions.push('p.paymentDate >= @StartDate');
@@ -148,13 +148,9 @@ exports.getUserPayments = async (req, res) => {
         p.paymentId,
         p.amount,
         p.paymentMethod,
-        p.paymentType,
         p.paymentDate,
-        p.status,
-        p.description,
-        u.fName + ' ' + u.lName as processedBy
+        p.status
       FROM Payment p
-      LEFT JOIN gymUser u ON p.processedBy = u.userId
       WHERE ${whereConditions.join(' AND ')}
       ORDER BY p.paymentDate DESC
     `;

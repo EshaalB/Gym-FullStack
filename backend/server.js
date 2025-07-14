@@ -194,16 +194,23 @@ app.use('*', (req, res) => {
 // Global error handler
 app.use((error, req, res, next) => {
     console.error('Global error handler:', error);
-    
+    const isDev = process.env.NODE_ENV === 'development';
+    let message = 'Internal server error';
+    let details = undefined;
     if (error.name === 'ValidationError') {
-        return res.status(400).json({ error: 'Validation error', details: error.message });
+        message = 'Validation error';
+        details = error.message;
+    } else if (error.name === 'UnauthorizedError') {
+        message = 'Unauthorized';
+    } else if (error.message) {
+        message = error.message;
+        if (isDev && error.stack) {
+            details = error.stack;
+        }
+    } else if (isDev && error.stack) {
+        details = error.stack;
     }
-    
-    if (error.name === 'UnauthorizedError') {
-        return res.status(401).json({ error: 'Unauthorized' });
-    }
-    
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(error.status || 500).json({ error: message, ...(details && { details }) });
 });
 
 // Graceful shutdown

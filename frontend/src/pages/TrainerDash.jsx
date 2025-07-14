@@ -13,6 +13,7 @@ import TrainerClassesTable from "../components/trainer/TrainerClassesTable";
 import AttendanceManagement from "../components/trainer/AttendanceManagement";
 import WorkoutPlanAssignment from "../components/trainer/WorkoutPlanAssignment";
 import TrainerStatistics from "../components/trainer/TrainerStatistics";
+import MyMembers from "../components/trainer/MyMembers";
 
 const TrainerDash = () => {
   const navigate = useNavigate();
@@ -57,11 +58,17 @@ const TrainerDash = () => {
       case "attendance":
         return <AttendanceManagement classes={classes} membersInClasses={attendance} loading={loading} />;
       case "workoutPlans":
+      case "plans":
+        return <WorkoutPlanAssignment membersInClasses={workoutPlans} loading={loading} />;
+      case "assign-plans":
         return <WorkoutPlanAssignment membersInClasses={workoutPlans} loading={loading} />;
       case "statistics":
+      case "stats":
         return <TrainerStatistics />;
+      case "members":
+        return <MyMembers membersInClasses={attendance} loading={loading} error={error} />;
       default:
-        return <TrainerDashboardOverview />;
+        return <TrainerDashboardOverview stats={stats} loading={loading} error={error} />;
     }
   };
 

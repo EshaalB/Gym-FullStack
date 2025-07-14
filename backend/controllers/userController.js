@@ -75,7 +75,7 @@ exports.getUserById = async (req, res) => {
   try {
     const { userId } = req.params;
     const user = await executeSingleQuery(`
-      SELECT userId, fName, lName, email, userRole, dateOfBirth, gender, isActive, createdAt
+      SELECT userId, fName, lName, email, userRole, dateOfBirth, gender, age
       FROM gymUser 
       WHERE userId = @UserId
     `, [{ name: 'UserId', type: sql.Int, value: userId }]);
@@ -348,6 +348,28 @@ exports.getUserStats = async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching user stats:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}; 
+
+exports.getUserClasses = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const query = `
+      SELECT c.classId, c.className, cd.Day as classDay, t.fName + ' ' + t.lName as trainerName
+      FROM Class_Enrollment ce
+      INNER JOIN Class c ON ce.classId = c.classId
+      INNER JOIN ClassDays cd ON c.classId = cd.classId
+      INNER JOIN gymUser t ON c.trainerId = t.userId
+      WHERE ce.memberId = @userId
+      ORDER BY c.className, cd.Day
+    `;
+    const classes = await executeQuery(query, [
+      { name: 'userId', type: sql.Int, value: userId }
+    ]);
+    res.json({ classes });
+  } catch (error) {
+    console.error('Error fetching user classes:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }; 

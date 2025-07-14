@@ -83,10 +83,7 @@ const paymentValidation = [
         .withMessage('Amount must be a positive number'),
     body('paymentMethod')
         .isIn(['Credit Card', 'Debit Card', 'Cash', 'Bank Transfer'])
-        .withMessage('Payment method must be Credit Card, Debit Card, Cash, or Bank Transfer'),
-    body('paymentType')
-        .isIn(['Membership', 'Class', 'Personal Training', 'Equipment'])
-        .withMessage('Payment type must be Membership, Class, Personal Training, or Equipment')
+        .withMessage('Payment method must be Credit Card, Debit Card, Cash, or Bank Transfer')
 ];
 
 const paginationValidation = [

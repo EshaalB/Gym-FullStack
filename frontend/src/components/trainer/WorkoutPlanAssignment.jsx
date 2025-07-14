@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { FaPlus, FaClipboardList, FaUser, FaCalendar } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { assignTrainerWorkoutPlan, selectTrainerPlanAssignLoading, selectTrainerPlanAssignError } from "../../store/dashboardSlice";
 
-const WorkoutPlanAssignment = ({ membersInClasses = [], onAssignPlan, loading }) => {
+const WorkoutPlanAssignment = ({ membersInClasses = [] }) => {
+  const dispatch = useDispatch();
+  const loading = useSelector(selectTrainerPlanAssignLoading);
+  const error = useSelector(selectTrainerPlanAssignError);
   const [selectedMember, setSelectedMember] = useState("");
   const [planData, setPlanData] = useState({
     planName: "",
@@ -31,12 +36,13 @@ const WorkoutPlanAssignment = ({ membersInClasses = [], onAssignPlan, loading })
     }
 
     try {
-      await onAssignPlan(selectedMember, planData.planName, parseInt(planData.durationWeeks));
+      const accessToken = localStorage.getItem('accessToken');
+      await dispatch(assignTrainerWorkoutPlan({ accessToken, memberId: selectedMember, planName: planData.planName, durationWeeks: parseInt(planData.durationWeeks) })).unwrap();
       toast.success("Workout plan assigned successfully!");
       setSelectedMember("");
       setPlanData({ planName: "", durationWeeks: "" });
     } catch (error) {
-      toast.error("Failed to assign workout plan");
+      toast.error(error || "Failed to assign workout plan");
     }
   };
 
@@ -61,6 +67,9 @@ const WorkoutPlanAssignment = ({ membersInClasses = [], onAssignPlan, loading })
         </div>
       </div>
 
+      {error && (
+        <div className="text-center text-red-400 font-semibold py-2">{error}</div>
+      )}
       {loading ? (
         <div className="text-center py-12">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-red-500 mx-auto mb-4"></div>
