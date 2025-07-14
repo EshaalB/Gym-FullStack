@@ -25,6 +25,7 @@ const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [generalError, setGeneralError] = useState("");
 
   const validateForm = () => {
     const newErrors = {};
@@ -101,8 +102,10 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setGeneralError("");
     
     if (!validateForm()) {
+      setGeneralError("Please fix the errors in the form");
       toast.error("Please fix the errors in the form");
       return;
     }
@@ -162,14 +165,14 @@ const Signup = () => {
         }
         
       } else {
-        // Handle signup error
-        toast.error(data.message || "Registration failed. Please try again.");
-        await showErrorAlert("Registration Failed", data.message || "There was an error creating your account. Please try again.");
+        setGeneralError(data.error || data.message || "Registration failed. Please try again.");
+        toast.error(data.error || data.message || "Registration failed. Please try again.");
+        await showErrorAlert("Registration Failed", data.error || data.message || "There was an error creating your account. Please try again.");
       }
       
     } catch (error) {
-      console.error("Signup error:", error);
-      toast.error("Registration failed. Please check your connection and try again.");
+      setGeneralError(error.message || "Registration failed. Please check your connection and try again.");
+      toast.error(error.message || "Registration failed. Please check your connection and try again.");
       await showErrorAlert("Registration Failed", "Network error. Please check your connection and try again.");
     } finally {
       setLoading(false);
@@ -214,7 +217,10 @@ const Signup = () => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6" aria-live="polite">
+          {generalError && (
+            <div className="bg-red-500/20 border border-red-400/30 text-red-300 rounded-lg px-4 py-2 mb-4 text-center font-semibold" aria-live="polite">{generalError}</div>
+          )}
           {/* Name Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -536,8 +542,10 @@ const Signup = () => {
             type="submit"
             disabled={loading}
             className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 shadow-lg"
+            aria-busy={loading}
+            aria-disabled={loading}
           >
-            {loading ? "Creating Account..." : "Create Account"}
+            {loading ? <span className="flex items-center justify-center"><span className="loader mr-2"></span> Creating Account...</span> : "Create Account"}
           </button>
         </form>
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../store/authSlice";
+  import { logout } from "../../store/authSlice";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 
 const UserHeader = () => {

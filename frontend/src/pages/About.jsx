@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { FaDumbbell, FaHeart, FaUsers, FaTrophy, FaClock, FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaFacebook, FaInstagram, FaTwitter, FaQuoteLeft, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import AnimatedCounter from "../components/AnimatedCounter";
-import Button from "../components/Button";
+import AnimatedCounter from "../components/common/AnimatedCounter";
+import Button from "../components/common/Button";
 
 const About = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -109,7 +108,7 @@ const About = () => {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(10)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
             className="absolute w-1 h-1 bg-red-500/20 rounded-full"
             style={{
@@ -132,14 +131,14 @@ const About = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-5 lg:px-32">
         {/* Header Section */}
         <div className="text-center mb-20 fade-in">
-          <motion.div
+          <div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
             className="inline-block bg-red-500/20 backdrop-blur-sm border border-red-400/30 text-red-300 px-6 py-3 rounded-full text-sm font-medium mb-6"
           >
             About Our Gym
-          </motion.div>
+          </div>
           <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6">
             About <span className="bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">Our Gym</span>
           </h1>
@@ -235,7 +234,7 @@ const About = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {facilityImages.map((facility, index) => (
-              <motion.div
+              <div
                 key={facility.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -255,7 +254,7 @@ const About = () => {
                     <p className="text-gray-200">{facility.description}</p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -347,7 +346,7 @@ const About = () => {
 
           <div className="relative max-w-4xl mx-auto">
             {/* Testimonial Card */}
-            <motion.div
+            <div
               key={currentTestimonial}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -395,7 +394,7 @@ const About = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Navigation Arrows */}
             <button

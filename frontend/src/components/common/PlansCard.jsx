@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaCheck, FaTimes } from "react-icons/fa";
-import Button from "../components/Button";
+import Button from "./Button";
 import AnimatedCounter from "../components/AnimatedCounter";
 
 const PlansCard = ({ 

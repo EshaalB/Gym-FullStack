@@ -52,7 +52,7 @@ const WorkoutPlanAssignment = ({ membersInClasses = [] }) => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" aria-live="polite">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-white">Assign Workout Plans</h1>
         <div className="flex items-center space-x-4">
@@ -68,7 +68,7 @@ const WorkoutPlanAssignment = ({ membersInClasses = [] }) => {
       </div>
 
       {error && (
-        <div className="text-center text-red-400 font-semibold py-2">{error}</div>
+        <div className="text-center text-red-400 font-semibold py-2" aria-live="polite">{error}</div>
       )}
       {loading ? (
         <div className="text-center py-12">
@@ -76,7 +76,7 @@ const WorkoutPlanAssignment = ({ membersInClasses = [] }) => {
           <p className="text-white text-lg">Loading...</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* Member Selection */}
           <div className="bg-black/50 backdrop-blur-lg rounded-xl p-6 border border-red-500/20">
             <h3 className="text-xl font-semibold text-white mb-4 flex items-center space-x-2">
@@ -127,7 +127,7 @@ const WorkoutPlanAssignment = ({ membersInClasses = [] }) => {
             </h3>
             
             {selectedMember ? (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <>
                 <div>
                   <label className="block text-white text-sm font-medium mb-2">
                     Plan Name
@@ -162,12 +162,14 @@ const WorkoutPlanAssignment = ({ membersInClasses = [] }) => {
                 
                 <button
                   type="submit"
-                  className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+                  disabled={loading}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 disabled:opacity-50"
+                  aria-busy={loading}
+                  aria-disabled={loading}
                 >
-                  <FaPlus className="mr-2 inline" />
-                  Assign Workout Plan
+                  {loading ? <span className="flex items-center justify-center"><span className="loader mr-2"></span> Assigning...</span> : "Assign Plan"}
                 </button>
-              </form>
+              </>
             ) : (
               <div className="text-center py-12">
                 <FaClipboardList className="text-6xl text-gray-600 mx-auto mb-4" />
@@ -176,7 +178,7 @@ const WorkoutPlanAssignment = ({ membersInClasses = [] }) => {
               </div>
             )}
           </div>
-        </div>
+        </form>
       )}
 
       {/* Instructions */}

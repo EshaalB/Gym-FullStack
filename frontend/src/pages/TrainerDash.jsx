@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTrainerStats, selectTrainerStats, selectTrainerLoading, selectTrainerError, fetchTrainerClasses, selectTrainerClasses, fetchTrainerAttendance, selectTrainerAttendance, fetchTrainerWorkoutPlans, selectTrainerWorkoutPlans } from "../store/dashboardSlice";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import Swal from "sweetalert2";
-
+  
 // Import components
 import TrainerSidebar from "../components/trainer/TrainerSidebar";
 import TrainerHeader from "../components/trainer/TrainerHeader";
@@ -106,9 +105,9 @@ const TrainerDash = () => {
           </div>
         )}
         {/* Main Content */}
-        <div className="flex-1 p-3 sm:p-6">
+        <main className="flex-1 p-3 sm:p-6" role="main">
           {renderContent()}
-        </div>
+        </main>
       </div>
     </div>
   );

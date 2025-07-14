@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaWhatsapp, FaCheck, FaTimes } from "react-icons/fa";
-import Button from "../components/Button";
-import BarLoader from "../components/BarLoader";
+import Button from "../components/common/Button";
+import BarLoader from "../components/common/BarLoader";
 import toast from "react-hot-toast";
 
 const Contact = () => {
@@ -113,7 +112,7 @@ const Contact = () => {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(15)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
             className="absolute w-1 h-1 bg-red-500/20 rounded-full"
             style={{
@@ -136,14 +135,14 @@ const Contact = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-5 lg:px-32">
         {/* Header Section */}
         <div className="text-center mb-20 fade-in">
-          <motion.div
+          <div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
             className="inline-block bg-red-500/20 backdrop-blur-sm border border-red-400/30 text-red-300 px-6 py-3 rounded-full text-sm font-medium mb-6"
           >
             Get In Touch
-          </motion.div>
+          </div>
           <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6">
             Contact <span className="bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">Us</span>
           </h1>
@@ -156,7 +155,7 @@ const Contact = () => {
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
           {/* Contact Form */}
-          <motion.div 
+          <div 
             className="slide-up"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -299,10 +298,10 @@ const Contact = () => {
                 />
               </form>
             </div>
-          </motion.div>
+          </div>
 
           {/* Contact Information */}
-          <motion.div 
+          <div 
             className="scale-in"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -381,13 +380,13 @@ const Contact = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Social Media & Additional Contact */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Social Media */}
-          <motion.div 
+          <div 
             className="slide-up"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -434,10 +433,10 @@ const Contact = () => {
                 </a>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* WhatsApp Contact */}
-          <motion.div 
+          <div 
             className="scale-in"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -459,7 +458,7 @@ const Contact = () => {
                 </div>
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Map Section */}

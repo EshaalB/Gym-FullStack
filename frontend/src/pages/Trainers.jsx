@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { FaDumbbell, FaTrophy, FaStar, FaClock, FaUsers, FaGraduationCap, FaAward, FaCalendar, FaPhone, FaEnvelope, FaInstagram, FaFacebook, FaLinkedin } from "react-icons/fa";
-import Button from "../components/Button";
+import Button from "../components/common/Button";
 import toast from "react-hot-toast";
-import trainer1 from "../assets/img/trainer1.jpg";
-import trainer2 from "../assets/img/trainer2.jpg";
-import trainer3 from "../assets/img/trainer3.jpg";
-import before1 from "../assets/img/beforevsafter1.jpg";
-import before2 from "../assets/img/beforevsafter2.jpg";
-import before3 from "../assets/img/beforevsafter3.jpg";
-import before4 from "../assets/img/beforevsafter4.jpg";
-import before5 from "../assets/img/beforevsafter5.jpg";
-import before6 from "../assets/img/beforevsafter6.jpg";
-import { motion } from "framer-motion";
+import trainer1 from "../../assets/img/trainer1.jpg";
+import trainer2 from "../../assets/img/trainer2.jpg";
+import trainer3 from "../../assets/img/trainer3.jpg";
+import before1 from "../../assets/img/beforevsafter1.jpg";
+import before2 from "../../assets/img/beforevsafter2.jpg";
+import before3 from "../../assets/img/beforevsafter3.jpg";
+import before4 from "../../assets/img/beforevsafter4.jpg";
+import before5 from "../../assets/img/beforevsafter5.jpg";
+import before6 from "../../assets/img/beforevsafter6.jpg";
 
 const Trainers = () => {
   const [selectedTrainer, setSelectedTrainer] = useState(null);

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { FaCheck, FaStar, FaCrown, FaGift, FaDumbbell, FaShower, FaMobile, FaParking, FaWifi, FaLock, FaClipboardCheck, FaUsers } from "react-icons/fa";
-import AnimatedCounter from "../components/AnimatedCounter";
-import Button from "../components/Button";
+import { FaCheck,   FaCrown,  FaDumbbell, FaShower, FaMobile, FaParking, FaWifi, FaLock, FaClipboardCheck, FaUsers } from "react-icons/fa";
+import Button from "../components/common/Button"; 
 
 const Plans = () => {
   const [billingCycle, setBillingCycle] = useState("monthly");
@@ -85,7 +83,7 @@ const Plans = () => {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(15)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
             className="absolute w-1 h-1 bg-red-500/20 rounded-full"
             style={{
@@ -108,14 +106,14 @@ const Plans = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-5 lg:px-32">
         {/* Header Section */}
         <div className="text-center mb-20 fade-in">
-          <motion.div
+          <div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
             className="inline-block bg-red-500/20 backdrop-blur-sm border border-red-400/30 text-red-300 px-6 py-3 rounded-full text-sm font-medium mb-6"
           >
             Membership Plans
-          </motion.div>
+          </div>
           <h1 className="text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight">
             CHOOSE YOUR <span className="bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">BATTLE PLAN</span>
           </h1>
@@ -126,7 +124,7 @@ const Plans = () => {
         </div>
 
         {/* Billing Toggle */}
-        <motion.div 
+        <div 
           className="flex justify-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -159,12 +157,12 @@ const Plans = () => {
               </button>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Plans Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
           {plans.map((plan, index) => (
-            <motion.div
+            <div
               key={plan.id}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -229,12 +227,12 @@ const Plans = () => {
                     : "bg-black/30 backdrop-blur-xl border border-white/20 text-white hover:bg-white/10"
                 }`}
               />
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* All Plans Include Section */}
-        <motion.div 
+        <div 
           className="bg-black/20 backdrop-blur-xl rounded-2xl p-12 border border-white/10 mb-20"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -251,7 +249,7 @@ const Plans = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {benefits.map((benefit, index) => (
-              <motion.div
+              <div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -262,10 +260,10 @@ const Plans = () => {
                   <benefit.icon className="text-2xl text-red-400" />
                 </div>
                 <p className="text-gray-300 font-medium">{benefit.text}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
        
       </div>

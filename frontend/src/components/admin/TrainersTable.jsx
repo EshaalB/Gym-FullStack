@@ -1,6 +1,6 @@
 import React from "react";
-import SkeletonLoader from "../SkeletonLoader";
-import Button from "../Button";
+import SkeletonLoader from "../../common/SkeletonLoader";
+import Button from "../../common/Button";
 
 const TrainersTable = ({ trainers, loading, error }) => {
   if (loading) {
@@ -17,13 +17,14 @@ const TrainersTable = ({ trainers, loading, error }) => {
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full text-sm text-gray-300">
+          <caption className="sr-only">List of all trainers</caption>
           <thead>
             <tr>
-              <th className="px-4 py-2 text-left">Name</th>
-              <th className="px-4 py-2 text-left">Email</th>
-              <th className="px-4 py-2 text-left">Specialization</th>
-              <th className="px-4 py-2 text-left">Experience (years)</th>
-              <th className="px-4 py-2 text-left">Actions</th>
+              <th className="px-4 py-2 text-left" scope="col">Name</th>
+              <th className="px-4 py-2 text-left" scope="col">Email</th>
+              <th className="px-4 py-2 text-left" scope="col">Specialization</th>
+              <th className="px-4 py-2 text-left" scope="col">Experience (years)</th>
+              <th className="px-4 py-2 text-left" scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>

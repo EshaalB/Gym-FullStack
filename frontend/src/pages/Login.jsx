@@ -16,6 +16,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [generalError, setGeneralError] = useState("");
 
   // Check if user is already logged in
   useEffect(() => {
@@ -84,8 +85,10 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setGeneralError("");
     
     if (!validateForm()) {
+      setGeneralError("Please fix the errors in the form");
       toast.error("Please fix the errors in the form");
       return;
     }
@@ -139,15 +142,15 @@ const Login = () => {
         
       } else {
         // Handle login error
-        console.error("Login failed:", data.message);
-        toast.error(data.message || "Login failed. Please try again.");
-        await showErrorAlert("Login Failed", data.message || "Invalid email or password. Please try again.");
+        setGeneralError(data.error || data.message || "Login failed. Please try again.");
+        toast.error(data.error || data.message || "Login failed. Please try again.");
+        await showErrorAlert("Login Failed", data.error || data.message || "Invalid email or password. Please try again.");
       }
       
     } catch (error) {
-      console.error("Login error:", error);
-      toast.error("Login failed. Please check your connection and try again.");
-      await showErrorAlert("Login Failed", "Network error. Please check your connection and try again.");
+      setGeneralError(error.message || "Login failed. Please check your connection and try again.");
+      toast.error(error.message || "Login failed. Please check your connection and try again.");
+      await showErrorAlert("Login Failed", error.message || "Network error. Please check your connection and try again.");
     } finally {
       setLoading(false);
     }
@@ -181,7 +184,10 @@ const Login = () => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6" aria-live="polite">
+          {generalError && (
+            <div className="bg-red-500/20 border border-red-400/30 text-red-300 rounded-lg px-4 py-2 mb-4 text-center font-semibold" aria-live="polite">{generalError}</div>
+          )}
           {/* Email Field */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
@@ -253,8 +259,10 @@ const Login = () => {
             type="submit"
             disabled={loading}
             className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 shadow-lg"
+            aria-busy={loading}
+            aria-disabled={loading}
           >
-            {loading ? "Signing In..." : "Sign In"}
+            {loading ? <span className="flex items-center justify-center"><span className="loader mr-2"></span> Logging In...</span> : "Login"}
           </button>
         </form>
 

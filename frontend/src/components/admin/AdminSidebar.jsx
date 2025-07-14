@@ -23,7 +23,7 @@ const AdminSidebar = ({ currentView, setCurrentView }) => {
     <div className="w-64 bg-black/50 backdrop-blur-lg border-r border-red-500/20 min-h-screen">
       <div className="p-6">
         <h2 className="text-2xl font-bold text-white mb-8">Admin Panel</h2>
-        <nav className="space-y-2">
+        <nav className="space-y-2" role="navigation" aria-label="Admin dashboard navigation">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -35,6 +35,7 @@ const AdminSidebar = ({ currentView, setCurrentView }) => {
                     ? "bg-red-600 text-white shadow-lg"
                     : "text-gray-300 hover:bg-red-500/20 hover:text-white"
                 }`}
+                aria-current={currentView === item.id ? 'page' : undefined}
               >
                 <Icon className="text-xl" />
                 <span className="font-medium">{item.label}</span>

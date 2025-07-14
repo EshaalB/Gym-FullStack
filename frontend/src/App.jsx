@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import BarLoader from "./components/BarLoader";
-import ScrollProgress from "./components/ScrollProgress";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Landing from "./pages/Landing";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Plans from "./pages/Plans";
-import Trainers from "./pages/Trainers";
-import Contact from "./pages/Contact";
-import SignUp from "./pages/Signup";
+import Navbar from "./components/common/Navbar";
+import Footer from "./components/common/Footer";
+import BarLoader from "./components/common/BarLoader";
+import ScrollProgress from "./components/common/ScrollProgress";
+import ProtectedRoute from "./components/common/ProtectedRoute";
+import Landing from "./pages/Landing.jsx";
+import Home from "./pages/Home.jsx";
+import About from "./pages/About.jsx";
+import Plans from "./pages/Plans.jsx";
+import Trainers from "./pages/Trainers.jsx";
+import Contact from "./pages/Contact.jsx";
+import SignUp from "./pages/Signup.jsx";
 import Login from "./pages/Login.jsx";
-import UserDash from "./pages/UserDash";
-import TrainerDash from "./pages/TrainerDash";
-import AdminDash from "./pages/AdminDash";
-import { motion } from "framer-motion";
+import UserDash from "./pages/UserDash.jsx";
+import TrainerDash from "./pages/TrainerDash.jsx";
+import AdminDash from "./pages/AdminDash.jsx";
 
 // Auto-redirect component for authenticated users
 const AutoRedirect = ({ children }) => {

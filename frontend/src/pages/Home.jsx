@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import Button from "../components/Button";
+import Button from "../components/common/Button";
 import { FaDumbbell, FaHeart, FaUsers, FaTrophy, FaPlay, FaFire, FaBolt, FaShieldAlt } from "react-icons/fa";
-import heroImage from "../assets/img/hero.jpg";
-import AnimatedCounter from "../components/AnimatedCounter";
-import ClassBookingModal from "../components/ClassBookingModal";
+import heroImage from "../../assets/img/hero.jpg";
+import AnimatedCounter from "../components/common/AnimatedCounter";
 
 const Home = () => {
   const [scrollY, setScrollY] = useState(0);
-  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -357,16 +354,7 @@ const Home = () => {
       </div>
 
       {/* Class Booking Modal */}
-      <ClassBookingModal
-        isOpen={isBookingModalOpen}
-        onClose={() => setIsBookingModalOpen(false)}
-        classData={{
-          name: "Strength Training",
-          trainer: "John Smith",
-          duration: "60 min",
-          capacity: "20"
-        }}
-      />
+      {/* ClassBookingModal component was removed, so this section is now empty */}
     </div>
   );
 };

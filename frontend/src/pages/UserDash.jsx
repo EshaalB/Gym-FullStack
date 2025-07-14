@@ -45,15 +45,15 @@ import {
 } from "../store/dashboardSlice";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import UserHeader from "../components/UserHeader";
-import UserSidebar from "../components/UserSidebar";
+import UserHeader from "../components/user/UserHeader";
+import UserSidebar from "../components/user/UserSidebar";
 import { FaPlus, FaRedo, FaEnvelope, FaChartBar, FaCalendarAlt, FaDumbbell, FaMoneyBill, FaUser, FaWeight } from "react-icons/fa";
-import BookClassModal from "../components/BookClassModal";
-import BMICalculator from "../components/BMICalculator";
-import RenewMembershipModal from "../components/RenewMembershipModal";
-import ContactTrainerModal from "../components/ContactTrainerModal";
-import EditProfileModal from "../components/EditProfileModal";
-import SupportModal from "../components/SupportModal";
+import BookClassModal from "../components/modals/BookClassModal";
+import BMICalculator from "../components/user/BMICalculator";
+import RenewMembershipModal from "../components/modals/RenewMembershipModal";
+import ContactTrainerModal from "../components/modals/ContactTrainerModal";
+import EditProfileModal from "../components/modals/EditProfileModal";
+import SupportModal from "../components/modals/SupportModal";
 
 // Add ProfileDetailsCard component
 const ProfileDetailsCard = ({ profile, updateProfileLoading, updateProfileError, onSave }) => {
@@ -130,6 +130,7 @@ const UserDash = () => {
   const [showContactTrainerModal, setShowContactTrainerModal] = useState(false);
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   const [showSupportModal, setShowSupportModal] = useState(false);
+  const [generalError, setGeneralError] = useState("");
 
   // Selectors for all features
   const stats = useSelector(selectUserStats);
@@ -187,8 +188,10 @@ const UserDash = () => {
 
   useEffect(() => {
     if (statsError || classesError || plansError || attendanceError || paymentsError || profileError || notificationsError) {
-      toast.error(statsError || classesError || plansError || attendanceError || paymentsError || profileError || notificationsError);
-      if ((statsError || classesError || plansError || attendanceError || paymentsError || profileError || notificationsError)?.toLowerCase().includes('unauthorized')) {
+      const errMsg = statsError || classesError || plansError || attendanceError || paymentsError || profileError || notificationsError;
+      setGeneralError(errMsg);
+      toast.error(errMsg);
+      if (errMsg?.toLowerCase().includes('unauthorized')) {
         navigate('/login');
       }
     }
@@ -364,12 +367,13 @@ const UserDash = () => {
             ) : classes && classes.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="min-w-full text-white border border-white/10 rounded-lg">
+                  <caption className="sr-only">List of your enrolled classes</caption>
                   <thead>
                     <tr className="bg-black/40">
-                      <th className="px-4 py-2">Class Name</th>
-                      <th className="px-4 py-2">Day</th>
-                      <th className="px-4 py-2">Trainer</th>
-                      <th className="px-4 py-2">Status</th>
+                      <th className="px-4 py-2" scope="col">Class Name</th>
+                      <th className="px-4 py-2" scope="col">Day</th>
+                      <th className="px-4 py-2" scope="col">Trainer</th>
+                      <th className="px-4 py-2" scope="col">Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -402,13 +406,14 @@ const UserDash = () => {
             ) : plans && plans.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="min-w-full text-white border border-white/10 rounded-lg">
+                  <caption className="sr-only">List of your workout plans</caption>
                   <thead>
                     <tr className="bg-black/40">
-                      <th className="px-4 py-2">Plan Name</th>
-                      <th className="px-4 py-2">Duration</th>
-                      <th className="px-4 py-2">Start Date</th>
-                      <th className="px-4 py-2">End Date</th>
-                      <th className="px-4 py-2">Status</th>
+                      <th className="px-4 py-2" scope="col">Plan Name</th>
+                      <th className="px-4 py-2" scope="col">Duration</th>
+                      <th className="px-4 py-2" scope="col">Start Date</th>
+                      <th className="px-4 py-2" scope="col">End Date</th>
+                      <th className="px-4 py-2" scope="col">Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -439,13 +444,14 @@ const UserDash = () => {
             ) : payments && payments.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="min-w-full text-white border border-white/10 rounded-lg">
+                  <caption className="sr-only">List of your payment history</caption>
                   <thead>
                     <tr className="bg-black/40">
-                      <th className="px-4 py-2">Date</th>
-                      <th className="px-4 py-2">Amount</th>
-                      <th className="px-4 py-2">Method</th>
-                      <th className="px-4 py-2">Type</th>
-                      <th className="px-4 py-2">Status</th>
+                      <th className="px-4 py-2" scope="col">Date</th>
+                      <th className="px-4 py-2" scope="col">Amount</th>
+                      <th className="px-4 py-2" scope="col">Method</th>
+                      <th className="px-4 py-2" scope="col">Type</th>
+                      <th className="px-4 py-2" scope="col">Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -522,7 +528,10 @@ const UserDash = () => {
           <span className="text-lg font-bold text-white">User Panel</span>
         </div>
         {/* Main Content */}
-        <main className="flex-1 p-3 sm:p-6">
+        <main className="flex-1 p-3 sm:p-6" role="main">
+          {generalError && (
+            <div className="bg-red-500/20 border border-red-400/30 text-red-300 rounded-lg px-4 py-2 mb-4 text-center font-semibold" aria-live="polite">{generalError}</div>
+          )}
           {renderContent()}
         </main>
       </div>
