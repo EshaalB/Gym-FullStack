@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { FaDumbbell, FaHeart, FaUsers, FaTrophy, FaClock, FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaFacebook, FaInstagram, FaTwitter, FaQuoteLeft, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import AnimatedCounter from "../components/common/AnimatedCounter";
+  import AnimatedCounter from "../components/common/AnimatedCounter";
 import Button from "../components/common/Button";
+import aboutImg from "../assets/img/about.png";
+import img1 from "../assets/img/img1.jpg";
+import img2 from "../assets/img/img2.jpg";
+import img3 from "../assets/img/img3.jpg";
 
 const About = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -12,7 +16,6 @@ const About = () => {
       id: 1,
       name: "Ahmed Khan",
       role: "Weight Loss Success",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
       rating: 5,
       text: "Lost 45 pounds in 8 months! The trainers here are incredible. They pushed me beyond my limits and helped me discover strength I never knew I had. This isn't just a gym - it's a transformation center."
     },
@@ -20,7 +23,6 @@ const About = () => {
       id: 2,
       name: "Fatima Ali",
       role: "Fitness Enthusiast",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
       rating: 5,
       text: "The community here is amazing! Everyone is so supportive and motivating. I've made incredible friends and achieved fitness goals I never thought possible. This gym changed my life completely."
     },
@@ -28,7 +30,6 @@ const About = () => {
       id: 3,
       name: "Usman Malik",
       role: "Bodybuilding Champion",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
       rating: 5,
       text: "Won my first bodybuilding competition thanks to the expert guidance here. The equipment is top-notch and the trainers know exactly how to push you to your maximum potential. Pure excellence!"
     },
@@ -36,7 +37,6 @@ const About = () => {
       id: 4,
       name: "Ayesha Hassan",
       role: "Yoga Instructor",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
       rating: 5,
       text: "As a yoga instructor, I appreciate the variety of classes and the peaceful environment. The management truly cares about member experience. This is more than just a gym - it's a wellness sanctuary."
     },
@@ -44,7 +44,6 @@ const About = () => {
       id: 5,
       name: "Bilal Ahmed",
       role: "CrossFit Athlete",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
       rating: 5,
       text: "The CrossFit program here is intense and challenging. I've improved my strength, endurance, and overall fitness dramatically. The trainers are world-class and the facilities are unmatched."
     }
@@ -75,35 +74,35 @@ const About = () => {
   const facilityImages = [
     {
       id: 1,
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop",
+      image: aboutImg,
       title: "Weight Training Area",
       description: "State-of-the-art equipment for strength training"
     },
     {
       id: 2,
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop",
+      image: img1,
       title: "Cardio Zone",
       description: "Latest cardio machines for endurance training"
     },
     {
       id: 3,
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop",
+      image: img2,
       title: "Group Fitness Studio",
       description: "Spacious studio for classes and group sessions"
     },
     {
       id: 4,
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop",
+      image: img3,
       title: "Yoga & Pilates Room",
       description: "Peaceful environment for mind-body workouts"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-red-gradient py-20 relative overflow-hidden">
+    <div className="relative w-screen min-h-screen bg-red-gradient py-20 overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
-      <div className="absolute inset-0 bg-gradient-to-r from-red-900/10 via-transparent to-red-900/10" />
+      <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-black via-gray-900 to-black z-0" />
+      <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-900/10 via-transparent to-red-900/10 z-0" />
       
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -358,7 +357,7 @@ const About = () => {
                 {/* Profile Image */}
                 <div className="flex-shrink-0">
                   <img 
-                    src={testimonials[currentTestimonial].image} 
+                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(testimonials[currentTestimonial].name)}&background=EF4444&color=fff&size=128&bold=true&rounded=true`} 
                     alt={testimonials[currentTestimonial].name}
                     className="w-24 h-24 lg:w-32 lg:h-32 rounded-full object-cover border-4 border-red-500/30 shadow-lg"
                   />

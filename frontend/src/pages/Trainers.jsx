@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { FaDumbbell, FaTrophy, FaStar, FaClock, FaUsers, FaGraduationCap, FaAward, FaCalendar, FaPhone, FaEnvelope, FaInstagram, FaFacebook, FaLinkedin } from "react-icons/fa";
 import Button from "../components/common/Button";
 import toast from "react-hot-toast";
-import trainer1 from "../../assets/img/trainer1.jpg";
-import trainer2 from "../../assets/img/trainer2.jpg";
-import trainer3 from "../../assets/img/trainer3.jpg";
-import before1 from "../../assets/img/beforevsafter1.jpg";
-import before2 from "../../assets/img/beforevsafter2.jpg";
-import before3 from "../../assets/img/beforevsafter3.jpg";
-import before4 from "../../assets/img/beforevsafter4.jpg";
-import before5 from "../../assets/img/beforevsafter5.jpg";
-import before6 from "../../assets/img/beforevsafter6.jpg";
+import trainer1 from "../assets/img/trainer1.jpg";
+import trainer2 from "../assets/img/trainer2.jpg";
+import trainer3 from "../assets/img/trainer3.jpg";
+import before1 from "../assets/img/beforevsafter1.jpg";
+import before2 from "../assets/img/beforevsafter2.jpg";
+import before3 from "../assets/img/beforevsafter3.jpg";
+import before4 from "../assets/img/beforevsafter4.jpg";
+import before5 from "../assets/img/beforevsafter5.jpg";
+import before6 from "../assets/img/beforevsafter6.jpg";
+import { motion } from "framer-motion";
 
 const Trainers = () => {
   const [selectedTrainer, setSelectedTrainer] = useState(null);
@@ -171,10 +172,10 @@ const Trainers = () => {
   };
 
   return (
-    <div className="min-h-screen bg-red-gradient py-20 relative overflow-hidden">
+    <div className="relative w-screen min-h-screen overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
-      <div className="absolute inset-0 bg-gradient-to-r from-red-900/10 via-transparent to-red-900/10" />
+      <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-black via-gray-900 to-black z-0" />
+      <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-900/10 via-transparent to-red-900/10 z-0" />
       
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -327,15 +328,28 @@ const Trainers = () => {
                 viewport={{ once: true }}
                 className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 border border-white/10"
               >
-                <div className="mb-4 flex justify-center">
+                <div className="flex flex-col gap-4 items-center">
+                  <div className="flex gap-2 w-full justify-center">
+                    <div className="flex flex-col items-center">
+                      <span className="text-xs text-gray-400 mb-1">Before</span>
                   <img 
                     src={transformation.before} 
-                    alt={transformation.client + ' transformation'}
-                    className="w-full h-64 object-cover rounded-lg shadow-lg"
+                        alt={transformation.client + ' before'}
+                        className="w-32 h-32 object-cover rounded-lg shadow-lg border-2 border-red-400/30"
+                      />
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <span className="text-xs text-gray-400 mb-1">After</span>
+                      <img 
+                        src={transformation.after} 
+                        alt={transformation.client + ' after'}
+                        className="w-32 h-32 object-cover rounded-lg shadow-lg border-2 border-green-400/30"
                   />
+                    </div>
+                  </div>
+                  <h4 className="text-white font-semibold mt-2">{transformation.client}</h4>
+                  <p className="text-gray-300 text-sm text-center">{transformation.transformation}</p>
                 </div>
-                <h4 className="text-white font-semibold mb-2">{transformation.client}</h4>
-                <p className="text-gray-300 text-sm">{transformation.transformation}</p>
               </motion.div>
             ))}
           </div>

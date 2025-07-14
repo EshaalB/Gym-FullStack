@@ -1,8 +1,7 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { FaCheck, FaTimes } from "react-icons/fa";
+  import { FaCheck, FaTimes } from "react-icons/fa";
 import Button from "./Button";
-import AnimatedCounter from "../components/AnimatedCounter";
+import AnimatedCounter from "../AnimatedCounter";
 
 const PlansCard = ({ 
   title, 
@@ -11,7 +10,6 @@ const PlansCard = ({
   features, 
   popular = false, 
   color = "from-red-400 to-red-600",
-  icon: IconComponent,
   savings = null,
   billingCycle = "monthly"
 }) => {

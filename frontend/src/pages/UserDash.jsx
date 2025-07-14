@@ -45,7 +45,6 @@ import {
 } from "../store/dashboardSlice";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import UserHeader from "../components/user/UserHeader";
 import UserSidebar from "../components/user/UserSidebar";
 import { FaPlus, FaRedo, FaEnvelope, FaChartBar, FaCalendarAlt, FaDumbbell, FaMoneyBill, FaUser, FaWeight } from "react-icons/fa";
 import BookClassModal from "../components/modals/BookClassModal";
@@ -54,7 +53,7 @@ import RenewMembershipModal from "../components/modals/RenewMembershipModal";
 import ContactTrainerModal from "../components/modals/ContactTrainerModal";
 import EditProfileModal from "../components/modals/EditProfileModal";
 import SupportModal from "../components/modals/SupportModal";
-
+import { motion } from "framer-motion";
 // Add ProfileDetailsCard component
 const ProfileDetailsCard = ({ profile, updateProfileLoading, updateProfileError, onSave }) => {
   const [editMode, setEditMode] = React.useState(false);
@@ -118,7 +117,7 @@ const ProfileDetailsCard = ({ profile, updateProfileLoading, updateProfileError,
     </div>
   );
 };
-
+ 
 const UserDash = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -511,7 +510,6 @@ const UserDash = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-red-900 to-black flex flex-col">
-      <UserHeader />
       <div className="flex flex-1">
         <div className="hidden md:block">
           <UserSidebar currentView={currentView} setCurrentView={setCurrentView} />

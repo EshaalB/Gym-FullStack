@@ -104,10 +104,10 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-red-gradient py-20 relative overflow-hidden">
+    <div className="relative w-screen min-h-screen overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
-      <div className="absolute inset-0 bg-gradient-to-r from-red-900/10 via-transparent to-red-900/10" />
+      <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-black via-gray-900 to-black z-0" />
+      <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-900/10 via-transparent to-red-900/10 z-0" />
       
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -319,7 +319,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-white mb-1">Visit Our Gym</h3>
-                      <p className="text-gray-300">123 Fitness Street, Gulberg III, Lahore, Pakistan</p>
+                      <p className="text-gray-300">123 Fitness Ave, Metropolis, USA</p>
                     </div>
                   </div>
 
@@ -329,8 +329,8 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-white mb-1">Call Us</h3>
-                      <p className="text-gray-300">+92 300 123 4567</p>
-                      <p className="text-gray-300">+92 42 123 4567</p>
+                      <p className="text-gray-300">(555) 123-4567</p>
+                      <p className="text-gray-300">(555) 765-4321</p>
                     </div>
                   </div>
 
@@ -462,21 +462,19 @@ const Contact = () => {
         </div>
 
         {/* Map Section */}
-        <div className="mt-20">
-          <div className="bg-black/40 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-white mb-4">Find Us</h2>
-              <p className="text-gray-300">
-                Visit our gym located in the heart of Lahore, easily accessible from all major areas.
-              </p>
-            </div>
-            
-            <div className="aspect-video bg-gray-800 rounded-xl flex items-center justify-center">
-              <div className="text-center">
-                <FaMapMarkerAlt className="text-6xl text-red-400 mx-auto mb-4" />
-                <p className="text-gray-300 text-lg">Interactive Map Coming Soon</p>
-                <p className="text-gray-400">123 Fitness Street, Gulberg III, Lahore, Pakistan</p>
-              </div>
+        <div className="mt-20 flex justify-center">
+          <div className="w-full max-w-2xl bg-black/80 bg-gradient-to-br from-black via-gray-900 to-red-900/10 rounded-2xl shadow-2xl border border-red-500/10 p-8">
+            <h2 className="text-3xl font-bold text-white mb-6 text-center">Find Us</h2>
+            <div className="rounded-xl overflow-hidden border border-white/10 shadow-lg">
+              <iframe
+                title="Gym Location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019019145409!2d-122.4194154846816!3d37.7749297797597!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808c7e6b1b1b%3A0x4a0b8b8b8b8b8b8b!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1680000000000!5m2!1sen!2sus"
+                className="w-full h-64 md:h-56 lg:h-80"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
           </div>
         </div>

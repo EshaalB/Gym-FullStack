@@ -1,6 +1,6 @@
 import React from "react";
 import { FaSignOutAlt, FaUser, FaBell } from "react-icons/fa";
-import Button from "../../common/Button";
+import Button from "../common/Button";
 
 const AdminHeader = ({ userName, onLogout }) => {
   return (

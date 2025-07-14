@@ -47,7 +47,7 @@ const AutoRedirect = ({ children }) => {
               window.location.href = '/userdash';
           }
         }
-      } catch (error) {
+      } catch {
         // Clear invalid data
         localStorage.removeItem('accessToken');
         localStorage.removeItem('userData');
@@ -58,10 +58,24 @@ const AutoRedirect = ({ children }) => {
   return children;
 };
 
+const DashboardLoader = ({ setDashboardLoading }) => {
+  const location = useLocation();
+  useEffect(() => {
+    if (["/userdash", "/trainerdash", "/admindash"].includes(location.pathname)) {
+      setDashboardLoading(true);
+      const timer = setTimeout(() => setDashboardLoading(false), 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname, setDashboardLoading]);
+  return null;
+};
+
 const App = () => {
   const [loading, setLoading] = useState(true);
+  const [dashboardLoading, setDashboardLoading] = useState(false);
 
   useEffect(() => {
+    // Only show loading on initial site load
     const timer = setTimeout(() => setLoading(false), 1500);
     return () => clearTimeout(timer);
   }, []);
@@ -126,7 +140,8 @@ const App = () => {
 
   return (
     <Router>
-      {loading ? (
+      <DashboardLoader setDashboardLoading={setDashboardLoading} />
+      {(loading || dashboardLoading) ? (
         <div className="h-screen w-screen flex items-center justify-center bg-black">
           <BarLoader />
         </div>

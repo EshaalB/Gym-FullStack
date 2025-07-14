@@ -75,10 +75,10 @@ const Plans = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-red-gradient py-20 relative overflow-hidden">
+    <div className="relative w-screen min-h-screen overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
-      <div className="absolute inset-0 bg-gradient-to-r from-red-900/10 via-transparent to-red-900/10" />
+      <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-black via-gray-900 to-black z-0" />
+      <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-900/10 via-transparent to-red-900/10 z-0" />
       
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">

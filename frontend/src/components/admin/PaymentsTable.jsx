@@ -1,6 +1,6 @@
 import React from "react";
-import SkeletonLoader from "../../common/SkeletonLoader"; 
-import Button from "../../common/Button";
+import SkeletonLoader from "../common/SkeletonLoader"; 
+import Button from "../common/Button";
 
 const PaymentsTable = ({ payments, loading, error }) => {
   if (loading) {

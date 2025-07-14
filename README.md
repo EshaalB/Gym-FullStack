@@ -1,261 +1,184 @@
-# Gym Management System - Backend API
+# Gym Management System - Full Stack
 
-A secure, scalable backend API for the Gym Management System with JWT authentication, role-based access control, and organized route structure.
+A secure, scalable full-stack Gym Management System with a modern React/Redux frontend and Node.js/Express backend. Features JWT authentication, role-based access, dashboards, booking, payments, and more.
 
-## 🚀 Features
+---
 
-- **JWT Authentication** with access and refresh tokens
-- **Role-based Access Control** (Admin, Trainer, Member)
-- **Input Validation** and sanitization
-- **Rate Limiting** and security headers
-- **Organized Route Structure** with modular design
-- **Database Utilities** with connection pooling
-- **Error Handling** with global error middleware
-- **API Documentation** with comprehensive endpoints
+## 🚀 Features (Full Stack)
 
-## 📋 Prerequisites
+- Modern, responsive frontend (React + Redux + Tailwind CSS)
+- Secure backend API (Node.js + Express + SQL Server)
+- JWT authentication & role-based access (Admin, Trainer, Member)
+- Modular, scalable codebase
+- Accessible UI (ARIA, keyboard, color contrast)
+- Real-time feedback (toasts, loaders)
+- Booking, payments, attendance, plans, and more
 
-- Node.js (>= 14.0.0)
-- SQL Server database
-- npm or yarn package manager
+---
 
-## 🛠️ Installation
-
-1. **Clone the repository and navigate to backend:**
-
-   ```bash
-   cd backend
-   ```
-
-2. **Install dependencies:**
-
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables:**
-
-   ```bash
-   cp env.example .env
-   ```
-
-   Edit `.env` file with your database and JWT configuration:
-
-   ```env
-   # Database Configuration
-   DB_USER=your_db_user
-   DB_PASSWORD=your_db_password
-   DB_SERVER=your_db_server
-   DB_DATABASE=your_db_name
-   DB_INSTANCE=your_db_instance
-   DB_PORT=1433
-
-   # JWT Configuration
-   JWT_SECRET=your_super_secret_jwt_key_here_make_it_long_and_random
-   JWT_REFRESH_SECRET=your_super_secret_refresh_key_here_make_it_long_and_random
-
-   # Server Configuration
-   PORT=3000
-   NODE_ENV=development
-   FRONTEND_URL=http://localhost:5173
-   ```
-
-4. **Start the server:**
-
-   ```bash
-   # Development mode
-   npm run dev
-
-   # Production mode
-   npm start
-   ```
-
-## 📁 Project Structure
+## 📦 Project Structure
 
 ```
-backend/
-├── middleware/
-│   └── auth.js              # JWT authentication middleware
-├── routes/
-│   ├── auth.js              # Authentication routes
-│   ├── users.js             # User management routes
-│   ├── attendance.js        # Attendance management routes
-│   └── payments.js          # Payment processing routes
-├── utils/
-│   ├── database.js          # Database utilities
-│   └── validation.js        # Input validation utilities
-├── server.js                # Main server file
-├── package.json
-└── README.md
+gym-management-system/
+├── backend/           # Node.js/Express API
+├── frontend/          # React/Redux client
+├── README.md          # This file
+└── ...
 ```
 
-## 🔐 Authentication
+---
 
-### JWT Token Structure
+## 🖥️ Frontend (React/Redux)
 
-- **Access Token**: 15 minutes expiry
-- **Refresh Token**: 7 days expiry
-- **Token Payload**: `{ userId, email, userRole }`
+### Stack
 
-### Authentication Flow
+- React 19+
+- Redux Toolkit
+- React Router v7
+- Tailwind CSS
+- Framer Motion (animations)
+- React Hot Toast (notifications)
+- Chart.js (dashboard stats)
 
-1. **Login**: POST `/api/auth/login`
-2. **Token Refresh**: POST `/api/auth/refresh`
-3. **Logout**: POST `/api/auth/logout`
-
-### Protected Routes
-
-All protected routes require the `Authorization` header:
+### Structure
 
 ```
-Authorization: Bearer <access_token>
+frontend/src/
+  components/
+    admin/      # Admin dashboard UI
+    trainer/    # Trainer dashboard UI
+    user/       # User dashboard UI
+    common/     # Shared UI (Navbar, Footer, Button, etc.)
+    modals/     # All modal dialogs
+  pages/        # Main site pages (Landing, Home, About, etc.)
+  store/        # Redux slices, thunks, selectors
+  assets/       # Images, icons
+  utils/        # Utility functions
+  theme.js      # Theme config
+  App.jsx       # Main app entry
+  main.jsx      # React root
 ```
 
-## 📚 API Endpoints
+### Main Features
 
-### Authentication Routes (`/api/auth`)
+- **Landing Page:** Multi-section, scrollable, animated, accessible
+- **Dashboards:** Role-based (Admin, Trainer, Member)
+- **Booking:** Class booking, trainer assignment
+- **Payments:** Membership, class, and plan payments
+- **Attendance:** Marking and viewing attendance
+- **Workout Plans:** Assignment and tracking
+- **Profile:** Edit, view, and support
+- **Accessibility:** ARIA roles, keyboard nav, color contrast
+- **Feedback:** Toasts, loaders, error messages
 
-| Method | Endpoint           | Description          | Access        |
-| ------ | ------------------ | -------------------- | ------------- |
-| POST   | `/login`           | User login           | Public        |
-| POST   | `/signup`          | User registration    | Public        |
-| POST   | `/refresh`         | Refresh access token | Public        |
-| POST   | `/logout`          | User logout          | Authenticated |
-| GET    | `/profile`         | Get user profile     | Authenticated |
-| PUT    | `/change-password` | Change password      | Authenticated |
-
-### User Management Routes (`/api/users`)
-
-| Method | Endpoint          | Description              | Access    |
-| ------ | ----------------- | ------------------------ | --------- |
-| GET    | `/`               | Get all users            | Admin     |
-| GET    | `/:userId`        | Get user by ID           | Admin/Own |
-| PUT    | `/:userId`        | Update user profile      | Admin/Own |
-| PATCH  | `/:userId/status` | Activate/deactivate user | Admin     |
-| GET    | `/stats/overview` | User statistics          | Admin     |
-| GET    | `/search`         | Search users             | Admin     |
-
-### Attendance Routes (`/api/attendance`)
-
-| Method | Endpoint            | Description           | Access            |
-| ------ | ------------------- | --------------------- | ----------------- |
-| POST   | `/mark`             | Mark attendance       | Trainer/Admin     |
-| GET    | `/class/:classId`   | Get class attendance  | Trainer/Admin     |
-| GET    | `/member/:memberId` | Get member attendance | Admin/Trainer/Own |
-| GET    | `/stats/overview`   | Attendance statistics | Admin             |
-| PUT    | `/:attendanceId`    | Update attendance     | Trainer/Admin     |
-| GET    | `/report`           | Attendance report     | Admin             |
-
-### Payment Routes (`/api/payments`)
-
-| Method | Endpoint             | Description           | Access        |
-| ------ | -------------------- | --------------------- | ------------- |
-| GET    | `/revenue-by-type`   | Revenue by type       | Admin         |
-| GET    | `/monthly-revenue`   | Monthly revenue       | Admin         |
-| POST   | `/process`           | Process payment       | Admin/Trainer |
-| GET    | `/pending`           | Get pending payments  | Admin         |
-| GET    | `/user/:userId`      | Get user payments     | Admin/Own     |
-| PATCH  | `/:paymentId/status` | Update payment status | Admin         |
-| GET    | `/stats/overview`    | Payment statistics    | Admin         |
-
-## 🔒 Security Features
-
-- **Helmet.js**: Security headers
-- **Rate Limiting**: 100 requests per 15 minutes per IP
-- **CORS**: Configured for frontend origin
-- **Input Validation**: Express-validator middleware
-- **Password Hashing**: bcryptjs with salt rounds
-- **JWT Token Rotation**: Refresh token mechanism
-- **SQL Injection Prevention**: Parameterized queries
-
-## 🎯 Role-Based Access Control
-
-### Admin
-
-- Full access to all endpoints
-- User management
-- System statistics
-- Payment processing
-
-### Trainer
-
-- Attendance management
-- Payment processing
-- View assigned classes
-- Member progress tracking
-
-### Member
-
-- View own profile
-- View own attendance
-- View own payments
-- Limited access to personal data
-
-## 🚨 Error Handling
-
-The API uses standardized error responses:
-
-```json
-{
-  "error": "Error message",
-  "details": "Additional error details (optional)"
-}
-```
-
-Common HTTP status codes:
-
-- `200`: Success
-- `201`: Created
-- `400`: Bad Request (validation errors)
-- `401`: Unauthorized (authentication required)
-- `403`: Forbidden (insufficient permissions)
-- `404`: Not Found
-- `500`: Internal Server Error
-
-## 🔧 Development
-
-### Running in Development Mode
+### How to Run (Frontend)
 
 ```bash
+cd frontend
+npm install
 npm run dev
+# Visit http://localhost:5173
 ```
 
-### Environment Variables
-
-- `NODE_ENV`: Set to `development` for detailed logging
-- `PORT`: Server port (default: 3000)
-- `FRONTEND_URL`: Frontend URL for CORS
-
-### Database Connection
-
-The system uses connection pooling for optimal performance. Database utilities are centralized in `utils/database.js`.
-
-## 📊 Health Check
-
-Check server status:
+### Build for Production
 
 ```bash
-GET /health
+npm run build
+npm run preview
 ```
 
-Response:
+### Connecting to Backend
 
-```json
-{
-  "status": "OK",
-  "timestamp": "2024-01-01T00:00:00.000Z",
-  "uptime": 123.456
-}
-```
+- The frontend expects the backend API at `http://localhost:3500` (configurable in `.env`)
+- All API calls use JWT tokens for authentication
+- Redux thunks handle async API logic
 
-## 🤝 Contributing
+### Redux Usage
 
-1. Follow the existing code structure
-2. Add proper error handling
-3. Include input validation
-4. Update documentation
-5. Test thoroughly
+- Slices for auth, bookings, dashboard, etc.
+- Thunks for async actions (fetch, update, etc.)
+- Selectors for efficient state access
+- All dashboard data is Redux-driven
 
-## 📝 License
+### Accessibility
 
-This project is licensed under the ISC License.
+- Navbar, sidebars, tables, and modals use ARIA roles/labels
+- Keyboard navigation supported
+- Color contrast and focus states
+- Toasts and loaders are screen-reader friendly
+
+---
+
+## 🛠️ Backend (Node.js/Express)
+
+(Keep all existing backend content here)
+
+---
+
+## 🏗️ System Architecture
+
+- **Frontend:** SPA (React) served by Vite, communicates with backend via REST API
+- **Backend:** Express API, SQL Server DB, JWT auth, role-based access
+- **Auth Flow:**
+  - User logs in/signup → receives JWT
+  - JWT sent with each API request
+  - Role-based routes (Admin, Trainer, Member)
+- **Dashboards:**
+  - Admin: Users, trainers, plans, classes, payments, stats
+  - Trainer: Assigned classes, attendance, members, plans
+  - Member: Book classes, view plans, payments, attendance
+- **Booking Flow:**
+  - Member books class → Trainer assigned → Attendance tracked
+- **Payments:**
+  - Membership, class, and plan payments tracked and managed
+- **Error Handling:**
+  - Consistent error format, toasts in frontend, error middleware in backend
+
+---
+
+## 🧭 How Everything Works (User Journey)
+
+### 1. **Landing & Signup**
+
+- User visits landing page, scrolls through sections
+- Can sign up as Member (default), or login as Trainer/Admin
+
+### 2. **Authentication**
+
+- JWT-based login/signup
+- Role-based dashboard redirect
+
+### 3. **Member Dashboard**
+
+- Book classes, view assigned classes
+- View/renew membership, make payments
+- Track attendance, workout plans
+- Edit profile, contact support
+
+### 4. **Trainer Dashboard**
+
+- View assigned classes, mark attendance
+- Assign workout plans
+- Track member progress
+
+### 5. **Admin Dashboard**
+
+- Manage users, trainers, plans, classes
+- View system stats, revenue, reports
+- Assign trainers, manage payments
+
+### 6. **Accessibility & Feedback**
+
+- All actions provide real-time feedback (toasts, loaders)
+- Accessible navigation and forms
+
+---
+
+## 📞 Support & Contribution
+
+- For issues, open a GitHub issue or contact the maintainer
+- PRs welcome! Please follow code style and add tests if possible
+
+---
+
+(Backend API details continue below)

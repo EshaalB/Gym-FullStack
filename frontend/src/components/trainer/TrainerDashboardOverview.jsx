@@ -8,7 +8,7 @@ import {
   FaChartBar,
   FaChartPie,
 } from "react-icons/fa";
-import SkeletonLoader from "../../common/SkeletonLoader";
+import SkeletonLoader from "../common/SkeletonLoader";
 
 const TrainerDashboardOverview = ({ stats, loading, error }) => {
   if (loading) return <SkeletonLoader variant="dashboard" />;

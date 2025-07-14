@@ -1,8 +1,28 @@
 import React, { useState, useEffect } from "react";
 import Button from "../components/common/Button";
-import { FaDumbbell, FaHeart, FaUsers, FaTrophy, FaPlay, FaFire, FaBolt, FaShieldAlt } from "react-icons/fa";
-import heroImage from "../../assets/img/hero.jpg";
+import { FaDumbbell, FaHeart, FaUsers, FaTrophy, FaRunning, FaStopwatch, FaBolt } from "react-icons/fa";
+import heroImage from "../assets/img/hero.jpg";
 import AnimatedCounter from "../components/common/AnimatedCounter";
+
+const DigitalScore = ({ icon, value, label, color, delay }) => (
+  <div className="flex flex-col items-center justify-center px-4">
+    <div className={`flex items-center justify-center text-3xl font-digital text-${color}-400 drop-shadow-lg mb-1`}>
+      {React.createElement(icon, { className: `mr-2 text-${color}-400` })}
+      <AnimatedCounter value={value} suffix="+" delay={delay} />
+    </div>
+    <span className="text-xs uppercase tracking-widest text-gray-300 font-semibold">{label}</span>
+  </div>
+);
+
+const LiveNowTicker = () => (
+  <div className="flex items-center justify-center gap-2 mb-4">
+    <span className="relative flex h-3 w-3">
+      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+      <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+    </span>
+    <span className="text-red-400 font-bold text-sm uppercase tracking-widest">Live Now: 3 people are working out!</span>
+  </div>
+);
 
 const Home = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -13,348 +33,128 @@ const Home = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const floatingVariants = {
-    animate: {
-      y: [-10, 10, -10],
-      transition: {
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
-  };
-
-  const iconVariants = {
-    hover: {
-      scale: 1.2,
-      rotate: 360,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut"
-      }
-    }
-  };
-
-  const pulseVariants = {
-    animate: {
-      scale: [1, 1.1, 1],
-      opacity: [0.5, 1, 0.5],
-      transition: {
-        duration: 2,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
-  };
-
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      {/* Hero Background Image with Enhanced Parallax */}
+    <div className="relative w-screen min-h-screen overflow-hidden">
+      {/* Hero Background Image with Subtle Overlay */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0"
         style={{
           backgroundImage: `url(${heroImage})`,
           transform: `translateY(${scrollY * 0.6}px) scale(${1 + scrollY * 0.0001})`
         }}
       />
-      
-      {/* Multiple Overlay Layers for Enhanced Depth */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-black/80" />
-      <div className="absolute inset-0 bg-gradient-to-r from-red-900/20 via-transparent to-red-900/20" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-      
-      {/* Enhanced Animated Particles Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(30)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-red-500/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [-20, 20, -20],
-              x: [-10, 10, -10],
-              opacity: [0.2, 0.8, 0.2],
-              scale: [0.5, 1.5, 0.5],
-            }}
-            transition={{
-              duration: 4 + Math.random() * 3,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
+      <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-black/80 via-black/60 to-black/80 z-0" />
+
+      {/* Live Now Ticker */}
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30">
+        <LiveNowTicker />
       </div>
 
-      {/* Floating Energy Orbs */}
-      <motion.div
-        className="absolute top-20 left-10 w-20 h-20 bg-red-500/20 rounded-full blur-xl"
-        animate={{
-          y: [-20, 20, -20],
-          x: [-10, 10, -10],
-          scale: [0.8, 1.2, 0.8],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-      <motion.div
-        className="absolute top-40 right-20 w-16 h-16 bg-orange-500/20 rounded-full blur-xl"
-        animate={{
-          y: [20, -20, 20],
-          x: [10, -10, 10],
-          scale: [1.2, 0.8, 1.2],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2
-        }}
-      />
-
       {/* Hero Section */}
-      <div className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between px-3 sm:px-5 md:px-10 lg:px-32 py-12 sm:py-20 gap-8 lg:gap-0">
+      <div className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between px-8 md:px-16 lg:px-32 py-8 gap-8 lg:gap-0">
+        
         {/* Left Content */}
-        <motion.div 
-          className="relative z-10 flex flex-col justify-center lg:w-1/2 text-center lg:text-left mb-10 lg:mb-0"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.div variants={itemVariants} className="mb-6">
-            <span className="inline-block bg-red-500/20 backdrop-blur-sm border border-red-400/30 text-red-300 px-4 py-2 rounded-full text-sm font-medium mb-4">
-              <motion.span
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                className="inline-block mr-2"
-              >
-                🏆
-              </motion.span>
-              #1 Gym in Lahore
-            </span>
-          </motion.div>
-
-          <motion.h1 
-            variants={itemVariants}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black text-white mb-6 leading-tight tracking-tight"
-          >
+        <div className="relative z-10 flex flex-col justify-center lg:w-1/2 text-center lg:text-left mb-10 lg:mb-0">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black text-white mb-4 leading-tight tracking-tight">
             BUILD YOUR
             <span className="block bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">
               LEGACY
             </span>
-          </motion.h1>
-          
-          <motion.p 
-            variants={itemVariants}
-            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-8 leading-relaxed font-medium"
-          >
-            Forge your body into a weapon. Transform weakness into strength with our 
-            battle-tested facilities and warrior trainers. Your transformation starts NOW.
-          </motion.p>
-          
-          <motion.div 
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button 
-                title="Start Your Journey" 
-                link="/signup"
-                className="group bg-red-500/20 backdrop-blur-xl border border-red-400/30 text-white hover:bg-red-500/30 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
-              />
-            </motion.div>
-            <motion.button 
-              onClick={() => setIsBookingModalOpen(true)}
+          </h1>
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 mb-6 leading-relaxed font-medium max-w-xl mx-auto">
+            Forge your body into a weapon. Transform weakness into strength with our battle-tested facilities and warrior trainers. Your transformation starts NOW.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-6">
+            <Button 
+              title="Start Your Journey" 
+              link="/signup"
+              className="group bg-black/80 border-2 border-red-400 text-red-400 hover:bg-red-500/20 px-8 py-4 rounded-xl font-digital text-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg focus:ring-4 focus:ring-red-500/40 tracking-widest"
+              aria-label="Start Your Journey"
+            />
+            <button 
               className="group bg-black/40 backdrop-blur-xl border border-white/20 text-white hover:bg-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 flex items-center gap-2"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
-              <motion.div
-                variants={iconVariants}
-                whileHover="hover"
-              >
-                <FaPlay className="text-sm" />
-              </motion.div>
+ 
+              <span className="w-6 h-6 inline-block">
+                <FaRunning className="text-lg text-red-400 animate-bounce" />
+              </span>
               Book a Class
-            </motion.button>
-          </motion.div>
-
-          {/* Trust Indicators with Enhanced Animations */}
-          <motion.div 
-            variants={itemVariants}
-            className="flex items-center justify-center lg:justify-start gap-6 mt-8 text-gray-400"
-          >
-            <motion.div 
-              className="flex items-center gap-2"
-              whileHover={{ scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <motion.div 
-                className="w-8 h-8 bg-green-500/20 backdrop-blur-sm border border-green-400/30 rounded-full flex items-center justify-center"
-                variants={pulseVariants}
-                animate="animate"
-              >
-                <FaHeart className="text-green-400 text-sm" />
-              </motion.div>
-              <span className="text-sm">
-                <AnimatedCounter value={1000} suffix="+" delay={0.5} /> Happy Members
-              </span>
-            </motion.div>
-            <motion.div 
-              className="flex items-center gap-2"
-              whileHover={{ scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <motion.div 
-                className="w-8 h-8 bg-blue-500/20 backdrop-blur-sm border border-blue-400/30 rounded-full flex items-center justify-center"
-                variants={pulseVariants}
-                animate="animate"
-                transition={{ delay: 0.5 }}
-              >
-                <FaTrophy className="text-blue-400 text-sm" />
-              </motion.div>
-              <span className="text-sm">
-                <AnimatedCounter value={10} suffix="+" delay={0.7} /> Years Experience
-              </span>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-
-        {/* Right Content - Enhanced Floating Stats Cards */}
-        <motion.div 
-          className="relative z-10 lg:w-1/2"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <div className="grid grid-cols-2 gap-6 max-w-md mx-auto lg:max-w-none">
-            <motion.div 
-              variants={floatingVariants}
-              animate="animate"
-              className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 text-center border border-white/10 hover:scale-105 transition-transform duration-300 group"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 20px 40px rgba(220, 38, 38, 0.2)"
-              }}
-            >
-              <motion.div 
-                className="w-16 h-16 bg-black/30 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center mx-auto mb-4"
-                variants={iconVariants}
-                whileHover="hover"
-              >
-                <FaDumbbell className="text-2xl text-white" />
-              </motion.div>
-              <h3 className="text-3xl font-bold text-white mb-2">
-                <AnimatedCounter value={500} suffix="+" delay={0.2} />
-              </h3>
-              <p className="text-gray-300">Equipment Pieces</p>
-            </motion.div>
-            
-            <motion.div 
-              variants={floatingVariants}
-              animate="animate"
-              transition={{ delay: 0.5 }}
-              className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 text-center border border-white/10 hover:scale-105 transition-transform duration-300 group"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 20px 40px rgba(220, 38, 38, 0.2)"
-              }}
-            >
-              <motion.div 
-                className="w-16 h-16 bg-black/30 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center mx-auto mb-4"
-                variants={iconVariants}
-                whileHover="hover"
-              >
-                <FaFire className="text-2xl text-white" />
-              </motion.div>
-              <h3 className="text-3xl font-bold text-white mb-2">
-                <AnimatedCounter value={1000} suffix="+" delay={0.7} />
-              </h3>
-              <p className="text-gray-300">Happy Members</p>
-            </motion.div>
-            
-            <motion.div 
-              variants={floatingVariants}
-              animate="animate"
-              transition={{ delay: 1 }}
-              className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 text-center border border-white/10 hover:scale-105 transition-transform duration-300 group"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 20px 40px rgba(220, 38, 38, 0.2)"
-              }}
-            >
-              <motion.div 
-                className="w-16 h-16 bg-black/30 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center mx-auto mb-4"
-                variants={iconVariants}
-                whileHover="hover"
-              >
-                <FaBolt className="text-2xl text-white" />
-              </motion.div>
-              <h3 className="text-3xl font-bold text-white mb-2">
-                <AnimatedCounter value={50} suffix="+" delay={1.2} />
-              </h3>
-              <p className="text-gray-300">Expert Trainers</p>
-            </motion.div>
-            
-            <motion.div 
-              variants={floatingVariants}
-              animate="animate"
-              transition={{ delay: 1.5 }}
-              className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 text-center border border-white/10 hover:scale-105 transition-transform duration-300 group"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 20px 40px rgba(220, 38, 38, 0.2)"
-              }}
-            >
-              <motion.div 
-                className="w-16 h-16 bg-black/30 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center mx-auto mb-4"
-                variants={iconVariants}
-                whileHover="hover"
-              >
-                <FaShieldAlt className="text-2xl text-white" />
-              </motion.div>
-              <h3 className="text-3xl font-bold text-white mb-2">
-                <AnimatedCounter value={10} suffix="+" delay={1.7} />
-              </h3>
-              <p className="text-gray-300">Years Experience</p>
-            </motion.div>
+            </button>
           </div>
-        </motion.div>
+         
+        </div>
+        {/* Right Content - Digital Scoreboard */}
+        <div className="w-full max-w-2xl mx-auto relative">
+  {/* Glassy, angled scoreboard bar */}
+  <div className="relative flex flex-row items-center justify-around py-8 px-6 bg-black/60 backdrop-blur-2xl border border-red-500 shadow-[0_0_32px_4px_rgba(239,68,68,0.4)] rounded-2xl" style={{
+    clipPath: 'polygon(6% 0, 94% 0, 100% 20%, 100% 80%, 94% 100%, 6% 100%, 0 80%, 0 20%)',
+    fontFamily: 'Orbitron, sans-serif',
+    boxShadow: '0 0 32px 4px rgba(239,68,68,0.4), 0 2px 24px 0 rgba(0,0,0,0.7)'
+  }}>
+    {/* Animated scanline */}
+    <div className="absolute left-0 top-0 w-full h-full pointer-events-none overflow-hidden z-10">
+      <div className="absolute left-0 top-0 w-full h-1 bg-gradient-to-r from-transparent via-red-400/60 to-transparent animate-scanline" />
+    </div>
+    {/* Stat: Calories Burned */}
+    <div className="flex flex-col items-center gap-2 z-20">
+      <div className="w-14 h-14 flex items-center justify-center rounded-full bg-black/70 border-2 border-red-500 shadow-[0_0_16px_2px_rgba(239,68,68,0.5)] mb-2">
+        <FaBolt className="text-2xl text-red-400 drop-shadow-lg" />
       </div>
-
-      {/* Class Booking Modal */}
-      {/* ClassBookingModal component was removed, so this section is now empty */}
+      <span className="text-3xl font-bold text-red-400 tracking-widest" style={{ fontFamily: 'Orbitron, sans-serif' }}>1.2K+</span>
+      <span className="text-xs text-gray-200 uppercase tracking-widest">Calories</span>
+    </div>
+    {/* Stat: Active Members */}
+    <div className="flex flex-col items-center gap-2 z-20">
+      <div className="w-14 h-14 flex items-center justify-center rounded-full bg-black/70 border-2 border-red-500 shadow-[0_0_16px_2px_rgba(239,68,68,0.5)] mb-2">
+        <FaUsers className="text-2xl text-red-400 drop-shadow-lg" />
+      </div>
+      <span className="text-3xl font-bold text-red-400 tracking-widest" style={{ fontFamily: 'Orbitron, sans-serif' }}>50+</span>
+      <span className="text-xs text-gray-200 uppercase tracking-widest">Members</span>
+    </div>
+    {/* Stat: Classes Today */}
+    <div className="flex flex-col items-center gap-2 z-20">
+      <div className="w-14 h-14 flex items-center justify-center rounded-full bg-black/70 border-2 border-red-500 shadow-[0_0_16px_2px_rgba(239,68,68,0.5)] mb-2">
+        <FaStopwatch className="text-2xl text-red-400 drop-shadow-lg" />
+      </div>
+      <span className="text-3xl font-bold text-red-400 tracking-widest" style={{ fontFamily: 'Orbitron, sans-serif' }}>5+</span>
+      <span className="text-xs text-gray-200 uppercase tracking-widest">Classes</span>
+    </div>
+  </div>
+  {/* Scanline animation keyframes */}
+  <style>{`
+    @keyframes scanline {
+      0% { top: -10%; opacity: 0.1; }
+      40% { opacity: 0.5; }
+      50% { top: 100%; opacity: 0.2; }
+      100% { top: 100%; opacity: 0; }
+    }
+    .animate-scanline {
+      animation: scanline 2.5s linear infinite;
+    }
+  `}</style>
+</div>
+      </div>
+ 
+        <svg viewBox="0 0 1920 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-24 md:h-32 lg:h-40">
+          <path d="M0 60 Q480 120 960 60 T1920 60 V120 H0 V60Z" fill="url(#wave-gradient)"/>
+          <defs>
+            <linearGradient id="wave-gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#000" stopOpacity="0.9" />
+            </linearGradient>
+          </defs>
+        </svg>
+   
+      {/* Featured In / Achievements Bar */}
+      <div className="relative z-30 w-full flex flex-col items-center justify-center mt-4 mb-2">
+        <div className="flex flex-row items-center gap-6 bg-black/40 px-6 py-3 rounded-2xl border border-white/10 shadow-lg backdrop-blur-xl">
+          <span className="uppercase text-xs font-bold tracking-widest text-gray-300 mr-2">Featured In</span>
+          <FaDumbbell className="text-red-500 text-xl" title="Strength" />
+          <FaHeart className="text-red-400 text-xl" title="Wellness" />
+          <FaTrophy className="text-yellow-400 text-xl" title="Awards" />
+          <FaUsers className="text-blue-400 text-xl" title="Community" />
+        </div>
+      </div>
     </div>
   );
 };
