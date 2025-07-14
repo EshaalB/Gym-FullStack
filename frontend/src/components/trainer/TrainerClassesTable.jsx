@@ -1,7 +1,7 @@
 import React from "react";
 import { FaUsers, FaCalendar, FaVenusMars, FaChair, FaDumbbell } from "react-icons/fa";
 
-const TrainerClassesTable = ({ classes, membersInClasses, loading }) => {
+const TrainerClassesTable = ({ classes = [], membersInClasses = [], loading }) => {
   const getGenderBadge = (gender) => {
     const colors = {
       'Male': 'bg-blue-500 text-white',

@@ -17,6 +17,7 @@ import Login from "./pages/Login.jsx";
 import UserDash from "./pages/UserDash";
 import TrainerDash from "./pages/TrainerDash";
 import AdminDash from "./pages/AdminDash";
+import { motion } from "framer-motion";
 
 // Auto-redirect component for authenticated users
 const AutoRedirect = ({ children }) => {

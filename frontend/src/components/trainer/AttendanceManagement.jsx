@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { FaCheck, FaTimes, FaCalendar, FaUsers, FaDumbbell } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { useSelector, useDispatch } from "react-redux";
+import { selectTrainerAttendanceError, selectTrainerAttendanceLoading, markTrainerAttendance } from "../../store/dashboardSlice";
 
-const AttendanceManagement = ({ classes, membersInClasses, onMarkAttendance, loading }) => {
+const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
+  const dispatch = useDispatch();
+  const loading = useSelector(selectTrainerAttendanceLoading);
+  const error = useSelector(selectTrainerAttendanceError);
   const [selectedClass, setSelectedClass] = useState(null);
   const [attendanceData, setAttendanceData] = useState({});
 
@@ -31,21 +36,19 @@ const AttendanceManagement = ({ classes, membersInClasses, onMarkAttendance, loa
     }
 
     try {
-      // Mark attendance for each member
       for (const [memberId, status] of attendanceEntries) {
-        await onMarkAttendance(selectedClass, memberId, status);
+        await dispatch(markTrainerAttendance({ classId: selectedClass, memberId, status })).unwrap();
       }
-      
       toast.success("Attendance marked successfully!");
       setAttendanceData({});
     } catch (error) {
-      toast.error("Failed to mark attendance");
+      toast.error(error || "Failed to mark attendance");
     }
   };
 
   const getSelectedClassMembers = () => {
     if (!selectedClass) return [];
-    return membersInClasses.filter(member => member.classId === selectedClass);
+    return (membersInClasses || []).filter(member => member.classId === selectedClass);
   };
 
   const getAttendanceStatus = (memberId) => {
@@ -67,7 +70,9 @@ const AttendanceManagement = ({ classes, membersInClasses, onMarkAttendance, loa
           </div>
         </div>
       </div>
-
+      {error && (
+        <div className="text-center text-red-400 font-semibold py-2">{error}</div>
+      )}
       {loading ? (
         <div className="text-center py-12">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-red-500 mx-auto mb-4"></div>
@@ -87,6 +92,11 @@ const AttendanceManagement = ({ classes, membersInClasses, onMarkAttendance, loa
                 <div className="text-center py-8">
                   <FaDumbbell className="text-4xl text-gray-600 mx-auto mb-2" />
                   <p className="text-gray-400">No classes assigned</p>
+                </div>
+              ) : membersInClasses.length === 0 ? (
+                <div className="text-center py-8">
+                  <FaUsers className="text-4xl text-gray-600 mx-auto mb-2" />
+                  <p className="text-gray-400">No members found for your classes</p>
                 </div>
               ) : (
                 <div className="space-y-3">

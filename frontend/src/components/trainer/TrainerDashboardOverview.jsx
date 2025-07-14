@@ -8,8 +8,20 @@ import {
   FaChartBar,
   FaChartPie,
 } from "react-icons/fa";
+import SkeletonLoader from "../SkeletonLoader";
 
-const TrainerDashboardOverview = ({ stats }) => {
+const TrainerDashboardOverview = ({ stats, loading, error }) => {
+  if (loading) return <SkeletonLoader variant="dashboard" />;
+  if (error) return <div className="text-red-500 p-4">{error}</div>;
+
+  // Use default values to avoid undefined errors
+  const {
+    totalClasses = 0,
+    totalMembers = 0,
+    totalPlans = 0,
+    todayAttendance = 0
+  } = stats || {};
+
   // Simple bar chart component
   const SimpleBarChart = ({ data, labels, title, color = "red" }) => (
     <div className="space-y-4">
@@ -67,7 +79,7 @@ const TrainerDashboardOverview = ({ stats }) => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-red-200">My Classes</p>
-              <p className="text-3xl font-bold">{stats.totalClasses || 0}</p>
+              <p className="text-3xl font-bold">{totalClasses}</p>
             </div>
             <FaDumbbell className="text-4xl text-red-300" />
           </div>
@@ -77,7 +89,7 @@ const TrainerDashboardOverview = ({ stats }) => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-red-200">Total Members</p>
-              <p className="text-3xl font-bold">{stats.totalMembers || 0}</p>
+              <p className="text-3xl font-bold">{totalMembers}</p>
             </div>
             <FaUsers className="text-4xl text-red-300" />
           </div>
@@ -87,7 +99,7 @@ const TrainerDashboardOverview = ({ stats }) => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-red-200">Workout Plans</p>
-              <p className="text-3xl font-bold">{stats.totalPlans || 0}</p>
+              <p className="text-3xl font-bold">{totalPlans}</p>
             </div>
             <FaClipboardList className="text-4xl text-red-300" />
           </div>
@@ -97,7 +109,7 @@ const TrainerDashboardOverview = ({ stats }) => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-red-200">Today's Attendance</p>
-              <p className="text-3xl font-bold">{stats.todayAttendance || 0}</p>
+              <p className="text-3xl font-bold">{todayAttendance}</p>
             </div>
             <FaCalendarCheck className="text-4xl text-red-300" />
           </div>

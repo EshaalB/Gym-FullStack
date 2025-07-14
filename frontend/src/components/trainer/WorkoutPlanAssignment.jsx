@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaPlus, FaClipboardList, FaUser, FaCalendar } from "react-icons/fa";
 import toast from "react-hot-toast";
 
-const WorkoutPlanAssignment = ({ membersInClasses, onAssignPlan, loading }) => {
+const WorkoutPlanAssignment = ({ membersInClasses = [], onAssignPlan, loading }) => {
   const [selectedMember, setSelectedMember] = useState("");
   const [planData, setPlanData] = useState({
     planName: "",
@@ -41,7 +41,7 @@ const WorkoutPlanAssignment = ({ membersInClasses, onAssignPlan, loading }) => {
   };
 
   // Get unique members (remove duplicates by memberId)
-  const uniqueMembers = membersInClasses.filter((member, index, self) => 
+  const uniqueMembers = (membersInClasses || []).filter((member, index, self) => 
     index === self.findIndex(m => m.memberId === member.memberId)
   );
 

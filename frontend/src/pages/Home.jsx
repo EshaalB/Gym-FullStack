@@ -144,7 +144,7 @@ const Home = () => {
       />
 
       {/* Hero Section */}
-      <div className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between px-5 lg:px-32 py-20">
+      <div className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between px-3 sm:px-5 md:px-10 lg:px-32 py-12 sm:py-20 gap-8 lg:gap-0">
         {/* Left Content */}
         <motion.div 
           className="relative z-10 flex flex-col justify-center lg:w-1/2 text-center lg:text-left mb-10 lg:mb-0"
@@ -167,7 +167,7 @@ const Home = () => {
 
           <motion.h1 
             variants={itemVariants}
-            className="text-6xl lg:text-8xl font-black text-white mb-6 leading-tight tracking-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black text-white mb-6 leading-tight tracking-tight"
           >
             BUILD YOUR
             <span className="block bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">
@@ -177,7 +177,7 @@ const Home = () => {
           
           <motion.p 
             variants={itemVariants}
-            className="text-xl lg:text-2xl text-gray-300 mb-8 leading-relaxed font-medium"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-8 leading-relaxed font-medium"
           >
             Forge your body into a weapon. Transform weakness into strength with our 
             battle-tested facilities and warrior trainers. Your transformation starts NOW.

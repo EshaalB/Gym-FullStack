@@ -1,7 +1,7 @@
 import React from "react";
 import { FaChartLine, FaChartBar, FaChartPie, FaUsers, FaDumbbell, FaCalendar, FaClipboardList } from "react-icons/fa";
 
-const TrainerStatistics = ({ stats, classes, membersInClasses, plans }) => {
+const TrainerStatistics = ({ stats = {}, classes = [], membersInClasses = [], plans = [] }) => {
   // Simple bar chart component
   const SimpleBarChart = ({ data, labels, title, color = "red" }) => (
     <div className="space-y-4">
@@ -50,14 +50,14 @@ const TrainerStatistics = ({ stats, classes, membersInClasses, plans }) => {
   );
 
   // Calculate class distribution
-  const classDistribution = classes.reduce((acc, cls) => {
-    const members = membersInClasses.filter(member => member.classId === cls.classId).length;
+  const classDistribution = (classes || []).reduce((acc, cls) => {
+    const members = (membersInClasses || []).filter(member => member.classId === cls.classId).length;
     acc.push({ name: cls.className, members });
     return acc;
   }, []);
 
   // Calculate gender distribution
-  const genderDistribution = membersInClasses.reduce((acc, member) => {
+  const genderDistribution = (membersInClasses || []).reduce((acc, member) => {
     acc[member.gender] = (acc[member.gender] || 0) + 1;
     return acc;
   }, {});
@@ -65,7 +65,7 @@ const TrainerStatistics = ({ stats, classes, membersInClasses, plans }) => {
   const totalMembers = Object.values(genderDistribution).reduce((a, b) => a + b, 0);
   const genderPercentages = Object.entries(genderDistribution).map(([gender, count]) => ({
     gender,
-    percentage: Math.round((count / totalMembers) * 100)
+    percentage: totalMembers > 0 ? Math.round((count / totalMembers) * 100) : 0
   }));
 
   return (
@@ -142,8 +142,8 @@ const TrainerStatistics = ({ stats, classes, membersInClasses, plans }) => {
           <h3 className="text-xl font-semibold text-white mb-4">Class Details</h3>
           <div className="space-y-4">
             {classes.map((cls) => {
-              const memberCount = membersInClasses.filter(member => member.classId === cls.classId).length;
-              const attendanceRate = Math.round((stats.todayAttendance / memberCount) * 100) || 0;
+              const memberCount = (membersInClasses || []).filter(member => member.classId === cls.classId).length;
+              const attendanceRate = memberCount > 0 ? Math.round((stats.todayAttendance / memberCount) * 100) : 0;
               
               return (
                 <div key={cls.classId} className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">

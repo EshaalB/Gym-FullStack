@@ -26,7 +26,7 @@ router.post('/mark', authenticateToken, requireRole(['Trainer', 'Admin']), atten
 
         // Check if attendance already marked for today
         const existingAttendance = await executeSingleQuery(`
-            SELECT attendanceId 
+            SELECT enrollmentId, currDate 
             FROM Attendance 
             WHERE enrollmentId = @EnrollmentId 
             AND CAST(currDate AS DATE) = CAST(GETDATE() AS DATE)
@@ -66,7 +66,6 @@ router.get('/class/:classId', authenticateToken, requireRole(['Trainer', 'Admin'
 
         const query = `
             SELECT 
-                a.attendanceId,
                 u.userId,
                 u.fName,
                 u.lName,
@@ -121,13 +120,13 @@ router.get('/member/:memberId', authenticateToken, async (req, res) => {
 
         const query = `
             SELECT 
-                a.attendanceId,
                 a.attendanceStatus,
                 a.currDate,
                 c.className,
                 c.classTime,
                 t.fName as trainerFirstName,
-                t.lName as trainerLastName
+                t.lName as trainerLastName,
+                ce.enrollmentId
             FROM Attendance a
             JOIN Class_Enrollment ce ON a.enrollmentId = ce.enrollmentId
             JOIN Class c ON ce.classId = c.classId
@@ -249,20 +248,24 @@ router.get('/stats/overview', authenticateToken, requireRole(['Admin']), async (
 });
 
 // Update attendance (Trainer/Admin only)
-router.put('/:attendanceId', authenticateToken, requireRole(['Trainer', 'Admin']), async (req, res) => {
+router.put('/:enrollmentId/:currDate', authenticateToken, requireRole(['Trainer', 'Admin']), async (req, res) => {
     try {
-        const { attendanceId } = req.params;
+        const { enrollmentId, currDate } = req.params;
         const { attendanceStatus } = req.body;
 
         if (!['P', 'A', 'L'].includes(attendanceStatus)) {
             return res.status(400).json({ error: 'Invalid attendance status' });
         }
+        if (!enrollmentId || !currDate) {
+            return res.status(400).json({ error: 'Missing enrollmentId or currDate' });
+        }
 
         await executeQuery(
-            'UPDATE Attendance SET attendanceStatus = @Status WHERE attendanceId = @AttendanceId',
+            'UPDATE Attendance SET attendanceStatus = @Status WHERE enrollmentId = @EnrollmentId AND currDate = @CurrDate',
             [
                 { name: 'Status', type: sql.VarChar(2), value: attendanceStatus },
-                { name: 'AttendanceId', type: sql.Int, value: attendanceId }
+                { name: 'EnrollmentId', type: sql.Int, value: enrollmentId },
+                { name: 'CurrDate', type: sql.Date, value: currDate }
             ]
         );
 
@@ -303,12 +306,12 @@ router.get('/report', authenticateToken, requireRole(['Admin']), async (req, res
 
         const query = `
             SELECT 
-                a.attendanceId,
                 u.fName + ' ' + u.lName as memberName,
                 c.className,
                 t.fName + ' ' + t.lName as trainerName,
                 a.attendanceStatus,
                 a.currDate,
+                ce.enrollmentId,
                 CASE 
                     WHEN a.attendanceStatus = 'P' THEN 'Present'
                     WHEN a.attendanceStatus = 'A' THEN 'Absent'

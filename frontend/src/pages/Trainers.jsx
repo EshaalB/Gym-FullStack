@@ -1,8 +1,17 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import { FaDumbbell, FaTrophy, FaStar, FaClock, FaUsers, FaGraduationCap, FaAward, FaCalendar, FaPhone, FaEnvelope, FaInstagram, FaFacebook, FaLinkedin } from "react-icons/fa";
 import Button from "../components/Button";
 import toast from "react-hot-toast";
+import trainer1 from "../assets/img/trainer1.jpg";
+import trainer2 from "../assets/img/trainer2.jpg";
+import trainer3 from "../assets/img/trainer3.jpg";
+import before1 from "../assets/img/beforevsafter1.jpg";
+import before2 from "../assets/img/beforevsafter2.jpg";
+import before3 from "../assets/img/beforevsafter3.jpg";
+import before4 from "../assets/img/beforevsafter4.jpg";
+import before5 from "../assets/img/beforevsafter5.jpg";
+import before6 from "../assets/img/beforevsafter6.jpg";
+import { motion } from "framer-motion";
 
 const Trainers = () => {
   const [selectedTrainer, setSelectedTrainer] = useState(null);
@@ -13,7 +22,7 @@ const Trainers = () => {
       id: 1,
       name: "Ahmed   Khan",
       role: "Head Strength Coach",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=500&fit=crop&crop=face",
+      image: trainer1,
       experience: "12+ Years",
       specialization: "Powerlifting & Bodybuilding",
       rating: 4.9,
@@ -42,14 +51,14 @@ const Trainers = () => {
       },
       beforeAfter: [
         {
-          before: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop",
-          after: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=400&fit=crop",
+          before: before1,
+          after: before2,
           client: "Usman Malik",
           transformation: "Lost 30kg, gained 15kg muscle in 18 months"
         },
         {
-          before: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=400&fit=crop",
-          after: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop",
+          before: before3,
+          after: before4,
           client: "Bilal Ahmed",
           transformation: "Increased bench press from 60kg to 120kg"
         }
@@ -59,7 +68,7 @@ const Trainers = () => {
       id: 2,
       name: "Fatima Ali",
       role: "Senior Fitness Coach",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=500&fit=crop&crop=face",
+      image: trainer2,
       experience: "8+ Years",
       specialization: "Functional Fitness & Weight Loss",
       rating: 4.8,
@@ -88,14 +97,14 @@ const Trainers = () => {
       },
       beforeAfter: [
         {
-          before: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop",
-          after: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=400&fit=crop",
+          before: before5,
+          after: before6,
           client: "Ayesha Hassan",
           transformation: "Lost 25kg, improved flexibility and strength"
         },
         {
-          before: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop",
-          after: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop",
+          before: before2,
+          after: before3,
           client: "Sarah Johnson",
           transformation: "Completed first marathon, lost 20kg"
         }
@@ -105,7 +114,7 @@ const Trainers = () => {
       id: 3,
       name: "Usman  Malik",
       role: "Elite Performance Coach",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop&crop=face",
+      image: trainer3,
       experience: "15+ Years",
       specialization: "Athletic Performance & CrossFit",
       rating: 5.0,
@@ -134,14 +143,14 @@ const Trainers = () => {
       },
       beforeAfter: [
         {
-          before: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=400&fit=crop",
-          after: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=400&fit=crop",
+          before: before4,
+          after: before5,
           client: "Ahmed Khan",
           transformation: "Improved 5K time from 25min to 18min"
         },
         {
-          before: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop",
-          after: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=400&fit=crop",
+          before: before6,
+          after: before1,
           client: "Mike Chen",
           transformation: "Qualified for CrossFit Regionals"
         }
@@ -319,27 +328,12 @@ const Trainers = () => {
                 viewport={{ once: true }}
                 className="bg-black/20 backdrop-blur-xl rounded-2xl p-6 border border-white/10"
               >
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div className="relative">
-                    <img 
-                      src={transformation.before} 
-                      alt="Before"
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
-                    <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
-                      Before
-                    </div>
-                  </div>
-                  <div className="relative">
-                    <img 
-                      src={transformation.after} 
-                      alt="After"
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
-                    <div className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
-                      After
-                    </div>
-                  </div>
+                <div className="mb-4 flex justify-center">
+                  <img 
+                    src={transformation.before} 
+                    alt={transformation.client + ' transformation'}
+                    className="w-full h-64 object-cover rounded-lg shadow-lg"
+                  />
                 </div>
                 <h4 className="text-white font-semibold mb-2">{transformation.client}</h4>
                 <p className="text-gray-300 text-sm">{transformation.transformation}</p>

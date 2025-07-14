@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { scroller } from "react-scroll";
-import { motion } from "framer-motion";
 import { FaBars, FaTimes, FaHome, FaChevronRight } from "react-icons/fa";
 import Button from "./Button";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -131,9 +131,10 @@ const Navbar = () => {
         {/* Mobile Menu Toggle */}
         <button
           onClick={toggleMenu}
-          className="md:hidden text-white p-2 hover:text-red-300 transition-all duration-300 hover:scale-110"
+          className="md:hidden text-white p-3 rounded-lg hover:text-red-300 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-400"
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
-          {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          {isMenuOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
         </button>
 
         {/* Mobile Menu */}
@@ -142,49 +143,52 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl border-t border-white/10"
+            className="lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl border-t border-white/10 z-50 shadow-2xl"
+            style={{ minHeight: '100vh' }}
           >
-            <div className="px-5 py-6 space-y-4">
+            <div className="px-5 py-8 space-y-6 flex flex-col">
               <button 
-                onClick={() => handleNavClick("home")}
-                className="block w-full text-left text-white hover:text-red-400 transition-colors duration-300 font-medium py-2"
+                onClick={() => { handleNavClick("home"); closeMenu(); }}
+                className="block w-full text-left text-white text-lg font-semibold hover:text-red-400 transition-colors duration-300 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               >
                 Home
               </button>
               <button 
-                onClick={() => handleNavClick("about")}
-                className="block w-full text-left text-white hover:text-red-400 transition-colors duration-300 font-medium py-2"
+                onClick={() => { handleNavClick("about"); closeMenu(); }}
+                className="block w-full text-left text-white text-lg font-semibold hover:text-red-400 transition-colors duration-300 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               >
                 About
               </button>
               <button 
-                onClick={() => handleNavClick("plans")}
-                className="block w-full text-left text-white hover:text-red-400 transition-colors duration-300 font-medium py-2"
+                onClick={() => { handleNavClick("plans"); closeMenu(); }}
+                className="block w-full text-left text-white text-lg font-semibold hover:text-red-400 transition-colors duration-300 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               >
                 Plans
               </button>
               <button 
-                onClick={() => handleNavClick("trainers")}
-                className="block w-full text-left text-white hover:text-red-400 transition-colors duration-300 font-medium py-2"
+                onClick={() => { handleNavClick("trainers"); closeMenu(); }}
+                className="block w-full text-left text-white text-lg font-semibold hover:text-red-400 transition-colors duration-300 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               >
                 Trainers
               </button>
               <button 
-                onClick={() => handleNavClick("contact")}
-                className="block w-full text-left text-white hover:text-red-400 transition-colors duration-300 font-medium py-2"
+                onClick={() => { handleNavClick("contact"); closeMenu(); }}
+                className="block w-full text-left text-white text-lg font-semibold hover:text-red-400 transition-colors duration-300 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
               >
                 Contact
               </button>
-              <div className="pt-4 border-t border-white/10 space-y-3">
+              <div className="pt-6 border-t border-white/10 space-y-4">
                 <Button 
                   title="Login" 
                   link="/login"
-                  className="block w-full text-left text-white hover:text-red-400 transition-colors duration-300 font-medium py-2"
+                  className="block w-full text-left text-white text-lg font-semibold hover:text-red-400 transition-colors duration-300 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                  onClick={closeMenu}
                 />
                 <Button 
                   title="Sign Up" 
                   link="/signup"
-                  className="block w-full bg-red-500/20 backdrop-blur-xl border border-red-400/30 text-white hover:bg-red-500/30 px-6 py-3 rounded-xl font-bold transition-all duration-300 text-center shadow-lg"
+                  className="block w-full bg-red-500/20 backdrop-blur-xl border border-red-400/30 text-white hover:bg-red-500/30 px-6 py-4 rounded-xl font-bold text-lg transition-all duration-300 text-center shadow-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                  onClick={closeMenu}
                 />
               </div>
             </div>

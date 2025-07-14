@@ -1,80 +1,56 @@
 import React from "react";
-import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
+import SkeletonLoader from "../SkeletonLoader";
 import Button from "../Button";
 
-const PlansTable = ({ 
-  plans, 
-  loading, 
-  onAddPlan, 
-  onEditPlan, 
-  onDeletePlan 
-}) => {
+const PlansTable = ({ plans, loading, error }) => {
+  if (loading) {
+    return <SkeletonLoader variant="table" />;
+  }
+  if (error) {
+    return <div className="text-red-500 p-4">{error}</div>;
+  }
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-white">Plans Management</h1>
-        <Button
-          onClick={onAddPlan}
-          className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
-        >
-          <FaPlus className="mr-2" />
-          Add Plan
-        </Button>
+    <div className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold text-white">Workout Plans</h2>
+        {/* Future: Add Plan button */}
       </div>
-
-      {loading ? (
-        <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto"></div>
-        </div>
-      ) : (
-        <div className="bg-black/50 backdrop-blur-lg rounded-xl overflow-hidden border border-red-500/20">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-red-600/50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Plan Name</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Member</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Trainer</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Duration</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Assigned Date</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Actions</th>
+      <div className="overflow-x-auto">
+        <table className="min-w-full text-sm text-gray-300">
+          <thead>
+            <tr>
+              <th className="px-4 py-2 text-left">Plan Name</th>
+              <th className="px-4 py-2 text-left">Member</th>
+              <th className="px-4 py-2 text-left">Trainer</th>
+              <th className="px-4 py-2 text-left">Duration (weeks)</th>
+              <th className="px-4 py-2 text-left">Assigned On</th>
+              <th className="px-4 py-2 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {plans && plans.length > 0 ? (
+              plans.map((plan) => (
+                <tr key={plan.planId} className="border-b border-gray-700/30">
+                  <td className="px-4 py-2">{plan.plan_name}</td>
+                  <td className="px-4 py-2">{plan.memberId || "-"}</td>
+                  <td className="px-4 py-2">{plan.trainerId || "-"}</td>
+                  <td className="px-4 py-2">{plan.duration_weeks}</td>
+                  <td className="px-4 py-2">{plan.assigned_on ? new Date(plan.assigned_on).toLocaleDateString() : "-"}</td>
+                  <td className="px-4 py-2">
+                    {/* Future: Edit/Delete buttons using Redux thunks */}
+                    <Button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-xs mr-2">Edit</Button>
+                    <Button className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-xs">Delete</Button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-red-500/20">
-                {plans.map((plan) => (
-                  <tr key={plan.planId} className="hover:bg-red-500/10 transition-colors">
-                    <td className="px-6 py-4 text-white">{plan.plan_name}</td>
-                    <td className="px-6 py-4 text-white">{plan.memberName}</td>
-                    <td className="px-6 py-4 text-white">{plan.trainerName}</td>
-                    <td className="px-6 py-4 text-white">{plan.duration_weeks} weeks</td>
-                    <td className="px-6 py-4 text-white">{new Date(plan.assigned_on).toLocaleDateString()}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex space-x-2">
-                        <button
-                          onClick={() => onEditPlan(plan)}
-                          className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:scale-105"
-                          title="Edit Plan"
-                        >
-                          <FaEdit className="mr-1" />
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => onDeletePlan(plan.planId)}
-                          className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200 transform hover:scale-105"
-                          title="Delete Plan"
-                        >
-                          <FaTrash className="mr-1" />
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6} className="text-center text-gray-400 py-6">No plans found.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
