@@ -30,15 +30,15 @@ const AdminSidebar = ({ currentView, setCurrentView }) => {
               <button
                 key={item.id}
                 onClick={() => setCurrentView(item.id)}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                className={`w-full flex items-center justify-center px-4 py-3 rounded-lg transition-all duration-200 ${
                   currentView === item.id
                     ? "bg-red-600 text-white shadow-lg"
                     : "text-gray-300 hover:bg-red-500/20 hover:text-white"
                 }`}
                 aria-current={currentView === item.id ? 'page' : undefined}
+                title={item.label}
               >
-                <Icon className="text-xl" />
-                <span className="font-medium">{item.label}</span>
+                <Icon className="text-2xl" />
               </button>
             );
           })}

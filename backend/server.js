@@ -81,6 +81,7 @@ app.use('/api/trainers', trainersRoutes);
 app.use('/api/plans', plansRoutes);
 app.use('/api/classes', classesRoutes);
 
+
 // Legacy routes (for backward compatibility)
 app.get('/api/active-inactive-members', async (req, res) => {
     try {

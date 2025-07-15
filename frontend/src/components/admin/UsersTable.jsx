@@ -1,6 +1,7 @@
 import React from "react";
 import SkeletonLoader from "../common/SkeletonLoader";
 import Button from "../common/Button";
+import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 
 const UsersTable = ({ users, loading, error, onAddUser, pagination, onPageChange }) => {
   if (loading) {
@@ -13,8 +14,8 @@ const UsersTable = ({ users, loading, error, onAddUser, pagination, onPageChange
     <div className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold text-white">Users</h2>
-        <Button onClick={onAddUser} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
-          Add User
+        <Button onClick={onAddUser} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+          <FaPlus /> Add User
         </Button>
       </div>
       <div className="overflow-x-auto">
@@ -39,8 +40,8 @@ const UsersTable = ({ users, loading, error, onAddUser, pagination, onPageChange
                   <td className="px-4 py-2">{user.gender}</td>
                   <td className="px-4 py-2">
                     {/* Future: Edit/Delete buttons using Redux thunks */}
-                    <Button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-xs mr-2">Edit</Button>
-                    <Button className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-xs">Delete</Button>
+                    <Button aria-label="Edit" onClick={() => {/* TODO: add edit logic */}} className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-xs mr-2 flex items-center gap-1"><FaEdit /></Button>
+                    <Button aria-label="Delete" onClick={() => {/* TODO: add delete logic */}} className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-xs flex items-center gap-1"><FaTrash /></Button>
                   </td>
                 </tr>
               ))

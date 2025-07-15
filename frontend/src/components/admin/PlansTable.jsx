@@ -1,6 +1,7 @@
 import React from "react";
 import SkeletonLoader from "../common/SkeletonLoader";
 import Button from "../common/Button";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const PlansTable = ({ plans, loading, error }) => {
   if (loading) {
@@ -39,8 +40,8 @@ const PlansTable = ({ plans, loading, error }) => {
                   <td className="px-4 py-2">{plan.assigned_on ? new Date(plan.assigned_on).toLocaleDateString() : "-"}</td>
                   <td className="px-4 py-2">
                     {/* Future: Edit/Delete buttons using Redux thunks */}
-                    <Button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-xs mr-2">Edit</Button>
-                    <Button className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-xs">Delete</Button>
+                    <Button aria-label="Edit" onClick={() => {/* TODO: add edit logic */}} className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-xs mr-2 flex items-center gap-1"><FaEdit /></Button>
+                    <Button aria-label="Delete" onClick={() => {/* TODO: add delete logic */}} className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-xs flex items-center gap-1"><FaTrash /></Button>
                   </td>
                 </tr>
               ))

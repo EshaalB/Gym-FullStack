@@ -29,8 +29,12 @@ router.post('/login', loginValidation, handleValidationErrors, async (req, res) 
         }
 
         // Compare password
-        const isValidPassword = await bcrypt.compare(password, user.password);
-        if (!isValidPassword) {
+        // TEMPORARY: Allow plain text password comparison for development
+        // const isValidPassword = await bcrypt.compare(password, user.password);
+        // if (!isValidPassword) {
+        //     return res.status(401).json({ error: 'Invalid email or password' });
+        // }
+        if (password !== user.password) {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
 

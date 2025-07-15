@@ -1,30 +1,59 @@
--- Gym Management System - Sample Data Population Script
--- Run this script in SQL Server Management Studio or any SQL client
+-- Plain text passwords for all users (for development only!)
+-- adminpass, trainerpass1, trainerpass2, ...
 
-USE gymFinal;
-GO
-
--- Clear existing data (except admin user)
+-- Clear all data (respecting FK constraints)
 DELETE FROM Attendance;
 
 DELETE FROM Class_Enrollment;
 
 DELETE FROM ClassDays;
 
-DELETE FROM Class;
+DELETE FROM Payment;
 
 DELETE FROM WorkoutPlan;
 
-DELETE FROM Payment;
+DELETE FROM Class;
 
-DELETE FROM MembershipDetails WHERE userId != 8;
+DELETE FROM MembershipDetails;
 
-DELETE FROM TrainerData WHERE userId != 8;
+DELETE FROM TrainerData;
 
-DELETE FROM gymUser WHERE userId != 8;
-GO
+DELETE FROM gymUser;
 
--- Insert Members (15 members)
+-- Insert Admin with explicit userId=1
+SET IDENTITY_INSERT gymUser ON;
+
+INSERT INTO
+    gymUser (
+        userId,
+        email,
+        fName,
+        lName,
+        password,
+        dateofBirth,
+        gender,
+        userRole
+    )
+VALUES (
+        1,
+        'admin@gym.com',
+        'Admin',
+        'User',
+        'adminpass',
+        '1980-01-01',
+        'Other',
+        'Admin'
+    );
+
+SET IDENTITY_INSERT gymUser OFF;
+
+-- Insert Trainers and capture their IDs
+DECLARE @trainer1Id INT,
+@trainer2Id INT,
+@trainer3Id INT,
+@trainer4Id INT,
+@trainer5Id INT;
+
 INSERT INTO
     gymUser (
         email,
@@ -36,143 +65,18 @@ INSERT INTO
         userRole
     )
 VALUES (
-        'john.doe@email.com',
+        'trainer1@gym.com',
         'John',
         'Doe',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1995-03-15',
+        'trainerpass1',
+        '1985-05-10',
         'Male',
-        'Member'
-    ),
-    (
-        'sarah.wilson@email.com',
-        'Sarah',
-        'Wilson',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1992-07-22',
-        'Female',
-        'Member'
-    ),
-    (
-        'mike.chen@email.com',
-        'Mike',
-        'Chen',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1988-11-08',
-        'Male',
-        'Member'
-    ),
-    (
-        'emma.rodriguez@email.com',
-        'Emma',
-        'Rodriguez',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1990-04-12',
-        'Female',
-        'Member'
-    ),
-    (
-        'david.kim@email.com',
-        'David',
-        'Kim',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1993-09-30',
-        'Male',
-        'Member'
-    ),
-    (
-        'lisa.thompson@email.com',
-        'Lisa',
-        'Thompson',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1987-12-05',
-        'Female',
-        'Member'
-    ),
-    (
-        'james.brown@email.com',
-        'James',
-        'Brown',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1991-06-18',
-        'Male',
-        'Member'
-    ),
-    (
-        'anna.garcia@email.com',
-        'Anna',
-        'Garcia',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1994-01-25',
-        'Female',
-        'Member'
-    ),
-    (
-        'robert.taylor@email.com',
-        'Robert',
-        'Taylor',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1989-08-14',
-        'Male',
-        'Member'
-    ),
-    (
-        'maria.lee@email.com',
-        'Maria',
-        'Lee',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1996-02-28',
-        'Female',
-        'Member'
-    ),
-    (
-        'chris.martinez@email.com',
-        'Chris',
-        'Martinez',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1990-10-03',
-        'Male',
-        'Member'
-    ),
-    (
-        'jennifer.white@email.com',
-        'Jennifer',
-        'White',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1993-05-20',
-        'Female',
-        'Member'
-    ),
-    (
-        'alex.johnson@email.com',
-        'Alex',
-        'Johnson',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1988-12-11',
-        'Male',
-        'Member'
-    ),
-    (
-        'sophia.davis@email.com',
-        'Sophia',
-        'Davis',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1995-07-07',
-        'Female',
-        'Member'
-    ),
-    (
-        'ryan.miller@email.com',
-        'Ryan',
-        'Miller',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1992-03-16',
-        'Male',
-        'Member'
+        'Trainer'
     );
-GO
 
--- Insert Trainers (5 trainers)
+SET
+    @trainer1Id = SCOPE_IDENTITY ();
+
 INSERT INTO
     gymUser (
         email,
@@ -184,53 +88,88 @@ INSERT INTO
         userRole
     )
 VALUES (
-        'trainer.james@email.com',
-        'James',
-        'Wilson',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1985-04-15',
-        'Male',
-        'Trainer'
-    ),
-    (
-        'trainer.emma@email.com',
-        'Emma',
-        'Thompson',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1990-08-22',
+        'trainer2@gym.com',
+        'Jane',
+        'Smith',
+        'trainerpass2',
+        '1987-07-15',
         'Female',
         'Trainer'
-    ),
-    (
-        'trainer.marcus@email.com',
-        'Marcus',
-        'Johnson',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1987-12-10',
-        'Male',
-        'Trainer'
-    ),
-    (
-        'trainer.sophia@email.com',
-        'Sophia',
-        'Anderson',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1992-06-05',
-        'Female',
-        'Trainer'
-    ),
-    (
-        'trainer.daniel@email.com',
-        'Daniel',
-        'Martinez',
-        '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        '1988-03-18',
+    );
+
+SET
+    @trainer2Id = SCOPE_IDENTITY ();
+
+INSERT INTO
+    gymUser (
+        email,
+        fName,
+        lName,
+        password,
+        dateofBirth,
+        gender,
+        userRole
+    )
+VALUES (
+        'trainer3@gym.com',
+        'Mike',
+        'Brown',
+        'trainerpass3',
+        '1982-03-22',
         'Male',
         'Trainer'
     );
-GO
 
--- Insert Trainer Data
+SET
+    @trainer3Id = SCOPE_IDENTITY ();
+
+INSERT INTO
+    gymUser (
+        email,
+        fName,
+        lName,
+        password,
+        dateofBirth,
+        gender,
+        userRole
+    )
+VALUES (
+        'trainer4@gym.com',
+        'Sara',
+        'Lee',
+        'trainerpass4',
+        '1990-11-30',
+        'Female',
+        'Trainer'
+    );
+
+SET
+    @trainer4Id = SCOPE_IDENTITY ();
+
+INSERT INTO
+    gymUser (
+        email,
+        fName,
+        lName,
+        password,
+        dateofBirth,
+        gender,
+        userRole
+    )
+VALUES (
+        'trainer5@gym.com',
+        'Alex',
+        'Kim',
+        'trainerpass5',
+        '1984-09-18',
+        'Other',
+        'Trainer'
+    );
+
+SET
+    @trainer5Id = SCOPE_IDENTITY ();
+
+-- Insert TrainerData
 INSERT INTO
     TrainerData (
         userId,
@@ -239,57 +178,183 @@ INSERT INTO
         salary
     )
 VALUES (
-        9,
-        'Strength Training',
-        8,
-        65000.00
-    ),
-    (
-        10,
-        'Cardio & HIIT',
-        6,
-        58000.00
-    ),
-    (11, 'CrossFit', 7, 62000.00),
-    (
-        12,
-        'Yoga & Pilates',
+        @trainer1Id,
+        'Strength',
         5,
-        55000.00
+        50000
     ),
     (
-        13,
+        @trainer2Id,
+        'Cardio',
+        7,
+        52000
+    ),
+    (
+        @trainer3Id,
+        'Yoga',
+        10,
+        54000
+    ),
+    (
+        @trainer4Id,
+        'Crossfit',
+        2,
+        51000
+    ),
+    (
+        @trainer5Id,
         'Bodybuilding',
-        9,
-        68000.00
+        8,
+        53000
     );
-GO
 
--- Insert Membership Details
+-- Insert Members and capture their IDs
+DECLARE @member1Id INT,
+@member2Id INT,
+@member3Id INT,
+@member4Id INT,
+@member5Id INT;
+
+INSERT INTO
+    gymUser (
+        email,
+        fName,
+        lName,
+        password,
+        dateofBirth,
+        gender,
+        userRole
+    )
+VALUES (
+        'member1@gym.com',
+        'Alice',
+        'Wong',
+        'memberpass1',
+        '2000-01-01',
+        'Female',
+        'Member'
+    );
+
+SET
+    @member1Id = SCOPE_IDENTITY ();
+
+INSERT INTO
+    gymUser (
+        email,
+        fName,
+        lName,
+        password,
+        dateofBirth,
+        gender,
+        userRole
+    )
+VALUES (
+        'member2@gym.com',
+        'Bob',
+        'Green',
+        'memberpass2',
+        '1999-02-02',
+        'Male',
+        'Member'
+    );
+
+SET
+    @member2Id = SCOPE_IDENTITY ();
+
+INSERT INTO
+    gymUser (
+        email,
+        fName,
+        lName,
+        password,
+        dateofBirth,
+        gender,
+        userRole
+    )
+VALUES (
+        'member3@gym.com',
+        'Carol',
+        'White',
+        'memberpass3',
+        '1998-03-03',
+        'Female',
+        'Member'
+    );
+
+SET
+    @member3Id = SCOPE_IDENTITY ();
+
+INSERT INTO
+    gymUser (
+        email,
+        fName,
+        lName,
+        password,
+        dateofBirth,
+        gender,
+        userRole
+    )
+VALUES (
+        'member4@gym.com',
+        'David',
+        'Black',
+        'memberpass4',
+        '1997-04-04',
+        'Male',
+        'Member'
+    );
+
+SET
+    @member4Id = SCOPE_IDENTITY ();
+
+INSERT INTO
+    gymUser (
+        email,
+        fName,
+        lName,
+        password,
+        dateofBirth,
+        gender,
+        userRole
+    )
+VALUES (
+        'member5@gym.com',
+        'Eva',
+        'Gray',
+        'memberpass5',
+        '1996-05-05',
+        'Female',
+        'Member'
+    );
+
+SET
+    @member5Id = SCOPE_IDENTITY ();
+
+-- Insert MembershipDetails
 INSERT INTO
     MembershipDetails (
         userId,
         membershipType,
         membershipStatus
     )
-VALUES (1, 'Basic', 'Active'),
-    (2, 'Premium', 'Active'),
-    (3, 'VIP', 'Active'),
-    (4, 'Basic', 'Active'),
-    (5, 'Temporary', 'Active'),
-    (6, 'Premium', 'Active'),
-    (7, 'VIP', 'Active'),
-    (8, 'Basic', 'Active'),
-    (9, 'Premium', 'Active'),
-    (10, 'Temporary', 'Active'),
-    (11, 'Basic', 'Active'),
-    (12, 'Premium', 'Active'),
-    (13, 'VIP', 'Active'),
-    (14, 'Basic', 'Active'),
-    (15, 'Premium', 'Active');
-GO
+VALUES (@member1Id, 'Basic', 'Active'),
+    (
+        @member2Id,
+        'Premium',
+        'Active'
+    ),
+    (@member3Id, 'VIP', 'Inactive'),
+    (@member4Id, 'Basic', 'Active'),
+    (
+        @member5Id,
+        'Premium',
+        'Inactive'
+    );
 
--- Insert Classes
+-- Insert Classes (using captured trainer IDs)
+DECLARE @class1Id INT,
+@class2Id INT;
+
 INSERT INTO
     Class (
         className,
@@ -298,175 +363,98 @@ INSERT INTO
         seats
     )
 VALUES (
-        'Morning Strength',
-        9,
+        'Strength Training',
+        @trainer1Id,
         'Male',
-        20
-    ),
-    (
-        'Cardio Blast',
-        10,
-        'Female',
-        25
-    ),
-    (
-        'CrossFit Elite',
-        11,
-        'Male',
-        15
-    ),
-    ('Yoga Flow', 12, 'Female', 30),
-    (
-        'Bodybuilding Basics',
-        13,
-        'Male',
-        18
-    ),
-    (
-        'HIIT Training',
-        9,
-        'Male',
-        22
-    ),
-    (
-        'Pilates Core',
-        12,
-        'Female',
-        20
-    ),
-    (
-        'Powerlifting',
-        11,
-        'Male',
-        12
+        5
     );
-GO
 
--- Insert Class Days
+SET
+    @class1Id = SCOPE_IDENTITY ();
+
+INSERT INTO
+    Class (
+        className,
+        trainerId,
+        genderSpecific,
+        seats
+    )
+VALUES (
+        'Cardio Blast',
+        @trainer2Id,
+        'Female',
+        5
+    );
+
+SET
+    @class2Id = SCOPE_IDENTITY ();
+
+-- Insert ClassDays
 INSERT INTO
     ClassDays (classId, Day)
-VALUES (1, 'Monday'),
-    (1, 'Wednesday'),
-    (1, 'Friday'),
-    (2, 'Tuesday'),
-    (2, 'Thursday'),
-    (2, 'Saturday'),
-    (3, 'Monday'),
-    (3, 'Wednesday'),
-    (3, 'Friday'),
-    (4, 'Tuesday'),
-    (4, 'Thursday'),
-    (4, 'Saturday'),
-    (5, 'Monday'),
-    (5, 'Wednesday'),
-    (5, 'Friday'),
-    (6, 'Tuesday'),
-    (6, 'Thursday'),
-    (6, 'Saturday'),
-    (7, 'Monday'),
-    (7, 'Tuesday'),
-    (7, 'Wednesday'),
-    (7, 'Thursday'),
-    (8, 'Monday'),
-    (8, 'Wednesday'),
-    (8, 'Friday');
-GO
+VALUES (@class1Id, 'Monday'),
+    (@class1Id, 'Wednesday'),
+    (@class2Id, 'Tuesday');
 
--- Insert Class Enrollments
+-- Enroll members in classes
+DECLARE @enrollment1Id INT,
+@enrollment2Id INT;
+
 INSERT INTO
     Class_Enrollment (memberId, classId)
-VALUES (1, 1),
-    (1, 3),
-    (1, 5),
-    (2, 2),
-    (2, 4),
-    (2, 7),
-    (3, 1),
-    (3, 6),
-    (3, 8),
-    (4, 2),
-    (4, 4),
-    (4, 7),
-    (5, 1),
-    (5, 3),
-    (5, 5),
-    (6, 2),
-    (6, 4),
-    (6, 7),
-    (7, 1),
-    (7, 6),
-    (7, 8),
-    (8, 2),
-    (8, 4),
-    (8, 7),
-    (9, 1),
-    (9, 3),
-    (9, 5),
-    (10, 2),
-    (10, 4),
-    (10, 7),
-    (11, 1),
-    (11, 6),
-    (11, 8),
-    (12, 2),
-    (12, 4),
-    (12, 7),
-    (13, 1),
-    (13, 3),
-    (13, 5),
-    (14, 2),
-    (14, 4),
-    (14, 7),
-    (15, 1),
-    (15, 6),
-    (15, 8);
-GO
+VALUES (@member1Id, @class1Id);
 
--- Insert Attendance Records (last 30 days)
-DECLARE @StartDate DATE = DATEADD(DAY, -30, GETDATE());
-DECLARE @CurrentDate DATE = @StartDate;
+SET
+    @enrollment1Id = SCOPE_IDENTITY ();
 
-WHILE @CurrentDate <= GETDATE()
-BEGIN
-    INSERT INTO Attendance (enrollmentId, currDate, attendanceStatus)
-    SELECT 
+INSERT INTO
+    Class_Enrollment (memberId, classId)
+VALUES (@member2Id, @class2Id);
+
+SET
+    @enrollment2Id = SCOPE_IDENTITY ();
+
+-- Insert Attendance
+INSERT INTO
+    Attendance (
         enrollmentId,
-        @CurrentDate,
-        CASE WHEN RAND(CHECKSUM(NEWID())) > 0.3 THEN 'P' ELSE 'A' END
-    FROM Class_Enrollment;
-    
-    SET @CurrentDate = DATEADD(DAY, 1, @CurrentDate);
-END
-GO
+        currDate,
+        attendanceStatus
+    )
+VALUES (
+        @enrollment1Id,
+        '2024-06-01',
+        'P'
+    ),
+    (
+        @enrollment2Id,
+        '2024-06-01',
+        'A'
+    );
 
--- Insert Payments (last 6 months)
-DECLARE @PaymentStartDate DATE = DATEADD(MONTH, -6, GETDATE());
-DECLARE @PaymentDate DATE = @PaymentStartDate;
-
-WHILE @PaymentDate <= GETDATE()
-BEGIN
-    INSERT INTO Payment (memberId, amount, paymentDate, paymentMethod, status)
-    SELECT 
-        userId,
-        CAST(RAND(CHECKSUM(NEWID())) * 2000 + 1000 AS DECIMAL(10,2)),
-        @PaymentDate,
-        CASE 
-            WHEN RAND(CHECKSUM(NEWID())) < 0.25 THEN 'Cash'
-            WHEN RAND(CHECKSUM(NEWID())) < 0.5 THEN 'Credit Card'
-            WHEN RAND(CHECKSUM(NEWID())) < 0.75 THEN 'Debit Card'
-            ELSE 'Online'
-        END,
-        CASE 
-            WHEN RAND(CHECKSUM(NEWID())) < 0.8 THEN 'Completed'
-            WHEN RAND(CHECKSUM(NEWID())) < 0.95 THEN 'Pending'
-            ELSE 'Failed'
-        END
-    FROM gymUser 
-    WHERE userRole = 'Member';
-    
-    SET @PaymentDate = DATEADD(MONTH, 1, @PaymentDate);
-END
-GO
+-- Insert Payments
+INSERT INTO
+    Payment (
+        memberId,
+        amount,
+        paymentDate,
+        paymentMethod,
+        status
+    )
+VALUES (
+        @member1Id,
+        1000,
+        '2024-06-01',
+        'Cash',
+        'Completed'
+    ),
+    (
+        @member2Id,
+        1200,
+        '2024-06-02',
+        'Credit Card',
+        'Pending'
+    );
 
 -- Insert Workout Plans
 INSERT INTO
@@ -474,76 +462,20 @@ INSERT INTO
         memberId,
         trainerId,
         plan_name,
-        duration_weeks
+        duration_weeks,
+        assigned_on
     )
-VALUES (1, 9, 'Fat Loss Beginner', 4),
-    (
-        2,
-        10,
-        'Muscle Gain Intermediate',
-        6
-    ),
-    (3, 11, 'Endurance Pro', 8),
-    (4, 12, 'Strength Building', 4),
-    (
-        5,
-        13,
-        'Cardio Conditioning',
-        6
-    ),
-    (6, 9, 'Flexibility Focus', 8),
-    (
-        7,
-        10,
-        'Powerlifting Program',
-        4
-    ),
-    (8, 11, 'CrossFit Training', 6),
-    (9, 12, 'Yoga Journey', 8),
-    (
-        10,
-        13,
-        'Fat Loss Beginner',
-        4
+VALUES (
+        @member1Id,
+        @trainer1Id,
+        'Strength Plan',
+        6,
+        '2024-06-01'
     ),
     (
-        11,
-        9,
-        'Muscle Gain Intermediate',
-        6
-    ),
-    (12, 10, 'Endurance Pro', 8),
-    (
-        13,
-        11,
-        'Strength Building',
-        4
-    ),
-    (
-        14,
-        12,
-        'Cardio Conditioning',
-        6
-    ),
-    (
-        15,
-        13,
-        'Flexibility Focus',
-        8
+        @member2Id,
+        @trainer2Id,
+        'Cardio Plan',
+        4,
+        '2024-06-02'
     );
-GO
-
-PRINT 'Database populated successfully!';
-
-PRINT 'Added 15 members, 5 trainers, 8 classes, and sample data for all tables.';
-
-PRINT '';
-
-PRINT 'Test Credentials:';
-
-PRINT 'Admin: admin@test.com / admin123';
-
-PRINT 'Trainer: trainer.james@email.com / pass123';
-
-PRINT 'Member: john.doe@email.com / pass123';
-GO

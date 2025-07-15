@@ -4,13 +4,15 @@ import { scroller } from "react-scroll";
 import { FaBars, FaTimes, FaHome, FaChevronRight } from "react-icons/fa";
 import Button from "./Button";
 import { motion } from "framer-motion";
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../store/authSlice';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const [currentSection, setCurrentSection] = useState("home");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
   // Section IDs for scroll tracking
   const sectionIds = ["home", "about", "plans", "trainers", "contact"];
@@ -99,12 +101,20 @@ const Navbar = () => {
   const pathnames = location.pathname.split("/").filter((x) => x);
   const showBreadcrumb = pathnames.length > 0 && location.pathname !== "/";
 
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userData');
+    navigate('/login');
+  };
+
   return (
     <header className={`fixed w-full z-50 transition-all duration-500 ${
       isSticky 
         ? "bg-black/20 backdrop-blur-xl border-b border-white/10" 
         : "bg-transparent"
     }`}>
+     
       {/* Main Navigation */}
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center" role="navigation" aria-label="Main navigation">
         {/* Logo */}

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { FaCheck, FaTimes, FaCalendar, FaUsers, FaDumbbell } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { useSelector, useDispatch } from "react-redux";
-import { selectTrainerAttendanceError, selectTrainerAttendanceLoading, markTrainerAttendance, updateTrainerAttendance } from "../../store/dashboardSlice";
+import { useSelector } from "react-redux";
+import { selectTrainerAttendanceError, selectTrainerAttendanceLoading } from "../../store/dashboardSlice";
 
 const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
-  const dispatch = useDispatch();
   const loading = useSelector(selectTrainerAttendanceLoading);
   const error = useSelector(selectTrainerAttendanceError);
   const [selectedClass, setSelectedClass] = useState(null);
@@ -40,11 +39,9 @@ const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
     }
 
     try {
-      for (const [memberId, status] of attendanceEntries) {
-        await dispatch(markTrainerAttendance({ classId: selectedClass, memberId, status })).unwrap();
-      }
-      toast.success("Attendance marked successfully!");
-      setAttendanceData({});
+      // Attendance marking is temporarily unavailable
+      toast.error("Attendance marking is currently unavailable. Please contact admin.");
+      // setAttendanceData({});
     } catch (error) {
       toast.error(error || "Failed to mark attendance");
     }
@@ -60,22 +57,9 @@ const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
     if (!editingMember) return;
     setUpdateLoading(true);
     setUpdateError("");
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      await dispatch(updateTrainerAttendance({
-        accessToken,
-        enrollmentId: editingMember.enrollmentId,
-        currDate: editingMember.currDate,
-        attendanceStatus: editStatus
-      })).unwrap();
-      toast.success("Attendance updated!");
-      setEditingMember(null);
-      setEditStatus("");
-    } catch (error) {
-      setUpdateError(error || "Failed to update attendance");
-    } finally {
-      setUpdateLoading(false);
-    }
+    // Attendance update is temporarily unavailable
+    setUpdateError("Attendance update is currently unavailable. Please contact admin.");
+    setUpdateLoading(false);
   };
 
   const getSelectedClassMembers = () => {

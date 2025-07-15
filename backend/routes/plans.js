@@ -8,4 +8,10 @@ router.get('/', authenticateToken, requireRole(['Admin']), planController.getAll
 // Add route to get plans for a specific user
 router.get('/user/:userId', authenticateToken, planController.getUserPlans);
 
+// Trainer: Get all workout plans assigned to the logged-in trainer
+router.get('/trainer', authenticateToken, requireRole(['Trainer']), planController.getTrainerPlans);
+
+// Trainer: Assign a workout plan to a member
+router.post('/trainer/assign', authenticateToken, requireRole(['Trainer']), planController.assignWorkoutPlan);
+
 module.exports = router; 

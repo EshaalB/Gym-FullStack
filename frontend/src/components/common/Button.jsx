@@ -1,34 +1,36 @@
-import React from 'react';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const Button = ({ title, link, href, className = "", onClick }) => {
-  const handleClick = () => {
-    if (onClick) {
-      onClick();
-    } else if (link) {
-      window.location.href = link;
+const Button = ({ title, children, link, href, className = "", onClick, ...props }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    if (onClick) onClick(e);
+    if (link) {
+      e.preventDefault();
+      navigate(link);
     }
   };
 
-  const baseClasses = "inline-flex items-center justify-center px-6 py-3 text-lg font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 cursor-pointer";
-  const defaultClasses = "bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white";
-  
-  const buttonClasses = className || defaultClasses;
-  const finalClasses = `${baseClasses} ${buttonClasses}`;
+  const content = children ? children : title;
 
   if (href) {
     return (
-      <a href={href} className={finalClasses}>
-        {title}
+      <a href={href} className={className} {...props}>
+        {content}
       </a>
     );
   }
-
+  if (link) {
+    return (
+      <a href={link} className={className} onClick={handleClick} {...props}>
+        {content}
+      </a>
+    );
+  }
   return (
-    <button 
-      onClick={handleClick}
-      className={finalClasses}
-    >
-      {title}
+    <button onClick={handleClick} className={className} {...props}>
+      {content}
     </button>
   );
 };

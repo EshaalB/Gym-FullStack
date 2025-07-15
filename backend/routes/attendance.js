@@ -72,11 +72,13 @@ router.get('/class/:classId', authenticateToken, requireRole(['Trainer', 'Admin'
                 u.email,
                 a.attendanceStatus,
                 a.currDate,
-                ce.enrollmentId
-            FROM Attendance a
-            JOIN Class_Enrollment ce ON a.enrollmentId = ce.enrollmentId
+                ce.enrollmentId,
+                c.className
+            FROM Class_Enrollment ce
             JOIN gymUser u ON ce.memberId = u.userId
-            WHERE ce.classId = @ClassId ${dateFilter}
+            JOIN Class c ON ce.classId = c.classId
+            LEFT JOIN Attendance a ON a.enrollmentId = ce.enrollmentId AND CAST(a.currDate AS DATE) = CAST(GETDATE() AS DATE)
+            WHERE ce.classId = @ClassId
             ORDER BY u.fName, u.lName
         `;
 

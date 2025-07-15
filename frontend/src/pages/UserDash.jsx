@@ -41,19 +41,19 @@ import {
   selectUserUpdateProfileLoading,
   selectUserUpdateProfileError,
   selectUserSupportLoading,
-  selectUserSupportError
+  selectUserSupportError,
+  fetchAvailableClassesForBooking
 } from "../store/dashboardSlice";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import UserSidebar from "../components/user/UserSidebar";
 import { FaPlus, FaRedo, FaEnvelope, FaChartBar, FaCalendarAlt, FaDumbbell, FaMoneyBill, FaUser, FaWeight } from "react-icons/fa";
-import BookClassModal from "../components/modals/BookClassModal";
-import BMICalculator from "../components/user/BMICalculator";
 import RenewMembershipModal from "../components/modals/RenewMembershipModal";
 import ContactTrainerModal from "../components/modals/ContactTrainerModal";
 import EditProfileModal from "../components/modals/EditProfileModal";
 import SupportModal from "../components/modals/SupportModal";
 import { motion } from "framer-motion";
+import Navbar from '../components/common/Navbar';
 // Add ProfileDetailsCard component
 const ProfileDetailsCard = ({ profile, updateProfileLoading, updateProfileError, onSave }) => {
   const [editMode, setEditMode] = React.useState(false);
@@ -124,7 +124,6 @@ const UserDash = () => {
   const accessToken = localStorage.getItem('accessToken');
   const user = useSelector(state => state.auth.user);
   const [currentView, setCurrentView] = useState("/userdash");
-  const [showBookModal, setShowBookModal] = useState(false);
   const [showRenewModal, setShowRenewModal] = useState(false);
   const [showContactTrainerModal, setShowContactTrainerModal] = useState(false);
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
@@ -195,20 +194,6 @@ const UserDash = () => {
       }
     }
   }, [statsError, classesError, plansError, attendanceError, paymentsError, profileError, notificationsError, navigate]);
-
-  // Book class handler
-  const handleBookClass = async (classId) => {
-    if (!classId) return;
-    try {
-      await dispatch(bookUserClass({ accessToken, userId: user.userId, classId })).unwrap();
-      toast.success("Class booked successfully!");
-      setShowBookModal(false);
-      // Refresh classes
-      dispatch(fetchUserClasses({ accessToken, userId: user.userId }));
-    } catch (err) {
-      toast.error(err || "Failed to book class");
-    }
-  };
 
   // Placeholder handlers for modal actions
   const handleRenewMembership = async (period) => {
@@ -295,20 +280,11 @@ const UserDash = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
               <Card title="Quick Actions" icon={<FaPlus />}>
                 <div className="flex flex-wrap gap-3">
-                  <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2" onClick={() => setShowBookModal(true)}><FaCalendarAlt /> Book Class</button>
                   <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2" onClick={() => setShowRenewModal(true)}><FaRedo /> Renew Membership</button>
                   <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2" onClick={() => setShowContactTrainerModal(true)}><FaEnvelope /> Contact Trainer</button>
                 </div>
               </Card>
             </div>
-            <BookClassModal
-              isOpen={showBookModal || currentView === "/userdash/book"}
-              onClose={() => { setShowBookModal(false); setCurrentView("/userdash"); }}
-              availableClasses={classes}
-              onBook={handleBookClass}
-              loading={bookingLoading}
-              error={bookingError}
-            />
             <RenewMembershipModal
               isOpen={showRenewModal}
               onClose={() => setShowRenewModal(false)}
@@ -346,14 +322,7 @@ const UserDash = () => {
       case "/userdash/book":
         return (
           <>
-            <BookClassModal
-              isOpen={true}
-              onClose={() => setCurrentView("/userdash")}
-              availableClasses={classes}
-              onBook={handleBookClass}
-              loading={bookingLoading}
-              error={bookingError}
-            />
+            {/* Book Class Modal removed */}
           </>
         );
       case "/userdash/classes":
@@ -500,7 +469,7 @@ const UserDash = () => {
       case "/userdash/bmi":
         return (
           <Card title="BMI Calculator" icon={<FaWeight />}>
-            <BMICalculator />
+            {/* BMICalculator component removed */}
           </Card>
         );
       default:
@@ -509,30 +478,14 @@ const UserDash = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-red-900 to-black flex flex-col">
-      <div className="flex flex-1">
-        <div className="hidden md:block">
-          <UserSidebar currentView={currentView} setCurrentView={setCurrentView} />
-        </div>
-        {/* Mobile Sidebar Toggle */}
-        <div className="md:hidden flex items-center justify-between bg-black/60 px-4 py-3 border-b border-red-500/20">
-          <button
-            onClick={() => setCurrentView(currentView === "sidebar" ? "/userdash" : "sidebar")}
-            className="text-white text-2xl focus:outline-none focus:ring-2 focus:ring-red-400"
-            aria-label="Toggle sidebar"
-          >
-            &#9776;
-          </button>
-          <span className="text-lg font-bold text-white">User Panel</span>
-        </div>
-        {/* Main Content */}
-        <main className="flex-1 p-3 sm:p-6" role="main">
-          {generalError && (
-            <div className="bg-red-500/20 border border-red-400/30 text-red-300 rounded-lg px-4 py-2 mb-4 text-center font-semibold" aria-live="polite">{generalError}</div>
-          )}
-          {renderContent()}
-        </main>
-      </div>
+    <div className="min-h-screen w-full bg-black flex flex-col">
+      <Navbar />
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-8">
+        {generalError && (
+          <div className="bg-red-500/20 border border-red-400/30 text-red-300 rounded-lg px-4 py-2 mb-4 text-center font-semibold" aria-live="polite">{generalError}</div>
+        )}
+        {renderContent()}
+      </main>
     </div>
   );
 };

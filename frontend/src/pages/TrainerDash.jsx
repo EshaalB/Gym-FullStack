@@ -24,10 +24,11 @@ const TrainerDash = () => {
   const classes = useSelector(selectTrainerClasses);
   const attendance = useSelector(selectTrainerAttendance);
   const workoutPlans = useSelector(selectTrainerWorkoutPlans);
-  // const { stats, loading } = useSelector(state => state.dashboard.trainer); // To be implemented
+  const user = useSelector(state => state.auth.user);
   const [currentView, setCurrentView] = React.useState("dashboard");
   const [showSidebar, setShowSidebar] = React.useState(true);
 
+  // Fetch all trainer data on mount
   useEffect(() => {
     if (!accessToken) {
       navigate("/login");
@@ -36,6 +37,7 @@ const TrainerDash = () => {
     }
     dispatch(fetchTrainerStats(accessToken));
     dispatch(fetchTrainerClasses(accessToken));
+    dispatch(fetchTrainerWorkoutPlans(accessToken));
   }, [accessToken, dispatch, navigate]);
 
   // Fetch attendance when attendance tab is selected
@@ -43,10 +45,18 @@ const TrainerDash = () => {
     if (currentView === "attendance" && classes && classes.length > 0) {
       dispatch(fetchTrainerAttendance({ accessToken, classId: classes[0].classId }));
     }
-    if (currentView === "workoutPlans") {
+    if (currentView === "workoutPlans" || currentView === "assign-plans" || currentView === "plans") {
       dispatch(fetchTrainerWorkoutPlans(accessToken));
     }
   }, [currentView, accessToken, dispatch, classes]);
+
+  // Handler to refresh all data after actions
+  const refreshAll = () => {
+    dispatch(fetchTrainerStats(accessToken));
+    dispatch(fetchTrainerClasses(accessToken));
+    dispatch(fetchTrainerAttendance({ accessToken, classId: classes[0]?.classId || 0 }));
+    dispatch(fetchTrainerWorkoutPlans(accessToken));
+  };
 
   const renderContent = () => {
     switch (currentView) {
@@ -55,15 +65,15 @@ const TrainerDash = () => {
       case "classes":
         return <TrainerClassesTable classes={classes} loading={loading} />;
       case "attendance":
-        return <AttendanceManagement classes={classes} membersInClasses={attendance} loading={loading} />;
+        return <AttendanceManagement classes={classes} membersInClasses={attendance} loading={loading} onAction={refreshAll} />;
       case "workoutPlans":
       case "plans":
-        return <WorkoutPlanAssignment membersInClasses={workoutPlans} loading={loading} />;
+        return <WorkoutPlanAssignment membersInClasses={workoutPlans} loading={loading} onAction={refreshAll} />;
       case "assign-plans":
-        return <WorkoutPlanAssignment membersInClasses={workoutPlans} loading={loading} />;
+        return <WorkoutPlanAssignment membersInClasses={workoutPlans} loading={loading} onAction={refreshAll} />;
       case "statistics":
       case "stats":
-        return <TrainerStatistics />;
+        return <TrainerStatistics stats={stats} classes={classes} membersInClasses={attendance} plans={workoutPlans} />;
       case "members":
         return <MyMembers membersInClasses={attendance} loading={loading} error={error} />;
       default:
@@ -72,12 +82,12 @@ const TrainerDash = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-red-900 to-black">
+    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-red-900 to-black flex flex-col">
       {/* Header */}
-      <TrainerHeader onLogout={() => { localStorage.clear(); navigate("/login"); }} />
-      <div className="flex flex-col md:flex-row">
+      <TrainerHeader userName={user ? `${user.fName} ${user.lName}` : ""} onLogout={() => { localStorage.clear(); navigate("/login"); }} />
+      <div className="flex flex-1 min-h-0">
         {/* Sidebar */}
-        <div className="hidden md:block">
+        <div className="hidden md:block h-full">
           <TrainerSidebar currentView={currentView} setCurrentView={setCurrentView} />
         </div>
         {/* Mobile Sidebar Toggle */}
@@ -105,8 +115,10 @@ const TrainerDash = () => {
           </div>
         )}
         {/* Main Content */}
-        <main className="flex-1 p-3 sm:p-6" role="main">
-          {renderContent()}
+        <main className="flex-1 min-h-0 w-full p-0 sm:p-0 overflow-y-auto" role="main">
+          <div className="w-full h-full min-h-screen p-0 m-0">
+            {renderContent()}
+          </div>
         </main>
       </div>
     </div>

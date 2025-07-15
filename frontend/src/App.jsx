@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./components/common/Navbar";
@@ -6,17 +6,19 @@ import Footer from "./components/common/Footer";
 import BarLoader from "./components/common/BarLoader";
 import ScrollProgress from "./components/common/ScrollProgress";
 import ProtectedRoute from "./components/common/ProtectedRoute";
-import Landing from "./pages/Landing.jsx";
-import Home from "./pages/Home.jsx";
-import About from "./pages/About.jsx";
-import Plans from "./pages/Plans.jsx";
-import Trainers from "./pages/Trainers.jsx";
-import Contact from "./pages/Contact.jsx";
-import SignUp from "./pages/Signup.jsx";
-import Login from "./pages/Login.jsx";
-import UserDash from "./pages/UserDash.jsx";
-import TrainerDash from "./pages/TrainerDash.jsx";
-import AdminDash from "./pages/AdminDash.jsx";
+
+// Replace direct imports with lazy imports
+const Landing = lazy(() => import("./pages/Landing.jsx"));
+const Home = lazy(() => import("./pages/Home.jsx"));
+const About = lazy(() => import("./pages/About.jsx"));
+const Plans = lazy(() => import("./pages/Plans.jsx"));
+const Trainers = lazy(() => import("./pages/Trainers.jsx"));
+const Contact = lazy(() => import("./pages/Contact.jsx"));
+const SignUp = lazy(() => import("./pages/Signup.jsx"));
+const Login = lazy(() => import("./pages/Login.jsx"));
+const UserDash = lazy(() => import("./pages/UserDash.jsx"));
+const TrainerDash = lazy(() => import("./pages/TrainerDash.jsx"));
+const AdminDash = lazy(() => import("./pages/AdminDash.jsx"));
 
 // Auto-redirect component for authenticated users
 const AutoRedirect = ({ children }) => {
@@ -82,7 +84,7 @@ const App = () => {
 
   const ShowNavbar = () => {
     const location = useLocation();
-    // Show Navbar on all pages except dashboards
+    // Only show Navbar on non-dashboard pages
     return !["/userdash", "/trainerdash", "/admindash"].includes(location.pathname) ? <Navbar /> : null;
   };
 
@@ -95,45 +97,47 @@ const App = () => {
 
     return (
       <main className={paddingTop}>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/plans" element={<Plans />} />
-          <Route path="/trainers" element={<Trainers />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          
-          {/* Protected Dashboard Routes */}
-          <Route 
-            path="/userdash" 
-            element={
-              <ProtectedRoute allowedRoles={['Member']}>
-                <UserDash />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/trainerdash" 
-            element={
-              <ProtectedRoute allowedRoles={['Trainer']}>
-                <TrainerDash />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/admindash" 
-            element={
-              <ProtectedRoute allowedRoles={['Admin']}>
-                <AdminDash />
-              </ProtectedRoute>
-            } 
-          />
-          
-          {/* Catch all route - redirect to home */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        <Suspense fallback={<div className="h-screen w-screen flex items-center justify-center bg-black"><BarLoader /></div>}>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/plans" element={<Plans />} />
+            <Route path="/trainers" element={<Trainers />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            
+            {/* Protected Dashboard Routes */}
+            <Route 
+              path="/userdash" 
+              element={
+                <ProtectedRoute allowedRoles={['Member']}>
+                  <UserDash />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/trainerdash" 
+              element={
+                <ProtectedRoute allowedRoles={['Trainer']}>
+                  <TrainerDash />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admindash" 
+              element={
+                <ProtectedRoute allowedRoles={['Admin']}>
+                  <AdminDash />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* Catch all route - redirect to home */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
       </main>
     );
   };

@@ -1,6 +1,7 @@
 import React from "react";
 import SkeletonLoader from "../common/SkeletonLoader"; 
 import Button from "../common/Button";
+import { FaCheck, FaTimes } from "react-icons/fa";
 
 const PaymentsTable = ({ payments, loading, error }) => {
   if (loading) {
@@ -39,8 +40,8 @@ const PaymentsTable = ({ payments, loading, error }) => {
                   <td className="px-4 py-2">{payment.status}</td>
                   <td className="px-4 py-2">
                     {/* Future: Approve/Reject buttons using Redux thunks */}
-                    <Button className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg text-xs mr-2">Approve</Button>
-                    <Button className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-xs">Reject</Button>
+                    <Button aria-label="Approve" onClick={() => {/* TODO: add approve logic */}} className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg text-xs mr-2 flex items-center gap-1"><FaCheck /></Button>
+                    <Button aria-label="Reject" onClick={() => {/* TODO: add reject logic */}} className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-xs flex items-center gap-1"><FaTimes /></Button>
                   </td>
                 </tr>
               ))

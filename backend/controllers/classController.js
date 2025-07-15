@@ -55,4 +55,20 @@ exports.createClass = async (req, res) => {
     console.error('Create class error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+};
+
+exports.assignMemberToClass = async (req, res) => {
+  try {
+    const { memberId, classId } = req.body;
+    if (!memberId || !classId) {
+      return res.status(400).json({ error: 'memberId and classId are required' });
+    }
+    await require('../utils/database').executeProcedure('AssignMemberToClass', [
+      { name: 'memberId', type: sql.Int, value: memberId },
+      { name: 'classId', type: sql.Int, value: classId }
+    ]);
+    res.status(200).json({ message: 'Member assigned to class successfully' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 }; 

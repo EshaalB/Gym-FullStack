@@ -8,4 +8,7 @@ router.get('/', authenticateToken, requireRole(['Admin']), classController.getAl
 // Add a new class
 router.post('/', authenticateToken, requireRole(['Admin']), classController.createClass);
 
+// Assign a member to a class
+router.post('/assign-member', authenticateToken, requireRole(['Admin']), classController.assignMemberToClass);
+
 module.exports = router; 

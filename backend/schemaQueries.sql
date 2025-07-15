@@ -293,7 +293,6 @@ BEGIN
 
     PRINT 'Attendance marked successfully!';
 END;
-GO
 
 -- Example Execution
 EXEC markAttendance @memberId = 2,
@@ -387,6 +386,56 @@ GO
 
 -- Example Execution
 EXEC AssignTrainerToClass @trainerId = 1, @classId = 1;
+
+-- Stored Procedure: Assign Member to a Class (Prevents duplicate enrollment and checks seat limits)
+CREATE OR ALTER PROCEDURE AssignMemberToClass
+    @memberId INT,
+    @classId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Check if member is already enrolled in the class
+    IF EXISTS (
+        SELECT 1 FROM Class_Enrollment WHERE memberId = @memberId AND classId = @classId
+    )
+    BEGIN
+        RAISERROR ('FAILED: Member is already enrolled in this class.', 16, 1);
+        RETURN;
+    END
+
+    -- Check if class exists and get seat info
+    DECLARE @seats INT, @enrolled INT;
+    SELECT @seats = seats FROM Class WHERE classId = @classId;
+    IF @seats IS NULL
+    BEGIN
+        RAISERROR ('FAILED: Class does not exist.', 16, 1);
+        RETURN;
+    END
+    SELECT @enrolled = COUNT(*) FROM Class_Enrollment WHERE classId = @classId;
+    IF @enrolled >= @seats
+    BEGIN
+        RAISERROR ('FAILED: Class is already full.', 16, 1);
+        RETURN;
+    END
+
+    -- Check if member exists and is active
+    IF NOT EXISTS (
+        SELECT 1 FROM MembershipDetails WHERE userId = @memberId AND membershipStatus = 'Active'
+    )
+    BEGIN
+        RAISERROR ('FAILED: Member does not exist or is not active.', 16, 1);
+        RETURN;
+    END
+
+    -- Insert enrollment
+    INSERT INTO Class_Enrollment (memberId, classId) VALUES (@memberId, @classId);
+    PRINT 'Member assigned to class successfully!';
+END;
+GO
+
+-- Example Execution
+-- EXEC AssignMemberToClass @memberId = 2, @classId = 1;
 
 -- View: Underfilled Classes (<50% Seats Filled)
 CREATE

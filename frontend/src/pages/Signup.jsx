@@ -80,6 +80,10 @@ const Signup = () => {
       newErrors.experience = "Experience is required for trainers";
     }
     
+    if (formData.role === "Trainer" && !formData.specialization) {
+      newErrors.specialization = "Specialization is required for trainers";
+    }
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -533,6 +537,29 @@ const Signup = () => {
                 >
                   {errors.experience}
                 </p>
+              )}
+            </div>
+          )}
+
+          {/* Specialization Field for Trainers */}
+          {formData.role === "Trainer" && (
+            <div>
+              <label htmlFor="specialization" className="block text-sm font-medium text-gray-300 mb-2">
+                Specialization
+              </label>
+              <input
+                type="text"
+                id="specialization"
+                name="specialization"
+                value={formData.specialization}
+                onChange={handleInputChange}
+                className={`w-full px-4 py-3 bg-black/50 backdrop-blur-sm border rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all duration-300 ${
+                  errors.specialization ? 'border-red-500' : 'border-white/20'
+                }`}
+                placeholder="e.g. Strength, Cardio, Yoga, etc."
+              />
+              {errors.specialization && (
+                <p className="text-red-400 text-sm mt-1">{errors.specialization}</p>
               )}
             </div>
           )}

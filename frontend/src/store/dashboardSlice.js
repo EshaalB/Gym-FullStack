@@ -153,87 +153,22 @@ export const fetchTrainerAttendance = createAsyncThunk(
 export const fetchTrainerWorkoutPlans = createAsyncThunk(
   'dashboard/fetchTrainerWorkoutPlans',
   async (accessToken) => {
-    const response = await fetch('http://localhost:3500/api/trainers/workout-plans', {
+    const response = await fetch('http://localhost:3500/api/plans/trainer', {
       headers: { 'Authorization': `Bearer ${accessToken}` },
       credentials: 'include',
     });
     if (!response.ok) throw new Error('Failed to fetch workout plans');
     const data = await response.json();
-    return data.workoutPlans;
+    return data.plans;
   }
 );
 
-export const markTrainerAttendance = createAsyncThunk(
-  'dashboard/markTrainerAttendance',
-  async ({ accessToken, classId, memberId, status }, { rejectWithValue }) => {
-    try {
-      const response = await fetch('http://localhost:3500/api/attendance/mark', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-        },
-        credentials: 'include',
-        body: JSON.stringify({ classId, memberId, attendanceStatus: status }),
-      });
-      if (!response.ok) {
-        let errorMsg = 'Failed to mark attendance';
-        try {
-          const errorData = await response.json();
-          errorMsg = errorData.error || errorData.message || errorMsg;
-          console.error('markTrainerAttendance error:', errorData);
-        } catch (e) {
-          console.error('markTrainerAttendance error: Non-JSON response', e);
-        }
-        return rejectWithValue(errorMsg);
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('markTrainerAttendance error:', error);
-      return rejectWithValue(error.message || 'Failed to mark attendance');
-    }
-  }
-);
-
-export const updateTrainerAttendance = createAsyncThunk(
-  'dashboard/updateTrainerAttendance',
-  async ({ accessToken, enrollmentId, currDate, attendanceStatus }, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`http://localhost:3500/api/attendance/${enrollmentId}/${currDate}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-        },
-        credentials: 'include',
-        body: JSON.stringify({ attendanceStatus }),
-      });
-      if (!response.ok) {
-        let errorMsg = 'Failed to update attendance';
-        try {
-          const errorData = await response.json();
-          errorMsg = errorData.error || errorData.message || errorMsg;
-          console.error('updateTrainerAttendance error:', errorData);
-        } catch (e) {
-          console.error('updateTrainerAttendance error: Non-JSON response', e);
-        }
-        return rejectWithValue(errorMsg);
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('updateTrainerAttendance error:', error);
-      return rejectWithValue(error.message || 'Failed to update attendance');
-    }
-  }
-);
-
+// Trainer assigns a workout plan to a member
 export const assignTrainerWorkoutPlan = createAsyncThunk(
   'dashboard/assignTrainerWorkoutPlan',
   async ({ accessToken, memberId, planName, durationWeeks }, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://localhost:3500/api/trainers/workout-plans', {
+      const response = await fetch('http://localhost:3500/api/plans/trainer/assign', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
