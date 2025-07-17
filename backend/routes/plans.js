@@ -14,4 +14,11 @@ router.get('/trainer', authenticateToken, requireRole(['Trainer']), planControll
 // Trainer: Assign a workout plan to a member
 router.post('/trainer/assign', authenticateToken, requireRole(['Trainer']), planController.assignWorkoutPlan);
 
+// Admin: Add a new workout plan
+router.post('/', authenticateToken, requireRole(['Admin']), planController.addPlan);
+// Admin: Update a workout plan
+router.put('/:planId', authenticateToken, requireRole(['Admin']), planController.updatePlan);
+// Admin: Delete a workout plan
+router.delete('/:planId', authenticateToken, requireRole(['Admin']), planController.deletePlan);
+
 module.exports = router; 

@@ -535,6 +535,368 @@ export const sendSupportRequest = createAsyncThunk(
   }
 );
 
+// --- USER CRUD THUNKS ---
+export const addAdminUser = createAsyncThunk(
+  'dashboard/addAdminUser',
+  async ({ accessToken, user }, { rejectWithValue }) => {
+    try {
+      const response = await fetch('http://localhost:3500/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify(user),
+      });
+      const data = await response.json();
+      if (!response.ok) return rejectWithValue(data.error || 'Failed to add user');
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to add user');
+    }
+  }
+);
+
+export const editAdminUser = createAsyncThunk(
+  'dashboard/editAdminUser',
+  async ({ accessToken, userId, user }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`http://localhost:3500/api/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify(user),
+      });
+      const data = await response.json();
+      if (!response.ok) return rejectWithValue(data.error || 'Failed to update user');
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to update user');
+    }
+  }
+);
+
+export const deleteAdminUser = createAsyncThunk(
+  'dashboard/deleteAdminUser',
+  async ({ accessToken, userId }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`http://localhost:3500/api/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+      });
+      const data = await response.json();
+      if (!response.ok) return rejectWithValue(data.error || 'Failed to delete user');
+      return { userId };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to delete user');
+    }
+  }
+);
+
+// --- TRAINER CRUD THUNKS ---
+export const addAdminTrainer = createAsyncThunk(
+  'dashboard/addAdminTrainer',
+  async ({ accessToken, trainer }) => {
+    const response = await fetch('http://localhost:3500/api/trainers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+      body: JSON.stringify(trainer),
+    });
+    if (!response.ok) throw new Error('Failed to add trainer');
+    return await response.json();
+  }
+);
+
+export const editAdminTrainer = createAsyncThunk(
+  'dashboard/editAdminTrainer',
+  async ({ accessToken, trainerId, trainer }) => {
+    const response = await fetch(`http://localhost:3500/api/trainers/${trainerId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+      body: JSON.stringify(trainer),
+    });
+    if (!response.ok) throw new Error('Failed to update trainer');
+    return await response.json();
+  }
+);
+
+export const deleteAdminTrainer = createAsyncThunk(
+  'dashboard/deleteAdminTrainer',
+  async ({ accessToken, trainerId }) => {
+    const response = await fetch(`http://localhost:3500/api/trainers/${trainerId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+    });
+    if (!response.ok) throw new Error('Failed to delete trainer');
+    return await response.json();
+  }
+);
+
+// --- CLASS CRUD THUNKS ---
+export const addAdminClass = createAsyncThunk(
+  'dashboard/addAdminClass',
+  async ({ accessToken, classObj }, { rejectWithValue }) => {
+    try {
+      const response = await fetch('http://localhost:3500/api/classes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify(classObj),
+      });
+      const data = await response.json();
+      if (!response.ok) return rejectWithValue(data.error || 'Failed to add class');
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to add class');
+    }
+  }
+);
+
+export const editAdminClass = createAsyncThunk(
+  'dashboard/editAdminClass',
+  async ({ accessToken, classId, classObj }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`http://localhost:3500/api/classes/${classId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify(classObj),
+      });
+      const data = await response.json();
+      if (!response.ok) return rejectWithValue(data.error || 'Failed to update class');
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to update class');
+    }
+  }
+);
+
+export const deleteAdminClass = createAsyncThunk(
+  'dashboard/deleteAdminClass',
+  async ({ accessToken, classId }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`http://localhost:3500/api/classes/${classId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+      });
+      const data = await response.json();
+      if (!response.ok) return rejectWithValue(data.error || 'Failed to delete class');
+      return { classId };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to delete class');
+    }
+  }
+);
+
+// --- PAYMENT CRUD THUNKS ---
+export const addAdminPayment = createAsyncThunk(
+  'dashboard/addAdminPayment',
+  async ({ accessToken, payment }) => {
+    const response = await fetch('http://localhost:3500/api/payments', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+      body: JSON.stringify(payment),
+    });
+    if (!response.ok) throw new Error('Failed to add payment');
+    return await response.json();
+  }
+);
+
+export const approveAdminPayment = createAsyncThunk(
+  'dashboard/approveAdminPayment',
+  async ({ accessToken, paymentId }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`http://localhost:3500/api/payments/${paymentId}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify({ status: 'Completed' }),
+      });
+      const data = await response.json();
+      if (!response.ok) return rejectWithValue(data.error || 'Failed to approve payment');
+      return { paymentId };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to approve payment');
+    }
+  }
+);
+
+export const editAdminPayment = createAsyncThunk(
+  'dashboard/editAdminPayment',
+  async ({ accessToken, paymentId, payment }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`http://localhost:3500/api/payments/${paymentId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify(payment),
+      });
+      const data = await response.json();
+      if (!response.ok) return rejectWithValue(data.error || 'Failed to update payment');
+      return { paymentId, payment };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to update payment');
+    }
+  }
+);
+
+export const deleteAdminPayment = createAsyncThunk(
+  'dashboard/deleteAdminPayment',
+  async ({ accessToken, paymentId }) => {
+    const response = await fetch(`http://localhost:3500/api/payments/${paymentId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+    });
+    if (!response.ok) throw new Error('Failed to delete payment');
+    return await response.json();
+  }
+);
+
+export const fetchPaymentMethods = createAsyncThunk(
+  'dashboard/fetchPaymentMethods',
+  async (accessToken, { rejectWithValue }) => {
+    try {
+      const response = await fetch('http://localhost:3500/api/payments/methods', {
+        headers: { 'Authorization': `Bearer ${accessToken}` },
+        credentials: 'include',
+      });
+      if (!response.ok) throw new Error('Failed to fetch payment methods');
+      const data = await response.json();
+      return data.methods;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to fetch payment methods');
+    }
+  }
+);
+
+// --- PLAN CRUD THUNKS ---
+export const addAdminPlan = createAsyncThunk(
+  'dashboard/addAdminPlan',
+  async ({ accessToken, plan }, { rejectWithValue }) => {
+    try {
+      const response = await fetch('http://localhost:3500/api/plans', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify(plan),
+      });
+      const data = await response.json();
+      if (!response.ok) return rejectWithValue(data.error || 'Failed to add plan');
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to add plan');
+    }
+  }
+);
+
+export const editAdminPlan = createAsyncThunk(
+  'dashboard/editAdminPlan',
+  async ({ accessToken, planId, plan }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`http://localhost:3500/api/plans/${planId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify(plan),
+      });
+      const data = await response.json();
+      if (!response.ok) return rejectWithValue(data.error || 'Failed to update plan');
+      return { ...data, planId, plan };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to update plan');
+    }
+  }
+);
+
+export const deleteAdminPlan = createAsyncThunk(
+  'dashboard/deleteAdminPlan',
+  async ({ accessToken, planId }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`http://localhost:3500/api/plans/${planId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+      });
+      const data = await response.json();
+      if (!response.ok) return rejectWithValue(data.error || 'Failed to delete plan');
+      return { planId };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to delete plan');
+    }
+  }
+);
+
+// --- CLASS ASSIGNMENT THUNK ---
+export const assignMemberToClass = createAsyncThunk(
+  'dashboard/assignMemberToClass',
+  async ({ accessToken, memberId, classId }, { rejectWithValue }) => {
+    try {
+      const response = await fetch('http://localhost:3500/api/classes/assign-member', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify({ memberId, classId }),
+      });
+      const data = await response.json();
+      if (!response.ok) return rejectWithValue(data.error || 'Failed to assign member to class');
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to assign member to class');
+    }
+  }
+);
+
 const initialState = {
   admin: {
     stats: {},
@@ -668,6 +1030,49 @@ const dashboardSlice = createSlice({
         state.admin.loading = false;
         state.admin.error = action.error.message;
       })
+      // Add Plan
+      .addCase(addAdminPlan.pending, (state) => {
+        state.admin.loading = true;
+        state.admin.error = null;
+      })
+      .addCase(addAdminPlan.fulfilled, (state, action) => {
+        state.admin.loading = false;
+        // Optionally, refetch all plans, or just push
+        state.admin.plans.push(action.meta.arg.plan);
+      })
+      .addCase(addAdminPlan.rejected, (state, action) => {
+        state.admin.loading = false;
+        state.admin.error = action.payload || action.error.message;
+      })
+      // Edit Plan
+      .addCase(editAdminPlan.pending, (state) => {
+        state.admin.loading = true;
+        state.admin.error = null;
+      })
+      .addCase(editAdminPlan.fulfilled, (state, action) => {
+        state.admin.loading = false;
+        const idx = state.admin.plans.findIndex(p => p.planId === action.meta.arg.planId);
+        if (idx !== -1) {
+          state.admin.plans[idx] = { ...state.admin.plans[idx], ...action.meta.arg.plan };
+        }
+      })
+      .addCase(editAdminPlan.rejected, (state, action) => {
+        state.admin.loading = false;
+        state.admin.error = action.payload || action.error.message;
+      })
+      // Delete Plan
+      .addCase(deleteAdminPlan.pending, (state) => {
+        state.admin.loading = true;
+        state.admin.error = null;
+      })
+      .addCase(deleteAdminPlan.fulfilled, (state, action) => {
+        state.admin.loading = false;
+        state.admin.plans = state.admin.plans.filter(p => p.planId !== action.meta.arg.planId);
+      })
+      .addCase(deleteAdminPlan.rejected, (state, action) => {
+        state.admin.loading = false;
+        state.admin.error = action.payload || action.error.message;
+      })
       // Classes
       .addCase(fetchAdminClasses.pending, (state) => {
         state.admin.loading = true;
@@ -691,6 +1096,20 @@ const dashboardSlice = createSlice({
         state.admin.payments = action.payload;
       })
       .addCase(fetchAdminPayments.rejected, (state, action) => {
+        state.admin.loading = false;
+        state.admin.error = action.error.message;
+      })
+      // Payment methods
+      .addCase(fetchPaymentMethods.pending, (state) => {
+        state.admin.loading = true;
+        state.admin.error = null;
+      })
+      .addCase(fetchPaymentMethods.fulfilled, (state, action) => {
+        state.admin.loading = false;
+        // Assuming action.payload is the array of methods
+        state.admin.paymentMethods = action.payload;
+      })
+      .addCase(fetchPaymentMethods.rejected, (state, action) => {
         state.admin.loading = false;
         state.admin.error = action.error.message;
       })
@@ -758,6 +1177,19 @@ const dashboardSlice = createSlice({
       .addCase(assignTrainerWorkoutPlan.rejected, (state, action) => {
         state.trainer.planAssignLoading = false;
         state.trainer.planAssignError = action.payload || action.error.message;
+      })
+      // Assign member to class
+      .addCase(assignMemberToClass.pending, (state) => {
+        state.admin.loading = true;
+        state.admin.error = null;
+      })
+      .addCase(assignMemberToClass.fulfilled, (state) => {
+        state.admin.loading = false;
+        state.admin.error = null;
+      })
+      .addCase(assignMemberToClass.rejected, (state, action) => {
+        state.admin.loading = false;
+        state.admin.error = action.payload || action.error.message;
       })
       // User stats
       .addCase(fetchUserStats.pending, (state) => {
@@ -928,6 +1360,7 @@ export const selectAdminClasses = (state) => state.dashboard.admin.classes;
 export const selectAdminPayments = (state) => state.dashboard.admin.payments;
 export const selectAdminLoading = (state) => state.dashboard.admin.loading;
 export const selectAdminError = (state) => state.dashboard.admin.error;
+export const selectPaymentMethods = (state) => state.dashboard.admin.paymentMethods;
 
 // Trainer selectors
 export const selectTrainerStats = (state) => state.dashboard.trainer.stats;

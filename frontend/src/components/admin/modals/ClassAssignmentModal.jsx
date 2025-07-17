@@ -1,9 +1,10 @@
+// LEGACY/UNUSED: This modal is not used in the current admin dashboard. Use AssignMemberModal instead. Safe to delete if not referenced elsewhere.
 import React, { useState, useEffect } from 'react';
 import { FaTimes, FaUser, FaDumbbell, FaCalendarAlt } from 'react-icons/fa';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-const ClassAssignmentModal = ({ isOpen, onClose, onAssign, classData }) => {
+const ClassAssignmentModal = ({ isOpen, onClose, onAssign }) => {
   const [formData, setFormData] = useState({
     userId: '',
     classId: ''

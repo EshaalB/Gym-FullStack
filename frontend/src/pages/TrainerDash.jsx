@@ -117,7 +117,7 @@ const TrainerDash = () => {
         {/* Main Content */}
         <main className="flex-1 min-h-0 w-full p-0 sm:p-0 overflow-y-auto" role="main">
           <div className="w-full h-full min-h-screen p-0 m-0">
-            {renderContent()}
+          {renderContent()}
           </div>
         </main>
       </div>

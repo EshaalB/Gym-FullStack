@@ -4,7 +4,7 @@ import Button from "../common/Button";
 
 const AdminHeader = ({ userName, onLogout }) => {
   return (
-    <header className="bg-black/50 backdrop-blur-lg border-b border-red-500/20 px-8 py-4">
+    <header className="bg-black/50 backdrop-blur-lg border-b border-red-500/20 px-8 py-4 mt-0 pt-0">
       <div className="flex justify-between items-center">
         {/* Left side - Welcome message */}
         <div className="flex items-center space-x-4">

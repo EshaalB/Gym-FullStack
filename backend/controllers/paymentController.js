@@ -195,6 +195,36 @@ exports.updatePaymentStatus = async (req, res) => {
   }
 };
 
+exports.updatePayment = async (req, res) => {
+  try {
+    const { paymentId } = req.params;
+    const { amount, paymentMethod, paymentDate } = req.body;
+    // Only allow editing if payment is not Completed
+    const payment = await executeSingleQuery('SELECT status FROM Payment WHERE paymentId = @PaymentId', [
+      { name: 'PaymentId', type: sql.Int, value: paymentId }
+    ]);
+    if (!payment) {
+      return res.status(404).json({ error: 'Payment not found' });
+    }
+    if (payment.status === 'Completed') {
+      return res.status(400).json({ error: 'Cannot edit a completed payment' });
+    }
+    await executeQuery(
+      'UPDATE Payment SET amount = @Amount, paymentMethod = @PaymentMethod, paymentDate = @PaymentDate WHERE paymentId = @PaymentId',
+      [
+        { name: 'Amount', type: sql.Decimal(10, 2), value: amount },
+        { name: 'PaymentMethod', type: sql.VarChar(50), value: paymentMethod },
+        { name: 'PaymentDate', type: sql.Date, value: paymentDate },
+        { name: 'PaymentId', type: sql.Int, value: paymentId }
+      ]
+    );
+    res.json({ message: 'Payment updated successfully' });
+  } catch (error) {
+    console.error('Update payment error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 exports.getStatsOverview = async (req, res) => {
   try {
     const { period = 'month' } = req.query;
@@ -235,4 +265,9 @@ exports.getStatsOverview = async (req, res) => {
     console.error('Get payment stats error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+}; 
+
+exports.getPaymentMethods = async (req, res) => {
+  // These are the allowed methods per schema
+  res.json({ methods: ['Cash', 'Credit Card', 'Debit Card', 'Online'] });
 }; 

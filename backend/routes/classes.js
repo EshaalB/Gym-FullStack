@@ -4,11 +4,11 @@ const classController = require('../controllers/classController');
 const router = express.Router();
 
 // List all classes
-router.get('/', authenticateToken, requireRole(['Admin']), classController.getAllClasses);
+router.get('/', authenticateToken, classController.getAllClasses);
 // Add a new class
 router.post('/', authenticateToken, requireRole(['Admin']), classController.createClass);
 
 // Assign a member to a class
-router.post('/assign-member', authenticateToken, requireRole(['Admin']), classController.assignMemberToClass);
+router.post('/assign-member', authenticateToken, classController.assignMemberToClass);
 
 module.exports = router; 

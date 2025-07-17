@@ -10,7 +10,7 @@ import { logout } from '../../store/authSlice';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
-  const [currentSection, setCurrentSection] = useState("home");
+  const [currentSection, setCurrentSection] = useState("home");   
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

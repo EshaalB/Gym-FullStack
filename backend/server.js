@@ -39,7 +39,7 @@ const limiter = rateLimit({
     legacyHeaders: false,
 });
 
-app.use(limiter);
+// app.use(limiter); // Disabled for development to allow unlimited requests
 
 // CORS configuration
 app.use(cors({
@@ -52,6 +52,9 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Add this line to handle preflight requests for all routes
+app.options('*', cors());
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
@@ -231,8 +234,8 @@ const PORT = process.env.PORT || 3500;
 const startServer = async () => {
     try {
         // Initialize database connection
-        await initializeDatabase();
-        
+        const pool = await initializeDatabase();
+        app.locals.pool = pool; // Attach pool to app.locals
         // Start server
         app.listen(PORT, () => {
             console.log(`🚀 Server running on port ${PORT}`);

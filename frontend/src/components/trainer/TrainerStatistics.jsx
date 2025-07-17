@@ -147,7 +147,7 @@ const TrainerStatistics = ({ classes = [], membersInClasses = [], plans = [] }) 
         </div>
       </div>
       {/* Attendance Rates per Class */}
-      <div className="bg-black/50 backdrop-blur-lg rounded-xl p-6 border border-red-500/20">
+        <div className="bg-black/50 backdrop-blur-lg rounded-xl p-6 border border-red-500/20">
         <h3 className="text-xl font-semibold text-white mb-4">Attendance Rate per Class</h3>
         <SimpleBarChart
           data={attendanceRates.map(a => a.rate)}

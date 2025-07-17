@@ -481,11 +481,11 @@ const UserDash = () => {
     <div className="min-h-screen w-full bg-black flex flex-col">
       <Navbar />
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-8">
-        {generalError && (
-          <div className="bg-red-500/20 border border-red-400/30 text-red-300 rounded-lg px-4 py-2 mb-4 text-center font-semibold" aria-live="polite">{generalError}</div>
-        )}
-        {renderContent()}
-      </main>
+          {generalError && (
+            <div className="bg-red-500/20 border border-red-400/30 text-red-300 rounded-lg px-4 py-2 mb-4 text-center font-semibold" aria-live="polite">{generalError}</div>
+          )}
+          {renderContent()}
+        </main>
     </div>
   );
 };

@@ -93,4 +93,69 @@ exports.assignWorkoutPlan = async (req, res) => {
     console.error('Assign workout plan error:', error.message, error.stack);
     res.status(500).json({ error: 'Internal server error', details: error.message });
   }
+};
+
+// Admin: Add a new workout plan
+exports.addPlan = async (req, res) => {
+  try {
+    const { memberId, trainerId, plan_name, duration_weeks } = req.body;
+    if (!memberId || !trainerId || !plan_name) {
+      return res.status(400).json({ error: 'memberId, trainerId, and plan_name are required' });
+    }
+    await executeQuery(
+      'INSERT INTO WorkoutPlan (memberId, trainerId, plan_name, duration_weeks) VALUES (@MemberId, @TrainerId, @PlanName, @DurationWeeks)',
+      [
+        { name: 'MemberId', type: sql.Int, value: memberId },
+        { name: 'TrainerId', type: sql.Int, value: trainerId },
+        { name: 'PlanName', type: sql.VarChar(100), value: plan_name },
+        { name: 'DurationWeeks', type: sql.Int, value: duration_weeks || 4 }
+      ]
+    );
+    res.status(201).json({ message: 'Workout plan created successfully' });
+  } catch (error) {
+    console.error('Add plan error:', error.message, error.stack);
+    res.status(500).json({ error: 'Internal server error', details: error.message });
+  }
+};
+
+// Admin: Update a workout plan
+exports.updatePlan = async (req, res) => {
+  try {
+    const { planId } = req.params;
+    const { memberId, trainerId, plan_name, duration_weeks } = req.body;
+    if (!memberId || !trainerId || !plan_name) {
+      return res.status(400).json({ error: 'memberId, trainerId, and plan_name are required' });
+    }
+    const result = await executeQuery(
+      'UPDATE WorkoutPlan SET memberId = @MemberId, trainerId = @TrainerId, plan_name = @PlanName, duration_weeks = @DurationWeeks WHERE planId = @PlanId',
+      [
+        { name: 'MemberId', type: sql.Int, value: memberId },
+        { name: 'TrainerId', type: sql.Int, value: trainerId },
+        { name: 'PlanName', type: sql.VarChar(100), value: plan_name },
+        { name: 'DurationWeeks', type: sql.Int, value: duration_weeks || 4 },
+        { name: 'PlanId', type: sql.Int, value: planId }
+      ]
+    );
+    res.json({ message: 'Workout plan updated successfully' });
+  } catch (error) {
+    console.error('Update plan error:', error.message, error.stack);
+    res.status(500).json({ error: 'Internal server error', details: error.message });
+  }
+};
+
+// Admin: Delete a workout plan
+exports.deletePlan = async (req, res) => {
+  try {
+    const { planId } = req.params;
+    await executeQuery(
+      'DELETE FROM WorkoutPlan WHERE planId = @PlanId',
+      [
+        { name: 'PlanId', type: sql.Int, value: planId }
+      ]
+    );
+    res.json({ message: 'Workout plan deleted successfully' });
+  } catch (error) {
+    console.error('Delete plan error:', error.message, error.stack);
+    res.status(500).json({ error: 'Internal server error', details: error.message });
+  }
 };  

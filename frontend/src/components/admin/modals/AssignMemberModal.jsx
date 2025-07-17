@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../common/Button";
+import { useDispatch, useSelector } from 'react-redux';
+import { assignMemberToClass, fetchAdminClasses } from '../../../store/dashboardSlice';
+import { logout } from '../../../store/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const AssignMemberModal = ({ open, onClose, onSuccess }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const accessToken = localStorage.getItem('accessToken');
+  const adminLoading = useSelector(state => state.dashboard.admin.loading);
+  const adminError = useSelector(state => state.dashboard.admin.error);
   const [members, setMembers] = useState([]);
   const [classes, setClasses] = useState([]);
   const [selectedMember, setSelectedMember] = useState("");
@@ -9,48 +18,109 @@ const AssignMemberModal = ({ open, onClose, onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [memberClasses, setMemberClasses] = useState([]);
 
+  // Fetch all data on open
   useEffect(() => {
     if (!open) return;
     setError("");
     setSuccess("");
     setSelectedMember("");
     setSelectedClass("");
-    // Fetch all members
-    fetch("/api/users?role=Member&page=1&limit=1000", {
-      headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-    })
-      .then((res) => res.json())
-      .then((data) => setMembers(data.users || []));
-    // Fetch all classes
-    fetch("/api/classes", {
-      headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-    })
-      .then((res) => res.json())
-      .then((data) => setClasses(data.classes || []));
+    setMemberClasses([]);
+    setLoading(true);
+    const token = accessToken;
+    Promise.all([
+      fetch("http://localhost:3500/api/users?role=Member&page=1&limit=1000", {
+        headers: { Authorization: `Bearer ${token}` }
+      }).then(async res => {
+        if (res.status === 401) throw new Error('Session expired. Please log in again.');
+        if (!res.ok) throw new Error('Failed to fetch members');
+        return res.json();
+      }),
+      fetch("http://localhost:3500/api/classes?all=true", {
+        headers: { Authorization: `Bearer ${token}` }
+      }).then(async res => {
+        if (res.status === 401) throw new Error('Session expired. Please log in again.');
+        if (!res.ok) throw new Error('Failed to fetch classes');
+        return res.json();
+      })
+    ])
+      .then(([membersData, classesData]) => {
+        setMembers(membersData.users || []);
+        setClasses(classesData.classes || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message || 'Failed to fetch members or classes');
+        setLoading(false);
+        if (err.message && err.message.includes('Session expired')) {
+          setTimeout(() => {
+            dispatch(logout());
+            navigate('/login');
+          }, 1500);
+        }
+      });
   }, [open]);
+
+  // Fetch member's current classes when a member is selected
+  useEffect(() => {
+    if (!selectedMember) {
+      setMemberClasses([]);
+      return;
+    }
+    const token = accessToken;
+    fetch(`http://localhost:3500/api/users/${selectedMember}/classes`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(async res => {
+        if (res.status === 401) throw new Error('Session expired. Please log in again.');
+        if (!res.ok) throw new Error('Failed to fetch member classes');
+        return res.json();
+      })
+      .then(data => setMemberClasses(data.classes || []))
+      .catch((err) => {
+        setError(err.message || 'Failed to fetch member classes');
+        if (err.message && err.message.includes('Session expired')) {
+          setTimeout(() => {
+            dispatch(logout());
+            navigate('/login');
+          }, 1500);
+        }
+      });
+  }, [selectedMember]);
+
+  // Filter out classes already enrolled, gender, and seat eligibility
+  const eligibleClasses = classes.filter(c => {
+    if (!selectedMember) return true;
+    if (memberClasses.some(mc => mc.classId === c.classId)) return false;
+    const member = members.find(m => m.userId === parseInt(selectedMember));
+    if (!member) return false;
+    if (c.genderSpecific !== 'Any' && c.genderSpecific !== member.gender) return false;
+    if ((c.enrolledCount || 0) >= c.seats) return false;
+    return true;
+  });
 
   const handleAssign = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError("");
     setSuccess("");
+    if (!selectedMember || !selectedClass) {
+      setError("Please select both a member and a class");
+      return;
+    }
+    setLoading(true);
     try {
-      const res = await fetch("/api/classes/assign-member", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-        },
-        body: JSON.stringify({ memberId: selectedMember, classId: selectedClass })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to assign member");
-      setSuccess("Member assigned successfully!");
+      await dispatch(assignMemberToClass({ accessToken, memberId: parseInt(selectedMember), classId: parseInt(selectedClass) })).unwrap();
+      setSuccess("Member assigned to class successfully");
+      await dispatch(fetchAdminClasses(accessToken));
       onSuccess && onSuccess();
-      setTimeout(() => onClose(), 1200);
+      setTimeout(() => {
+        setSuccess("");
+        onClose && onClose();
+      }, 1200);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || err);
     } finally {
       setLoading(false);
     }
@@ -59,52 +129,75 @@ const AssignMemberModal = ({ open, onClose, onSuccess }) => {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
-        <button className="absolute top-2 right-2 text-gray-500 hover:text-red-600" onClick={onClose}>&times;</button>
-        <h2 className="text-xl font-bold mb-4">Assign Member to Class</h2>
-        <form onSubmit={handleAssign} className="space-y-4">
-          <div>
-            <label className="block mb-1 font-medium">Select Member</label>
-            <select
-              className="w-full border rounded px-3 py-2"
-              value={selectedMember}
-              onChange={e => setSelectedMember(e.target.value)}
-              required
-            >
-              <option value="">-- Select Member --</option>
-              {members.map(m => (
-                <option key={m.userId} value={m.userId}>
-                  {m.fName} {m.lName} ({m.email})
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block mb-1 font-medium">Select Class</label>
-            <select
-              className="w-full border rounded px-3 py-2"
-              value={selectedClass}
-              onChange={e => setSelectedClass(e.target.value)}
-              required
-            >
-              <option value="">-- Select Class --</option>
-              {classes.map(c => (
-                <option key={c.classId} value={c.classId}>
-                  {c.className}
-                </option>
-              ))}
-            </select>
-          </div>
-          {error && <div className="text-red-600 text-sm">{error}</div>}
-          {success && <div className="text-green-600 text-sm">{success}</div>}
-          <div className="flex justify-end gap-2">
-            <Button type="button" className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded" onClick={onClose} title="Cancel">Cancel</Button>
-            <Button type="submit" className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" disabled={loading} title="Assign">
-              {loading ? "Assigning..." : "Assign"}
-            </Button>
-          </div>
-        </form>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-white">Assign Member to Class</h2>
+          <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors text-2xl">×</button>
+        </div>
+        {loading || adminLoading ? (
+          <div className="text-white">Loading...</div>
+        ) : error || adminError ? (
+          <div className="text-red-400 mb-4">{error || adminError}</div>
+        ) : (
+          <form onSubmit={handleAssign} className="space-y-5">
+            <div>
+              <label className="block mb-1 font-medium text-white">Select Member</label>
+              <select
+                className="w-full border border-white/10 rounded-lg px-4 py-3 bg-black/60 text-white focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"
+                value={selectedMember}
+                onChange={e => {
+                  setSelectedMember(e.target.value);
+                  setSelectedClass("");
+                }}
+                required
+              >
+                <option value="">-- Select Member --</option>
+                {members.map(m => (
+                  <option key={m.userId} value={m.userId}>
+                    {m.fName} {m.lName}
+                  </option>
+                ))}
+              </select>
+              {selectedMember && memberClasses.length > 0 && (
+                <div className="mt-2 text-sm text-gray-200 bg-black/40 rounded p-2 border border-white/10">
+                  <span className="font-semibold">Current Classes:</span>
+                  <ul className="list-disc ml-5">
+                    {memberClasses.map(c => (
+                      <li key={c.classId}>{c.className} (Trainer: {c.trainerName || c.trainerId})</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {selectedMember && memberClasses.length === 0 && (
+                <div className="mt-2 text-sm text-gray-400">This member is not enrolled in any class.</div>
+              )}
+            </div>
+            <div>
+              <label className="block mb-1 font-medium text-white">Select Class</label>
+              <select
+                className="w-full border border-white/10 rounded-lg px-4 py-3 bg-black/60 text-white focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"
+                value={selectedClass}
+                onChange={e => setSelectedClass(e.target.value)}
+                required
+                disabled={!selectedMember}
+              >
+                <option value="">-- Select Class --</option>
+                {eligibleClasses.map(c => (
+                  <option key={c.classId} value={c.classId}>
+                    {c.className} (Trainer: {c.trainerName || c.trainerId}, {c.enrolledCount || 0}/{c.seats} seats, {c.genderSpecific || "Any"})
+                  </option>
+                ))}
+              </select>
+            </div>
+            {success && <div className="text-green-400 text-sm">{success}</div>}
+            {error && <div className="text-red-400 text-sm">{error}</div>}
+            <div className="flex justify-end gap-2">
+              <Button type="button" onClick={onClose} className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">Cancel</Button>
+              <Button type="submit" className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg" disabled={loading || adminLoading}>Assign</Button>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

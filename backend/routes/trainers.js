@@ -4,7 +4,16 @@ const trainerController = require('../controllers/trainerController');
 const router = express.Router();
 
 // List all trainers
-router.get('/', authenticateToken, requireRole(['Admin']), trainerController.getAllTrainers);
+router.get('/', authenticateToken, trainerController.getAllTrainers);
+
+// Add a new trainer (Admin only)
+router.post('/', authenticateToken, requireRole(['Admin']), trainerController.createTrainer);
+
+// Update a trainer (Admin only)
+router.put('/:trainerId', authenticateToken, requireRole(['Admin']), trainerController.updateTrainer);
+
+// Delete a trainer (Admin only)
+router.delete('/:trainerId', authenticateToken, requireRole(['Admin']), trainerController.deleteTrainer);
 
 // Trainer's own dashboard stats
 router.get('/dashboard', authenticateToken, requireRole(['Trainer']), trainerController.getTrainerDashboard);

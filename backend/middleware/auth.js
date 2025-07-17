@@ -23,13 +23,15 @@ const authenticateToken = (req, res, next) => {
 const requireRole = (roles) => {
     return (req, res, next) => {
         if (!req.user) {
-            return res.status(401).json({ error: 'Authentication required' });
+            return res.status(401).json({ error: 'Unauthorized' });
         }
-
+        // Admins have full permissions
+        if (req.user.userRole === 'Admin') {
+            return next();
+        }
         if (!roles.includes(req.user.userRole)) {
-            return res.status(403).json({ error: 'Insufficient permissions' });
+            return res.status(403).json({ error: 'Forbidden: Insufficient role' });
         }
-
         next();
     };
 };

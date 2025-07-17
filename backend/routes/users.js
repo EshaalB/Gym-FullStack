@@ -11,8 +11,8 @@ router.post('/', authenticateToken, requireRole(['Admin']), userController.creat
 // Delete a user (Admin only)
 router.delete('/:userId', authenticateToken, requireRole(['Admin']), userIdValidation, handleValidationErrors, userController.deleteUser);
 
-// Get all users (Admin only)
-router.get('/', authenticateToken, requireRole(['Admin']), paginationValidation, handleValidationErrors, userController.getAllUsers);
+// Get all users
+router.get('/', authenticateToken, paginationValidation, handleValidationErrors, userController.getAllUsers);
 
 // Get user by ID (Admin or own profile)
 router.get('/:userId', authenticateToken, requireOwnershipOrAdmin, userIdValidation, handleValidationErrors, userController.getUserById);

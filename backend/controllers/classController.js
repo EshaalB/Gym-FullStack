@@ -6,8 +6,11 @@ exports.getAllClasses = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const offset = (page - 1) * limit;
     const classesQuery = `
-      SELECT * FROM Class
-      ORDER BY classId DESC
+      SELECT c.*, u.fName + ' ' + u.lName as trainerName,
+        (SELECT COUNT(*) FROM Class_Enrollment ce WHERE ce.classId = c.classId) as enrolledCount
+      FROM Class c
+      INNER JOIN gymUser u ON c.trainerId = u.userId
+      ORDER BY c.classId DESC
       OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY
     `;
     const countQuery = 'SELECT COUNT(*) as total FROM Class';

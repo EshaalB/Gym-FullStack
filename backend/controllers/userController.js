@@ -37,20 +37,46 @@ exports.getAllUsers = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const offset = (page - 1) * limit;
-    const query = `
-      SELECT userId, fName, lName, email, userRole, dateofBirth, gender, age
-      FROM gymUser 
-      ORDER BY userId DESC
-      OFFSET @Offset ROWS
-      FETCH NEXT @Limit ROWS ONLY
-    `;
-    const countQuery = 'SELECT COUNT(*) as total FROM gymUser';
+    let whereClause = '';
+    let inputs = [
+      { name: 'Offset', type: sql.Int, value: offset },
+      { name: 'Limit', type: sql.Int, value: limit }
+    ];
+    let query, countQuery;
+    if (req.query.role === 'Member') {
+      // Only return members who are active and have MembershipDetails
+      query = `
+        SELECT u.userId, u.fName, u.lName, u.email, u.userRole, u.dateofBirth, u.gender, u.age
+        FROM gymUser u
+        INNER JOIN MembershipDetails m ON u.userId = m.userId
+        WHERE u.userRole = 'Member' AND m.membershipStatus = 'Active'
+        ORDER BY u.userId DESC
+        OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY
+      `;
+      countQuery = `SELECT COUNT(*) as total FROM gymUser u INNER JOIN MembershipDetails m ON u.userId = m.userId WHERE u.userRole = 'Member' AND m.membershipStatus = 'Active'`;
+    } else if (req.query.role) {
+      whereClause = 'WHERE userRole = @Role';
+      inputs.unshift({ name: 'Role', type: sql.VarChar(20), value: req.query.role });
+      query = `
+        SELECT userId, fName, lName, email, userRole, dateofBirth, gender, age
+        FROM gymUser 
+        ${whereClause}
+        ORDER BY userId DESC
+        OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY
+      `;
+      countQuery = `SELECT COUNT(*) as total FROM gymUser ${whereClause}`;
+    } else {
+      query = `
+        SELECT userId, fName, lName, email, userRole, dateofBirth, gender, age
+        FROM gymUser 
+        ORDER BY userId DESC
+        OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY
+      `;
+      countQuery = `SELECT COUNT(*) as total FROM gymUser`;
+    }
     const [users, countResult] = await Promise.all([
-      executeQuery(query, [
-        { name: 'Offset', type: sql.Int, value: offset },
-        { name: 'Limit', type: sql.Int, value: limit }
-      ]),
-      executeSingleQuery(countQuery)
+      executeQuery(query, inputs),
+      executeSingleQuery(countQuery, inputs.slice(0, whereClause ? 1 : 0))
     ]);
     const total = countResult.total;
     const totalPages = Math.ceil(total / limit);
@@ -135,6 +161,27 @@ exports.deleteUser = async (req, res) => {
     if (userId == req.user.userId) {
       return res.status(400).json({ error: 'Cannot delete your own account' });
     }
+    // Delete from TrainerData (if trainer)
+    await executeQuery('DELETE FROM TrainerData WHERE userId = @UserId', [
+      { name: 'UserId', type: sql.Int, value: userId }
+    ]);
+    // Delete from Class_Enrollment (if member)
+    await executeQuery('DELETE FROM Class_Enrollment WHERE memberId = @UserId', [
+      { name: 'UserId', type: sql.Int, value: userId }
+    ]);
+    // Delete classes where this user is the trainer
+    await executeQuery('DELETE FROM Class WHERE trainerId = @UserId', [
+      { name: 'UserId', type: sql.Int, value: userId }
+    ]);
+    // Delete workout plans where this user is member or trainer
+    await executeQuery('DELETE FROM WorkoutPlan WHERE memberId = @UserId OR trainerId = @UserId', [
+      { name: 'UserId', type: sql.Int, value: userId }
+    ]);
+    // Delete payments where this user is the member
+    await executeQuery('DELETE FROM Payment WHERE memberId = @UserId', [
+      { name: 'UserId', type: sql.Int, value: userId }
+    ]);
+    // Delete from gymUser
     await executeQuery('DELETE FROM gymUser WHERE userId = @UserId', [
       { name: 'UserId', type: sql.Int, value: userId }
     ]);

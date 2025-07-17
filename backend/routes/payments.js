@@ -8,15 +8,17 @@ const router = express.Router();
 router.get('/revenue-by-type', authenticateToken, requireRole(['Admin']), paymentController.getRevenueByType);
 // Get monthly revenue (Admin only)
 router.get('/monthly-revenue', authenticateToken, requireRole(['Admin']), paymentController.getMonthlyRevenue);
-// Process payment (Admin/Trainer only)
-router.post('/process', authenticateToken, requireRole(['Admin', 'Trainer']), paymentValidation, handleValidationErrors, paymentController.processPayment);
 // Get pending payments (Admin only)
 router.get('/pending', authenticateToken, requireRole(['Admin']), paymentController.getPendingPayments);
 // Get payment history for a user (Admin or own payments)
 router.get('/user/:userId', authenticateToken, paymentController.getUserPayments);
 // Update payment status (Admin only)
 router.patch('/:paymentId/status', authenticateToken, requireRole(['Admin']), paymentController.updatePaymentStatus);
+// Edit payment details (Admin only)
+router.patch('/:paymentId', authenticateToken, requireRole(['Admin']), paymentController.updatePayment);
 // Get payment statistics (Admin only)
 router.get('/stats/overview', authenticateToken, requireRole(['Admin']), paymentController.getStatsOverview);
+// Get allowed payment methods
+router.get('/methods', authenticateToken, requireRole(['Admin']), paymentController.getPaymentMethods);
 
 module.exports = router;
