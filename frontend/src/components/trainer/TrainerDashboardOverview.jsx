@@ -10,17 +10,25 @@ import {
 } from "react-icons/fa";
 import SkeletonLoader from "../common/SkeletonLoader";
 
-const TrainerDashboardOverview = ({ stats, loading, error }) => {
-  if (loading) return <SkeletonLoader variant="dashboard" />;
-  if (error) return <div className="text-red-500 p-4">{error}</div>;
+const TrainerDashboardOverview = ({ analytics, loading, error }) => {
+  if (loading) return <div className="text-white">Loading analytics...</div>;
+  if (error) return <div className="text-red-400">{error}</div>;
+  if (!analytics) return null;
 
-  // Use default values to avoid undefined errors
-  const {
-    totalClasses = 0,
-    totalMembers = 0,
-    totalPlans = 0,
-    todayAttendance = 0
-  } = stats || {};
+  // Extract analytics data
+  const classStats = analytics.classStats || [];
+  const memberGrowth = analytics.memberGrowth || [];
+  const genderDistribution = analytics.genderDistribution || [];
+  const attendance = analytics.attendance || {};
+  const planAssignmentRate = analytics.planAssignmentRate ?? 0;
+
+  // Prepare chart data
+  const classLabels = classStats.map((c) => c.className);
+  const classMemberCounts = classStats.map((c) => c.memberCount);
+  const memberGrowthLabels = memberGrowth.map((d) => d.monthName);
+  const memberGrowthData = memberGrowth.map((d) => d.count);
+  const genderLabels = genderDistribution.map((d) => d.gender);
+  const genderData = genderDistribution.map((d) => d.count);
 
   // Simple bar chart component
   const SimpleBarChart = ({ data, labels, title, color = "red" }) => (
@@ -33,7 +41,7 @@ const TrainerDashboardOverview = ({ stats, loading, error }) => {
             <div className="flex-1 bg-gray-700 rounded-full h-4">
               <div 
                 className={`bg-${color}-500 h-4 rounded-full transition-all duration-500`}
-                style={{ width: `${(value / Math.max(...data)) * 100}%` }}
+                style={{ width: `${(value / Math.max(...data, 1)) * 100}%` }}
               />
             </div>
             <span className="text-white text-sm w-12">{value}</span>
@@ -58,11 +66,11 @@ const TrainerDashboardOverview = ({ stats, loading, error }) => {
                   'rgb(220, 38, 38)', 
                   'rgb(185, 28, 28)',
                   'rgb(153, 27, 27)'
-                ][index] 
+                ][index % 4] 
               }}
             />
             <span className="text-white text-sm">{labels[index]}</span>
-            <span className="text-white text-sm font-semibold">{value}%</span>
+            <span className="text-white text-sm font-semibold">{value}</span>
           </div>
         ))}
       </div>
@@ -72,89 +80,120 @@ const TrainerDashboardOverview = ({ stats, loading, error }) => {
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-white">Dashboard Overview</h1>
-      
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-gradient-to-r from-red-600 to-red-800 rounded-xl p-6 text-white shadow-lg">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-red-200">My Classes</p>
-              <p className="text-3xl font-bold">{totalClasses}</p>
+              <p className="text-3xl font-bold">{classStats.length}</p>
             </div>
             <FaDumbbell className="text-4xl text-red-300" />
           </div>
         </div>
-        
         <div className="bg-gradient-to-r from-red-700 to-red-900 rounded-xl p-6 text-white shadow-lg">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-red-200">Total Members</p>
-              <p className="text-3xl font-bold">{totalMembers}</p>
+              <p className="text-3xl font-bold">{classStats.reduce((sum, c) => sum + (c.memberCount || 0), 0)}</p>
             </div>
             <FaUsers className="text-4xl text-red-300" />
           </div>
         </div>
-        
         <div className="bg-gradient-to-r from-red-800 to-black rounded-xl p-6 text-white shadow-lg">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-red-200">Workout Plans</p>
-              <p className="text-3xl font-bold">{totalPlans}</p>
+              <p className="text-red-200">Plan Assignment Rate</p>
+              <p className="text-3xl font-bold">{planAssignmentRate}%</p>
             </div>
             <FaClipboardList className="text-4xl text-red-300" />
           </div>
         </div>
-        
         <div className="bg-gradient-to-r from-black to-red-900 rounded-xl p-6 text-white shadow-lg">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-red-200">Today's Attendance</p>
-              <p className="text-3xl font-bold">{todayAttendance}</p>
+              <p className="text-red-200">Attendance Rate</p>
+              <p className="text-3xl font-bold">{attendance.overall?.attendanceRate || 0}%</p>
             </div>
             <FaCalendarCheck className="text-4xl text-red-300" />
           </div>
         </div>
       </div>
-
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-black/50 backdrop-blur-lg rounded-xl p-6 border border-red-500/20">
-          <h3 className="text-xl font-semibold text-white mb-4">Weekly Attendance</h3>
+          <div className="flex items-center space-x-2 mb-4">
+            <FaChartLine className="text-red-400 text-xl" />
+            <h3 className="text-xl font-semibold text-white">Member Growth</h3>
+          </div>
           <SimpleBarChart 
-            data={[15, 12, 18, 14, 16, 10, 8]}
-            labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
-            title="This Week's Attendance"
+            data={memberGrowthData}
+            labels={memberGrowthLabels}
+            title="Monthly Member Growth"
+            color="red"
           />
         </div>
-        
         <div className="bg-black/50 backdrop-blur-lg rounded-xl p-6 border border-red-500/20">
-          <h3 className="text-xl font-semibold text-white mb-4">Class Distribution</h3>
-          <SimplePieChart 
-            data={[40, 30, 20, 10]}
-            labels={['Yoga', 'Strength', 'Cardio', 'Flexibility']}
-            title="Class Types"
+          <div className="flex items-center space-x-2 mb-4">
+            <FaChartBar className="text-red-400 text-xl" />
+            <h3 className="text-xl font-semibold text-white">Class Distribution</h3>
+          </div>
+          <SimpleBarChart 
+            data={classMemberCounts}
+            labels={classLabels}
+            title="Members per Class"
+            color="red"
           />
         </div>
       </div>
-
-      {/* Recent Activity */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-black/50 backdrop-blur-lg rounded-xl p-6 border border-red-500/20">
+          <div className="flex items-center space-x-2 mb-4">
+            <FaChartPie className="text-red-400 text-xl" />
+            <h3 className="text-xl font-semibold text-white">Gender Distribution</h3>
+          </div>
+          <SimplePieChart 
+            data={genderData}
+            labels={genderLabels}
+            title="Gender Distribution"
+          />
+        </div>
+        <div className="bg-black/50 backdrop-blur-lg rounded-xl p-6 border border-red-500/20">
+          <h3 className="text-xl font-semibold text-white mb-4">Attendance Rate by Class (Last Month)</h3>
+          <SimpleBarChart
+            data={(attendance.byClass || []).map((c) => Math.round(c.attendanceRate))}
+            labels={(attendance.byClass || []).map((c) => c.className)}
+            title="Attendance Rate (%)"
+          />
+        </div>
+      </div>
+      {/* Attendance Overview */}
       <div className="bg-black/50 backdrop-blur-lg rounded-xl p-6 border border-red-500/20">
-        <h3 className="text-xl font-semibold text-white mb-4">Recent Activity</h3>
-        <div className="space-y-3">
-          <div className="flex items-center space-x-3 p-3 bg-red-500/10 rounded-lg">
-            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-            <span className="text-white">New member enrolled in Yoga class</span>
-            <span className="text-gray-400 text-sm ml-auto">2 hours ago</span>
+        <h3 className="text-xl font-semibold text-white mb-4">Attendance Overview (Last Month)</h3>
+        <div className="flex flex-wrap gap-6">
+          <div className="text-center">
+            <div className="text-3xl font-bold text-green-400 mb-2">
+              {attendance.overall?.presentCount || 0}
+            </div>
+            <p className="text-gray-400">Present</p>
           </div>
-          <div className="flex items-center space-x-3 p-3 bg-red-500/10 rounded-lg">
-            <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-            <span className="text-white">Workout plan assigned to John Doe</span>
-            <span className="text-gray-400 text-sm ml-auto">4 hours ago</span>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-red-400 mb-2">
+              {attendance.overall?.absentCount || 0}
+            </div>
+            <p className="text-gray-400">Absent</p>
           </div>
-          <div className="flex items-center space-x-3 p-3 bg-red-500/10 rounded-lg">
-            <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-            <span className="text-white">Attendance marked for Strength class</span>
-            <span className="text-gray-400 text-sm ml-auto">6 hours ago</span>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-yellow-400 mb-2">
+              {attendance.overall?.lateCount || 0}
+            </div>
+            <p className="text-gray-400">Late</p>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-blue-400 mb-2">
+              {attendance.overall?.attendanceRate || 0}%
+            </div>
+            <p className="text-gray-400">Attendance Rate</p>
           </div>
         </div>
       </div>

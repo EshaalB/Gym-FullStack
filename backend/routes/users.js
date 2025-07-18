@@ -44,4 +44,7 @@ router.get('/user-stats', userController.getUserStats);
 // Add route for user to see their assigned classes
 router.get('/:userId/classes', authenticateToken, requireOwnershipOrAdmin, userController.getUserClasses);
 
+// Get admin dashboard analytics (Admin only)
+router.get('/dashboard-analytics', authenticateToken, requireRole(['Admin']), userController.getDashboardAnalytics);
+
 module.exports = router; 

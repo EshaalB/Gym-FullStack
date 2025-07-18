@@ -242,13 +242,13 @@ EXEC registerUser @fname = 'Adam',
 CREATE OR ALTER PROCEDURE markAttendance
     @memberId INT,
     @classId INT,  
-    @attendanceStatus VARCHAR(2)
+    @attendanceStatus VARCHAR(2),
+    @currDate DATE
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @enrollmentId INT,
-            @currDate DATE = CAST(GETDATE() AS DATE);
+    DECLARE @enrollmentId INT;
 
     -- Check if member is enrolled in the class
     SELECT @enrollmentId = enrollmentId
@@ -276,14 +276,14 @@ BEGIN
             AND currDate = @currDate
     )
     BEGIN
-        RAISERROR ('FAILED: Attendance already marked for today!', 16, 1);
+        RAISERROR ('FAILED: Attendance already marked for this day!', 16, 1);
         RETURN;
     END
 
     -- Validate attendance status
-    IF @attendanceStatus NOT IN ('P', 'A')
+    IF @attendanceStatus NOT IN ('P', 'A', 'L')
     BEGIN
-        RAISERROR ('FAILED: Invalid attendance status! Use ''P'' for Present or ''A'' for Absent.', 16, 1);
+        RAISERROR ('FAILED: Invalid attendance status! Use ''P'' for Present, ''A'' for Absent, or ''L'' for Late.', 16, 1);
         RETURN;
     END
 
@@ -297,7 +297,8 @@ END;
 -- Example Execution
 EXEC markAttendance @memberId = 2,
 @classId = 3,
-@attendanceStatus = 'P';
+@attendanceStatus = 'P',
+@currDate = '2024-03-23';
 
 ------------------------------------ROHAIL QUERIES---------------------------------------------
 
@@ -382,7 +383,6 @@ BEGIN
 
     PRINT 'Trainer assigned to class successfully!';
 END;
-GO
 
 -- Example Execution
 EXEC AssignTrainerToClass @trainerId = 1, @classId = 1;

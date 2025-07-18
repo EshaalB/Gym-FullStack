@@ -59,6 +59,28 @@ const AdminDash = () => {
   const [currentView, setCurrentView] = React.useState("dashboard");
   const [showSidebar, setShowSidebar] = React.useState(true);
   const [usersPage, setUsersPage] = React.useState(1);
+  const [analytics, setAnalytics] = React.useState(null);
+  const [analyticsLoading, setAnalyticsLoading] = React.useState(false);
+  const [analyticsError, setAnalyticsError] = React.useState("");
+
+  // Fetch analytics for dashboard
+  const fetchDashboardAnalytics = React.useCallback(async () => {
+    setAnalyticsLoading(true);
+    setAnalyticsError("");
+    try {
+      const token = localStorage.getItem("accessToken");
+      const res = await fetch("http://localhost:3500/api/users/dashboard-analytics", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error("Failed to fetch analytics");
+      const data = await res.json();
+      setAnalytics(data);
+    } catch (err) {
+      setAnalyticsError(err.message || "Failed to fetch analytics");
+    } finally {
+      setAnalyticsLoading(false);
+    }
+  }, []);
 
   // Fetch all dashboard data on mount and when currentView changes
   useEffect(() => {
@@ -74,6 +96,13 @@ const AdminDash = () => {
     dispatch(fetchAdminClasses(accessToken));
     dispatch(fetchAdminPayments(accessToken));
   }, [accessToken, dispatch, navigate, currentView, usersPage, usersPagination.limit]);
+
+  // Fetch analytics on mount and when dashboard is viewed
+  useEffect(() => {
+    if (currentView === "dashboard") {
+      fetchDashboardAnalytics();
+    }
+  }, [currentView, fetchDashboardAnalytics]);
 
   // Add/Edit/Delete handlers for users
   const handleAddUser = async (user, onDone) => {
@@ -231,7 +260,7 @@ const AdminDash = () => {
   const renderContent = () => {
     switch (currentView) {
       case "dashboard":
-        return <DashboardOverview stats={stats} loading={loading} error={error} />;
+        return <DashboardOverview analytics={analytics} loading={analyticsLoading} error={analyticsError} />;
       case "users":
         return <UsersTable users={users} loading={loading} error={error} pagination={usersPagination} onPageChange={setUsersPage} onAddUser={handleAddUser} onEditUser={handleEditUser} onDeleteUser={handleDeleteUser} />;
       case "trainers":

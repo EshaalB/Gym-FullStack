@@ -14,7 +14,6 @@ const TrainerSidebar = ({ currentView, setCurrentView }) => {
     { id: "dashboard", label: "Dashboard", icon: FaHome },
     { id: "classes", label: "My Classes", icon: FaDumbbell },
     { id: "attendance", label: "Attendance", icon: FaCalendarCheck },
-    { id: "members", label: "My Members", icon: FaUsers },
     { id: "plans", label: "Workout Plans", icon: FaClipboardList },
     { id: "stats", label: "Statistics", icon: FaChartLine },
   ];

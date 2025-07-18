@@ -897,6 +897,20 @@ export const assignMemberToClass = createAsyncThunk(
   }
 );
 
+// Trainer members thunk
+export const fetchTrainerMembers = createAsyncThunk(
+  'dashboard/fetchTrainerMembers',
+  async (accessToken) => {
+    const response = await fetch('http://localhost:3500/api/trainers/members', {
+      headers: { 'Authorization': `Bearer ${accessToken}` },
+      credentials: 'include',
+    });
+    if (!response.ok) throw new Error('Failed to fetch trainer members');
+    const data = await response.json();
+    return data.members;
+  }
+);
+
 const initialState = {
   admin: {
     stats: {},
@@ -1346,6 +1360,19 @@ const dashboardSlice = createSlice({
       .addCase(sendSupportRequest.rejected, (state, action) => {
         state.user.supportLoading = false;
         state.user.supportError = action.payload || action.error.message;
+      })
+      // Trainer members
+      .addCase(fetchTrainerMembers.pending, (state) => {
+        state.trainer.loading = true;
+        state.trainer.error = null;
+      })
+      .addCase(fetchTrainerMembers.fulfilled, (state, action) => {
+        state.trainer.loading = false;
+        state.trainer.members = action.payload;
+      })
+      .addCase(fetchTrainerMembers.rejected, (state, action) => {
+        state.trainer.loading = false;
+        state.trainer.error = action.error.message;
       });
   },
 });

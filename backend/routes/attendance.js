@@ -8,7 +8,7 @@ const router = express.Router();
 // Mark attendance (Trainer/Admin only)
 router.post('/mark', authenticateToken, requireRole(['Trainer', 'Admin']), attendanceValidation, handleValidationErrors, async (req, res) => {
     try {
-        const { memberId, classId, attendanceStatus } = req.body;
+        const { memberId, classId, attendanceStatus, date } = req.body;
 
         // Check if member is enrolled in the class
         const enrollment = await executeSingleQuery(`
@@ -24,23 +24,31 @@ router.post('/mark', authenticateToken, requireRole(['Trainer', 'Admin']), atten
             return res.status(400).json({ error: 'Member is not enrolled in this class' });
         }
 
-        // Check if attendance already marked for today
+        // Use the provided date or default to today
+        const attendanceDate = date ? new Date(date) : new Date();
+        const dateParam = attendanceDate.toISOString().split('T')[0];
+
+        // Check if attendance already marked for the given date
         const existingAttendance = await executeSingleQuery(`
             SELECT enrollmentId, currDate 
             FROM Attendance 
             WHERE enrollmentId = @EnrollmentId 
-            AND CAST(currDate AS DATE) = CAST(GETDATE() AS DATE)
-        `, [{ name: 'EnrollmentId', type: sql.Int, value: enrollment.enrollmentId }]);
+            AND CAST(currDate AS DATE) = @Date
+        `, [
+            { name: 'EnrollmentId', type: sql.Int, value: enrollment.enrollmentId },
+            { name: 'Date', type: sql.Date, value: dateParam }
+        ]);
 
         if (existingAttendance) {
-            return res.status(400).json({ error: 'Attendance already marked for today' });
+            return res.status(400).json({ error: 'Attendance already marked for this day' });
         }
 
-        // Mark attendance using stored procedure
+        // Mark attendance using stored procedure, passing the date
         await executeProcedure('markAttendance', [
             { name: 'memberId', type: sql.Int, value: memberId },
             { name: 'classId', type: sql.Int, value: classId },
-            { name: 'attendanceStatus', type: sql.VarChar(2), value: attendanceStatus }
+            { name: 'attendanceStatus', type: sql.VarChar(2), value: attendanceStatus },
+            { name: 'currDate', type: sql.Date, value: dateParam }
         ]);
 
         res.json({ message: 'Attendance marked successfully' });
@@ -91,6 +99,39 @@ router.get('/class/:classId', authenticateToken, requireRole(['Trainer', 'Admin'
     }
 });
 
+// Export attendance for a class in a given month/year (for Excel export)
+router.get('/class/:classId', authenticateToken, requireRole(['Trainer', 'Admin']), async (req, res) => {
+    try {
+        const { classId } = req.params;
+        const { month, year } = req.query;
+        if (!month || !year) {
+            return res.status(400).json({ error: 'Month and year are required' });
+        }
+        const query = `
+            SELECT 
+                a.currDate as date,
+                u.fName + ' ' + u.lName as memberName,
+                a.attendanceStatus as status
+            FROM Attendance a
+            JOIN Class_Enrollment ce ON a.enrollmentId = ce.enrollmentId
+            JOIN gymUser u ON ce.memberId = u.userId
+            WHERE ce.classId = @ClassId
+                AND MONTH(a.currDate) = @Month
+                AND YEAR(a.currDate) = @Year
+            ORDER BY a.currDate, memberName
+        `;
+        const attendance = await executeQuery(query, [
+            { name: 'ClassId', type: sql.Int, value: classId },
+            { name: 'Month', type: sql.Int, value: month },
+            { name: 'Year', type: sql.Int, value: year }
+        ]);
+        res.json({ attendance: attendance || [] });
+    } catch (error) {
+        console.error('Export class attendance error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 // Get member attendance history (Member can see own, Admin/Trainer can see any)
 router.get('/member/:memberId', authenticateToken, async (req, res) => {
     try {
@@ -125,7 +166,6 @@ router.get('/member/:memberId', authenticateToken, async (req, res) => {
                 a.attendanceStatus,
                 a.currDate,
                 c.className,
-                c.classTime,
                 t.fName as trainerFirstName,
                 t.lName as trainerLastName,
                 ce.enrollmentId

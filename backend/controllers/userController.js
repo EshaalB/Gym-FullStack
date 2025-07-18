@@ -420,3 +420,126 @@ exports.getUserClasses = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 }; 
+
+// Admin Dashboard Analytics Endpoint
+exports.getDashboardAnalytics = async (req, res) => {
+  try {
+    // 1. User stats
+    const userStatsQuery = `
+      SELECT 
+        COUNT(*) as totalUsers,
+        SUM(CASE WHEN userRole = 'Member' THEN 1 ELSE 0 END) as totalMembers,
+        SUM(CASE WHEN userRole = 'Trainer' THEN 1 ELSE 0 END) as totalTrainers
+      FROM gymUser
+    `;
+    const activeMembershipsQuery = `
+      SELECT COUNT(*) as activeMemberships
+      FROM MembershipDetails
+      WHERE membershipStatus = 'Active'
+    `;
+    const genderDistQuery = `
+      SELECT gender, COUNT(*) as count
+      FROM gymUser
+      GROUP BY gender
+    `;
+    // 2. Monthly user growth (last 6 months)
+    const userGrowthQuery = `
+      SELECT YEAR(createdAt) as year, MONTH(createdAt) as month, DATENAME(MONTH, createdAt) as monthName, COUNT(*) as count
+      FROM gymUser
+      WHERE createdAt >= DATEADD(MONTH, -5, DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0))
+      GROUP BY YEAR(createdAt), MONTH(createdAt), DATENAME(MONTH, createdAt)
+      ORDER BY year ASC, month ASC
+    `;
+    // 3. Revenue trend (last 6 months)
+    const revenueTrendQuery = `
+      SELECT 
+        YEAR(paymentDate) as year, 
+        MONTH(paymentDate) as month,
+        DATENAME(MONTH, paymentDate) as monthName,
+        SUM(amount) as totalRevenue
+      FROM Payment
+      WHERE paymentDate >= DATEADD(MONTH, -5, DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0))
+        AND status = 'Completed'
+      GROUP BY YEAR(paymentDate), MONTH(paymentDate), DATENAME(MONTH, paymentDate)
+      ORDER BY year ASC, month ASC
+    `;
+    // 4. Plan/membership type distribution
+    const planDistQuery = `
+      SELECT membershipType, COUNT(*) as count
+      FROM MembershipDetails
+      WHERE membershipStatus = 'Active'
+      GROUP BY membershipType
+    `;
+    // 5. Attendance stats (overall and by class, last month)
+    const attendanceOverallQuery = `
+      SELECT 
+        COUNT(*) as totalAttendance,
+        SUM(CASE WHEN a.attendanceStatus = 'P' THEN 1 ELSE 0 END) as presentCount,
+        SUM(CASE WHEN a.attendanceStatus = 'A' THEN 1 ELSE 0 END) as absentCount,
+        SUM(CASE WHEN a.attendanceStatus = 'L' THEN 1 ELSE 0 END) as lateCount
+      FROM Attendance a
+      WHERE a.currDate >= DATEADD(MONTH, -1, GETDATE())
+    `;
+    const attendanceByClassQuery = `
+      SELECT 
+        c.className,
+        COUNT(*) as totalAttendance,
+        SUM(CASE WHEN a.attendanceStatus = 'P' THEN 1 ELSE 0 END) as presentCount,
+        SUM(CASE WHEN a.attendanceStatus = 'A' THEN 1 ELSE 0 END) as absentCount,
+        (SUM(CASE WHEN a.attendanceStatus = 'P' THEN 1 ELSE 0 END) * 100.0) / COUNT(*) as attendanceRate
+      FROM Attendance a
+      JOIN Class_Enrollment ce ON a.enrollmentId = ce.enrollmentId
+      JOIN Class c ON ce.classId = c.classId
+      WHERE a.currDate >= DATEADD(MONTH, -1, GETDATE())
+      GROUP BY c.classId, c.className
+      ORDER BY attendanceRate DESC
+    `;
+
+    // Run all queries in parallel
+    const [
+      userStats,
+      activeMemberships,
+      genderDist,
+      userGrowth,
+      revenueTrend,
+      planDist,
+      attendanceOverall,
+      attendanceByClass
+    ] = await Promise.all([
+      executeSingleQuery(userStatsQuery),
+      executeSingleQuery(activeMembershipsQuery),
+      executeQuery(genderDistQuery),
+      executeQuery(userGrowthQuery),
+      executeQuery(revenueTrendQuery),
+      executeQuery(planDistQuery),
+      executeSingleQuery(attendanceOverallQuery),
+      executeQuery(attendanceByClassQuery)
+    ]);
+
+    // Calculate overall attendance rate
+    const totalAttendance = attendanceOverall.totalAttendance || 0;
+    const presentCount = attendanceOverall.presentCount || 0;
+    const overallAttendanceRate = totalAttendance > 0 ? (presentCount / totalAttendance) * 100 : 0;
+
+    res.json({
+      userStats: {
+        ...userStats,
+        activeMemberships: activeMemberships.activeMemberships || 0
+      },
+      genderDistribution: genderDist,
+      userGrowth,
+      revenueTrend,
+      planDistribution: planDist,
+      attendance: {
+        overall: {
+          ...attendanceOverall,
+          attendanceRate: Math.round(overallAttendanceRate * 100) / 100
+        },
+        byClass: attendanceByClass
+      }
+    });
+  } catch (error) {
+    console.error('Get dashboard analytics error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}; 

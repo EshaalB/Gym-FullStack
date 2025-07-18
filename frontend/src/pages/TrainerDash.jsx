@@ -12,7 +12,6 @@ import TrainerClassesTable from "../components/trainer/TrainerClassesTable";
 import AttendanceManagement from "../components/trainer/AttendanceManagement";
 import WorkoutPlanAssignment from "../components/trainer/WorkoutPlanAssignment";
 import TrainerStatistics from "../components/trainer/TrainerStatistics";
-import MyMembers from "../components/trainer/MyMembers";
 
 const TrainerDash = () => {
   const navigate = useNavigate();
@@ -27,6 +26,28 @@ const TrainerDash = () => {
   const user = useSelector(state => state.auth.user);
   const [currentView, setCurrentView] = React.useState("dashboard");
   const [showSidebar, setShowSidebar] = React.useState(true);
+  const [analytics, setAnalytics] = React.useState(null);
+  const [analyticsLoading, setAnalyticsLoading] = React.useState(false);
+  const [analyticsError, setAnalyticsError] = React.useState("");
+
+  // Fetch analytics for dashboard
+  const fetchDashboardAnalytics = React.useCallback(async () => {
+    setAnalyticsLoading(true);
+    setAnalyticsError("");
+    try {
+      const token = localStorage.getItem("accessToken");
+      const res = await fetch("http://localhost:3500/api/trainers/dashboard-analytics", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error("Failed to fetch analytics");
+      const data = await res.json();
+      setAnalytics(data);
+    } catch (err) {
+      setAnalyticsError(err.message || "Failed to fetch analytics");
+    } finally {
+      setAnalyticsLoading(false);
+    }
+  }, []);
 
   // Fetch all trainer data on mount
   useEffect(() => {
@@ -51,6 +72,13 @@ const TrainerDash = () => {
     }
   }, [currentView, accessToken, dispatch, classes]);
 
+  // Fetch analytics on mount and when dashboard is viewed
+  React.useEffect(() => {
+    if (currentView === "dashboard") {
+      fetchDashboardAnalytics();
+    }
+  }, [currentView, fetchDashboardAnalytics]);
+
   // Handler to refresh all data after actions
   const refreshAll = () => {
     dispatch(fetchTrainerStats(accessToken));
@@ -63,7 +91,7 @@ const TrainerDash = () => {
   const renderContent = () => {
     switch (currentView) {
       case "dashboard":
-        return <TrainerDashboardOverview stats={stats} loading={loading} error={error} />;
+        return <TrainerDashboardOverview analytics={analytics} loading={analyticsLoading} error={analyticsError} />;
       case "classes":
         return <TrainerClassesTable classes={classes} membersInClasses={members} loading={loading} />;
       case "attendance":
@@ -76,8 +104,6 @@ const TrainerDash = () => {
       case "statistics":
       case "stats":
         return <TrainerStatistics stats={stats} classes={classes} membersInClasses={members} plans={workoutPlans} />;
-      case "members":
-        return <MyMembers membersInClasses={members} loading={loading} error={error} />;
       default:
         return <TrainerDashboardOverview stats={stats} loading={loading} error={error} />;
     }

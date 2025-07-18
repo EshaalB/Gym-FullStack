@@ -14,6 +14,9 @@ router.get('/trainer', authenticateToken, requireRole(['Trainer']), planControll
 // Trainer: Assign a workout plan to a member
 router.post('/trainer/assign', authenticateToken, requireRole(['Trainer']), planController.assignWorkoutPlan);
 
+// Trainer: Create and assign a workout plan in one go
+router.post('/trainer/create-assign', authenticateToken, requireRole(['Trainer']), planController.createAndAssignWorkoutPlan);
+
 // Admin: Add a new workout plan
 router.post('/', authenticateToken, requireRole(['Admin']), planController.addPlan);
 // Admin: Update a workout plan

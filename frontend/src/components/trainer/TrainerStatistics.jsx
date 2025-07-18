@@ -78,11 +78,13 @@ const TrainerStatistics = ({ classes = [], membersInClasses = [], plans = [] }) 
     };
   });
 
-  // Plan assignment rate
-  const planAssignmentRate = totalMembers > 0 ? Math.round((plans.length / totalMembers) * 100) : 0;
+  // Calculate unique members with plans assigned
+  const membersWithPlans = new Set((plans || []).map(plan => plan.memberId));
+  const planAssignmentRate = totalMembers > 0 ? Math.round((membersWithPlans.size / totalMembers) * 100) : 0;
 
-  // Today's attendance rate
-  const todayAttendance = (membersInClasses || []).filter(m => m.attendanceStatus === 'P').length;
+  // Calculate today's attendance based on currDate
+  const todayStr = new Date().toISOString().split('T')[0];
+  const todayAttendance = (membersInClasses || []).filter(m => m.attendanceStatus === 'P' && m.currDate && m.currDate.split('T')[0] === todayStr).length;
   const todayAttendanceRate = totalMembers > 0 ? Math.round((todayAttendance / totalMembers) * 100) : 0;
 
   return (

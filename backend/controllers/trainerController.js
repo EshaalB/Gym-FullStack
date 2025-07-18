@@ -272,3 +272,104 @@ exports.getTrainerMembers = async (req, res) => {
     res.status(500).json({ error: 'Internal server error', details: error.message });
   }
 }; 
+
+// Trainer Dashboard Analytics Endpoint
+exports.getTrainerDashboardAnalytics = async (req, res) => {
+  try {
+    const trainerId = req.user.userId;
+    // 1. Class stats
+    const classStatsQuery = `
+      SELECT c.classId, c.className, c.genderSpecific, c.seats,
+        (SELECT COUNT(*) FROM Class_Enrollment ce WHERE ce.classId = c.classId) as memberCount
+      FROM Class c
+      WHERE c.trainerId = @TrainerId
+      ORDER BY c.className
+    `;
+    // 2. Gender distribution of members
+    const genderDistQuery = `
+      SELECT u.gender, COUNT(*) as count
+      FROM Class_Enrollment ce
+      JOIN Class c ON ce.classId = c.classId
+      JOIN gymUser u ON ce.memberId = u.userId
+      WHERE c.trainerId = @TrainerId
+      GROUP BY u.gender
+    `;
+    // 3. Attendance rates (overall, by class, by week)
+    const attendanceOverallQuery = `
+      SELECT 
+        COUNT(*) as totalAttendance,
+        SUM(CASE WHEN a.attendanceStatus = 'P' THEN 1 ELSE 0 END) as presentCount,
+        SUM(CASE WHEN a.attendanceStatus = 'A' THEN 1 ELSE 0 END) as absentCount,
+        SUM(CASE WHEN a.attendanceStatus = 'L' THEN 1 ELSE 0 END) as lateCount
+      FROM Attendance a
+      JOIN Class_Enrollment ce ON a.enrollmentId = ce.enrollmentId
+      JOIN Class c ON ce.classId = c.classId
+      WHERE c.trainerId = @TrainerId AND a.currDate >= DATEADD(MONTH, -1, GETDATE())
+    `;
+    const attendanceByClassQuery = `
+      SELECT 
+        c.className,
+        COUNT(*) as totalAttendance,
+        SUM(CASE WHEN a.attendanceStatus = 'P' THEN 1 ELSE 0 END) as presentCount,
+        SUM(CASE WHEN a.attendanceStatus = 'A' THEN 1 ELSE 0 END) as absentCount,
+        (SUM(CASE WHEN a.attendanceStatus = 'P' THEN 1 ELSE 0 END) * 100.0) / COUNT(*) as attendanceRate
+      FROM Attendance a
+      JOIN Class_Enrollment ce ON a.enrollmentId = ce.enrollmentId
+      JOIN Class c ON ce.classId = c.classId
+      WHERE c.trainerId = @TrainerId AND a.currDate >= DATEADD(MONTH, -1, GETDATE())
+      GROUP BY c.classId, c.className
+      ORDER BY attendanceRate DESC
+    `;
+    // 4. Plan assignment rate (unique members with a plan / total unique members)
+    const planAssignmentQuery = `
+      SELECT COUNT(DISTINCT wp.memberId) as membersWithPlans
+      FROM WorkoutPlan wp
+      JOIN Class_Enrollment ce ON wp.memberId = ce.memberId
+      JOIN Class c ON ce.classId = c.classId
+      WHERE c.trainerId = @TrainerId
+    `;
+    const totalMembersQuery = `
+      SELECT COUNT(DISTINCT ce.memberId) as totalMembers
+      FROM Class_Enrollment ce
+      JOIN Class c ON ce.classId = c.classId
+      WHERE c.trainerId = @TrainerId
+    `;
+    // Run all queries in parallel
+    const [
+      classStats,
+      genderDist,
+      attendanceOverall,
+      attendanceByClass,
+      planAssignment,
+      totalMembers
+    ] = await Promise.all([
+      executeQuery(classStatsQuery, [{ name: 'TrainerId', type: sql.Int, value: trainerId }]),
+      executeQuery(genderDistQuery, [{ name: 'TrainerId', type: sql.Int, value: trainerId }]),
+      executeSingleQuery(attendanceOverallQuery, [{ name: 'TrainerId', type: sql.Int, value: trainerId }]),
+      executeQuery(attendanceByClassQuery, [{ name: 'TrainerId', type: sql.Int, value: trainerId }]),
+      executeSingleQuery(planAssignmentQuery, [{ name: 'TrainerId', type: sql.Int, value: trainerId }]),
+      executeSingleQuery(totalMembersQuery, [{ name: 'TrainerId', type: sql.Int, value: trainerId }])
+    ]);
+    // Calculate plan assignment rate
+    const planAssignmentRate = totalMembers.totalMembers > 0 ? Math.round((planAssignment.membersWithPlans / totalMembers.totalMembers) * 100) : 0;
+    // Calculate overall attendance rate
+    const totalAttendance = attendanceOverall.totalAttendance || 0;
+    const presentCount = attendanceOverall.presentCount || 0;
+    const overallAttendanceRate = totalAttendance > 0 ? (presentCount / totalAttendance) * 100 : 0;
+    res.json({
+      classStats,
+      genderDistribution: genderDist,
+      attendance: {
+        overall: {
+          ...attendanceOverall,
+          attendanceRate: Math.round(overallAttendanceRate * 100) / 100
+        },
+        byClass: attendanceByClass
+      },
+      planAssignmentRate
+    });
+  } catch (error) {
+    console.error('Get trainer dashboard analytics error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}; 

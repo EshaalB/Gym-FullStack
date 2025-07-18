@@ -24,4 +24,7 @@ router.get('/classes', authenticateToken, requireRole(['Trainer']), trainerContr
 // Get all members in the trainer's classes
 router.get('/members', authenticateToken, requireRole(['Trainer']), trainerController.getTrainerMembers);
 
+// Trainer dashboard analytics
+router.get('/dashboard-analytics', authenticateToken, requireRole(['Trainer']), trainerController.getTrainerDashboardAnalytics);
+
 module.exports = router; 
