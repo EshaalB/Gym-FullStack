@@ -250,3 +250,25 @@ exports.deleteTrainer = async (req, res) => {
     res.status(500).json({ error: 'Internal server error', details: error.message });
   }
 }; 
+
+// Get all members in the trainer's classes
+exports.getTrainerMembers = async (req, res) => {
+  try {
+    const trainerId = req.user.userId;
+    const query = `
+      SELECT u.userId as memberId, u.fName, u.lName, u.email, u.gender, ce.classId, c.className, ce.enrollmentId
+      FROM Class_Enrollment ce
+      JOIN gymUser u ON ce.memberId = u.userId
+      JOIN Class c ON ce.classId = c.classId
+      WHERE c.trainerId = @TrainerId
+      ORDER BY c.className, u.fName, u.lName
+    `;
+    const members = await executeQuery(query, [
+      { name: 'TrainerId', type: sql.Int, value: trainerId }
+    ]);
+    res.json({ members });
+  } catch (error) {
+    console.error('Trainer members fetch error:', error.message, error.stack);
+    res.status(500).json({ error: 'Internal server error', details: error.message });
+  }
+}; 

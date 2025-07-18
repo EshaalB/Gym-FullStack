@@ -1373,6 +1373,7 @@ export const selectTrainerAttendanceLoading = (state) => state.dashboard.trainer
 export const selectTrainerWorkoutPlans = (state) => state.dashboard.trainer.workoutPlans;
 export const selectTrainerPlanAssignLoading = (state) => state.dashboard.trainer.planAssignLoading;
 export const selectTrainerPlanAssignError = (state) => state.dashboard.trainer.planAssignError;
+export const selectTrainerMembers = (state) => state.dashboard.trainer.members;
 
 // User selectors
 export const selectUserStats = (state) => state.dashboard.user.stats;

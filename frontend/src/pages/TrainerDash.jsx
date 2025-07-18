@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTrainerStats, selectTrainerStats, selectTrainerLoading, selectTrainerError, fetchTrainerClasses, selectTrainerClasses, fetchTrainerAttendance, selectTrainerAttendance, fetchTrainerWorkoutPlans, selectTrainerWorkoutPlans } from "../store/dashboardSlice";
+import { fetchTrainerStats, selectTrainerStats, selectTrainerLoading, selectTrainerError, fetchTrainerClasses, selectTrainerClasses, fetchTrainerAttendance, fetchTrainerWorkoutPlans, selectTrainerWorkoutPlans, fetchTrainerMembers, selectTrainerMembers } from "../store/dashboardSlice";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
   
@@ -22,8 +22,8 @@ const TrainerDash = () => {
   const loading = useSelector(selectTrainerLoading);
   const error = useSelector(selectTrainerError);
   const classes = useSelector(selectTrainerClasses);
-  const attendance = useSelector(selectTrainerAttendance);
   const workoutPlans = useSelector(selectTrainerWorkoutPlans);
+  const members = useSelector(selectTrainerMembers);
   const user = useSelector(state => state.auth.user);
   const [currentView, setCurrentView] = React.useState("dashboard");
   const [showSidebar, setShowSidebar] = React.useState(true);
@@ -38,6 +38,7 @@ const TrainerDash = () => {
     dispatch(fetchTrainerStats(accessToken));
     dispatch(fetchTrainerClasses(accessToken));
     dispatch(fetchTrainerWorkoutPlans(accessToken));
+    dispatch(fetchTrainerMembers(accessToken));
   }, [accessToken, dispatch, navigate]);
 
   // Fetch attendance when attendance tab is selected
@@ -56,6 +57,7 @@ const TrainerDash = () => {
     dispatch(fetchTrainerClasses(accessToken));
     dispatch(fetchTrainerAttendance({ accessToken, classId: classes[0]?.classId || 0 }));
     dispatch(fetchTrainerWorkoutPlans(accessToken));
+    dispatch(fetchTrainerMembers(accessToken));
   };
 
   const renderContent = () => {
@@ -63,19 +65,19 @@ const TrainerDash = () => {
       case "dashboard":
         return <TrainerDashboardOverview stats={stats} loading={loading} error={error} />;
       case "classes":
-        return <TrainerClassesTable classes={classes} loading={loading} />;
+        return <TrainerClassesTable classes={classes} membersInClasses={members} loading={loading} />;
       case "attendance":
-        return <AttendanceManagement classes={classes} membersInClasses={attendance} loading={loading} onAction={refreshAll} />;
+        return <AttendanceManagement classes={classes} membersInClasses={members} loading={loading} onAction={refreshAll} />;
       case "workoutPlans":
       case "plans":
-        return <WorkoutPlanAssignment membersInClasses={workoutPlans} loading={loading} onAction={refreshAll} />;
+        return <WorkoutPlanAssignment membersInClasses={members} loading={loading} onAction={refreshAll} />;
       case "assign-plans":
-        return <WorkoutPlanAssignment membersInClasses={workoutPlans} loading={loading} onAction={refreshAll} />;
+        return <WorkoutPlanAssignment membersInClasses={members} loading={loading} onAction={refreshAll} />;
       case "statistics":
       case "stats":
-        return <TrainerStatistics stats={stats} classes={classes} membersInClasses={attendance} plans={workoutPlans} />;
+        return <TrainerStatistics stats={stats} classes={classes} membersInClasses={members} plans={workoutPlans} />;
       case "members":
-        return <MyMembers membersInClasses={attendance} loading={loading} error={error} />;
+        return <MyMembers membersInClasses={members} loading={loading} error={error} />;
       default:
         return <TrainerDashboardOverview stats={stats} loading={loading} error={error} />;
     }
