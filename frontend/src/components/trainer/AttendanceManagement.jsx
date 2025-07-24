@@ -6,8 +6,10 @@ import toast from "react-hot-toast";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import "./AttendanceCalendar.css";
+import { useSelector } from "react-redux";
 
 const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
+  const token = useSelector(state => state.auth.token);
   const [selectedClass, setSelectedClass] = useState(classes[0]?.classId || null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
@@ -19,36 +21,40 @@ const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
   const [exporting, setExporting] = useState(false);
   const [calendarIndicators, setCalendarIndicators] = useState({}); // { 'YYYY-MM-DD': true }
   const [alreadyMarked, setAlreadyMarked] = useState({}); // { 'YYYY-MM-DD': true }
+  const [loadingIndicators, setLoadingIndicators] = useState(false);
 
   // Fetch attendance indicators for the month (for calendar dots/ticks)
+  const fetchMarkedDays = async () => {
+    if (!selectedClass || !token) return;
+    setLoadingIndicators(true);
+    try {
+      const year = selectedDate.getFullYear();
+      const month = selectedDate.getMonth() + 1;
+      const res = await fetch(`http://localhost:3500/api/attendance/class/${selectedClass}?year=${year}&month=${month}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error('Failed to fetch attendance days');
+      const data = await res.json();
+      const indicators = {};
+      const marked = {};
+      (data.markedDays || []).forEach(day => {
+        indicators[day] = true;
+        marked[day] = true;
+      });
+      setCalendarIndicators(indicators);
+      setAlreadyMarked(marked);
+    } catch (err) {
+      setCalendarIndicators({});
+      setAlreadyMarked({});
+      toast.error("Failed to fetch attendance indicators");
+    }
+    setLoadingIndicators(false);
+  };
+
   useEffect(() => {
-    if (!selectedClass) return;
-    const fetchMarkedDays = async () => {
-      try {
-        const accessToken = localStorage.getItem('accessToken');
-        const year = selectedDate.getFullYear();
-        const month = selectedDate.getMonth() + 1;
-        const res = await fetch(`http://localhost:3500/api/attendance/class/${selectedClass}?year=${year}&month=${month}`, {
-          headers: { 'Authorization': `Bearer ${accessToken}` }
-        });
-        if (!res.ok) throw new Error('Failed to fetch attendance days');
-        const data = await res.json();
-        // Assume backend returns { markedDays: ["2024-06-01", ...] }
-        const indicators = {};
-        const marked = {};
-        (data.markedDays || []).forEach(day => {
-          indicators[day] = true;
-          marked[day] = true;
-        });
-        setCalendarIndicators(indicators);
-        setAlreadyMarked(marked);
-      } catch {
-        setCalendarIndicators({});
-        setAlreadyMarked({});
-      }
-    };
     fetchMarkedDays();
-  }, [selectedClass, selectedDate]);
+    // eslint-disable-next-line
+  }, [selectedClass, selectedDate, token]);
 
   const handleClassSelect = (e) => {
     setSelectedClass(e.target.value);
@@ -117,14 +123,12 @@ const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
       return;
     }
     try {
-      // Validate payload and ensure correct types
       for (const [memberId, status] of attendanceEntries) {
         if (!memberId || !status) {
           toast.error("Invalid attendance data");
           return;
         }
       }
-      const accessToken = localStorage.getItem('accessToken');
       await Promise.all(attendanceEntries.map(async ([memberId, status]) => {
         const payload = {
           memberId: Number(memberId),
@@ -132,29 +136,27 @@ const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
           attendanceStatus: status,
           date: dateStr
         };
-        console.log('Sending attendance payload:', payload);
         const res = await fetch('http://localhost:3500/api/attendance/mark', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(payload)
         });
         let data = {};
         try { data = await res.json(); } catch {}
         if (!res.ok) {
-          console.error('Attendance mark error:', data);
           toast.error(data.error || `Failed for member ${memberId}`);
           throw new Error(data.error || `Failed for member ${memberId}`);
         }
       }));
       toast.success("Attendance marked successfully!");
       setShowModal(false);
-      setCalendarIndicators(prev => ({ ...prev, [dateStr]: true }));
-      setAlreadyMarked(prev => ({ ...prev, [dateStr]: true }));
-    } catch {
-      // Error toast already shown above
+      // Refresh indicators after marking
+      fetchMarkedDays();
+    } catch (err) {
+      toast.error(err.message || "Failed to mark attendance");
     }
   };
 
@@ -164,13 +166,13 @@ const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
     setHistoryLoading(true);
     setHistoryData([]);
     try {
-      const accessToken = localStorage.getItem('accessToken');
       const res = await fetch(`http://localhost:3500/api/attendance/member/${member.memberId}?classId=${selectedClass}`,
-        { headers: { 'Authorization': `Bearer ${accessToken}` } });
+        { headers: { 'Authorization': `Bearer ${token}` } });
       const data = await res.json();
       setHistoryData(data.attendance || []);
     } catch {
       setHistoryData([]);
+      toast.error("Failed to fetch member history");
     }
     setHistoryLoading(false);
   };
@@ -179,13 +181,11 @@ const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
   const handleExportCSV = async () => {
     setExporting(true);
     try {
-      const accessToken = localStorage.getItem('accessToken');
       const res = await fetch(`http://localhost:3500/api/attendance/class/${selectedClass}?month=${selectedDate.getMonth() + 1}&year=${selectedDate.getFullYear()}`, {
-        headers: { 'Authorization': `Bearer ${accessToken}` }
+        headers: { 'Authorization': `Bearer ${token}` }
       });
       if (!res.ok) throw new Error('Failed to fetch attendance data');
       const data = await res.json();
-      // Assume data.attendance is an array of { date, memberName, status }
       const workbook = new ExcelJS.Workbook();
       const sheet = workbook.addWorksheet('Attendance');
       sheet.columns = [
@@ -240,9 +240,7 @@ const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
           value={selectedDate}
           className="custom-calendar-theme w-full max-w-2xl rounded-xl shadow-lg border border-red-500/30 bg-black/60 text-white glassy-calendar"
           tileClassName={({ date }) => {
-            // Highlight today
             if (date.toDateString() === new Date().toDateString()) return "calendar-today";
-            // Marked attendance: make the whole tile green
             const key = date.toISOString().split('T')[0];
             if (calendarIndicators[key]) return "calendar-attendance-marked calendar-attendance-full";
             return null;
@@ -256,7 +254,6 @@ const AttendanceManagement = ({ classes = [], membersInClasses = [] }) => {
             return (
               <div className="flex flex-col items-center justify-center">
                 {calendarIndicators[key] && <FaCheckCircle className="text-green-400 text-lg mt-1 glassy-tick" title="Attendance marked" />}
-                {/* Use a clickable span instead of a button to avoid nested button error */}
                 {!alreadyMarked[key] && (
                   <span
                     className="mt-1 p-1 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs flex items-center glassy-add-btn cursor-pointer"

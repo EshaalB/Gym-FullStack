@@ -4,13 +4,6 @@ import { NavLink } from "react-router-dom";
 
 const links = [
   { to: "/userdash", label: "Dashboard", icon: <FaHome /> },
-  { to: "/userdash/book", label: "Book Class", icon: <FaCalendarAlt /> },
-  { to: "/userdash/classes", label: "My Classes", icon: <FaClipboardList /> },
-  { to: "/userdash/plans", label: "Workout Plans", icon: <FaDumbbell /> },
-  { to: "/userdash/payments", label: "Payments", icon: <FaMoneyBill /> },
-  { to: "/userdash/profile", label: "Profile", icon: <FaUser /> },
-  { to: "/userdash/bmi", label: "BMI Calculator", icon: <FaWeight /> },
-  { to: "/userdash/support", label: "Support", icon: <FaHeadset /> },
 ];
 
 const UserSidebar = ({ currentView, setCurrentView }) => {
