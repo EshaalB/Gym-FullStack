@@ -53,13 +53,13 @@ const Trainers = () => {
         {
           before: before1,
           after: before2,
-          client: "Usman Malik",
+          client: "Hailey Smith",
           transformation: "Lost 30kg, gained 15kg muscle in 18 months"
         },
         {
           before: before3,
           after: before4,
-          client: "Bilal Ahmed",
+          client: "Jasmine Sunshine",
           transformation: "Increased bench press from 60kg to 120kg"
         }
       ]
@@ -99,7 +99,7 @@ const Trainers = () => {
         {
           before: before5,
           after: before6,
-          client: "Ayesha Hassan",
+          client: "Jason Alex",
           transformation: "Lost 25kg, improved flexibility and strength"
         },
         {

@@ -167,7 +167,7 @@ const Plans = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 + index * 0.1 }}
-              className={`relative bg-black/20 backdrop-blur-xl rounded-2xl p-8 border transition-all duration-300 hover:scale-105 ${
+              className={`relative flex flex-col h-full min-h-[600px] bg-black/20 backdrop-blur-xl rounded-2xl p-8 border transition-all duration-300 hover:scale-105 ${
                 plan.popular
                   ? "border-red-400/30 bg-red-500/5"
                   : "border-white/10 hover:border-white/20"
@@ -218,7 +218,7 @@ const Plans = () => {
                 ))}
               </ul>
 
-              <div className="flex justify-center mt-6">
+              <div className="flex justify-center mt-auto pt-6">
                 <Button 
                   title={plan.popular ? "Get Started" : "Choose Plan"}
                   link="/signup"

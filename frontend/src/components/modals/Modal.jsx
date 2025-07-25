@@ -9,8 +9,8 @@ const Modal = ({ open, isOpen, onClose, title, children, actions, size = "md" })
   if (size === "xl") maxWidth = "max-w-4xl";
   
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className={`bg-[#181a20] rounded-2xl shadow-2xl border border-white/10 w-full ${maxWidth} p-8 relative animate-fadeIn mt-16`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center min-h-screen bg-black/60 backdrop-blur-sm">
+      <div className={`bg-[#181a20] rounded-2xl shadow-2xl border border-white/10 w-full ${maxWidth} p-8 relative animate-fadeIn`}>
         <button
           className="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl font-bold"
           onClick={onClose}

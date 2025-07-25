@@ -16,20 +16,20 @@ const Button = ({ title, children, link, href, className = "", onClick, ...props
 
   if (href) {
     return (
-      <a href={href} className={className} {...props}>
+      <a href={href} className={`flex justify-center items-center text-center ${className}`} {...props}>
         {content}
       </a>
     );
   }
   if (link) {
     return (
-      <a href={link} className={className} onClick={handleClick} {...props}>
+      <a href={link} className={`flex justify-center items-center text-center ${className}`} onClick={handleClick} {...props}>
         {content}
       </a>
     );
   }
   return (
-    <button onClick={handleClick} className={className} {...props}>
+    <button onClick={handleClick} className={`flex justify-center items-center text-center ${className}`} {...props}>
       {content}
     </button>
   );
