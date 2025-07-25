@@ -1,37 +1,38 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../common/Button";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAdminClasses } from '../../../store/dashboardSlice';
+import { fetchAdminClasses, fetchAdminTrainers } from '../../../store/dashboardSlice';
 import { logout } from '../../../store/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { FaTimes, FaUserTie } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import Modal from '../../modals/Modal';
 
-const AssignMemberModal = ({ open, onClose, onSuccess }) => {
+const AssignTrainerModal = ({ open, onClose, onSuccess }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
   const adminLoading = useSelector(state => state.dashboard.admin.loading);
-  const [members, setMembers] = useState([]);
+  
+  const [trainers, setTrainers] = useState([]);
   const [classes, setClasses] = useState([]);
-  const [selectedMember, setSelectedMember] = useState("");
+  const [selectedTrainer, setSelectedTrainer] = useState("");
   const [selectedClass, setSelectedClass] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [memberClasses, setMemberClasses] = useState([]);
 
-  // Fetch members and classes when modal opens
+  // Fetch trainers and classes when modal opens
   useEffect(() => {
     if (open) {
-      fetchMembers();
+      fetchTrainers();
       fetchClasses();
     }
   }, [open]);
 
-  const fetchMembers = async () => {
+  const fetchTrainers = async () => {
     try {
-      const response = await fetch('http://localhost:3500/api/users?role=Member', {
+      const response = await fetch('http://localhost:3500/api/trainers?all=true', {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (response.status === 401) {
@@ -39,12 +40,12 @@ const AssignMemberModal = ({ open, onClose, onSuccess }) => {
         navigate('/login');
         return;
       }
-      if (!response.ok) throw new Error('Failed to fetch members');
+      if (!response.ok) throw new Error('Failed to fetch trainers');
       const data = await response.json();
-      setMembers(data.users || []);
+      setTrainers(data.trainers || []);
     } catch (err) {
-      console.error('Error fetching members:', err);
-      let message = err.message || 'Failed to fetch members';
+      console.error('Error fetching trainers:', err);
+      let message = err.message || 'Failed to fetch trainers';
       if (message === "Failed to fetch" || message.includes("fetch")) {
         message = "Unable to connect to server. Please check your connection and try again.";
       }
@@ -75,50 +76,36 @@ const AssignMemberModal = ({ open, onClose, onSuccess }) => {
     }
   };
 
-  const fetchMemberClasses = async (memberId) => {
-    try {
-      const response = await fetch(`http://localhost:3500/api/users/${memberId}/classes`, {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      });
-      if (!response.ok) {
-        // If 404 or other error, assume no classes
-        setMemberClasses([]);
-        return;
-      }
-      const data = await response.json();
-      setMemberClasses(data.classes || []);
-    } catch (err) {
-      console.error('Error fetching member classes:', err);
-      setMemberClasses([]);
-    }
-  };
+  // Filter trainers who have less than 3 classes (workload constraint)
+  const eligibleTrainers = trainers.filter(trainer => {
+    const trainerClassCount = classes.filter(c => c.trainerId === trainer.userId).length;
+    return trainerClassCount < 3; // Assuming max 3 classes per trainer
+  });
 
-  // Filter classes that the member isn't already enrolled in
-  const eligibleClasses = classes.filter(c => 
-    !memberClasses.some(mc => mc.classId === c.classId)
-  );
+  // Filter classes that can have trainers assigned
+  const eligibleClasses = classes; // For simplicity, show all classes
 
   const handleAssign = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
     
-    if (!selectedMember || !selectedClass) {
-      setError("Please select both a member and a class");
+    if (!selectedTrainer || !selectedClass) {
+      setError("Please select both a trainer and a class");
       return;
     }
 
     setLoading(true);
     
     try {
-      const response = await fetch('http://localhost:3500/api/classes/assign-member', {
+      const response = await fetch('http://localhost:3500/api/classes/assign-trainer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
-          memberId: parseInt(selectedMember),
+          trainerId: parseInt(selectedTrainer),
           classId: parseInt(selectedClass)
         }),
       });
@@ -127,14 +114,15 @@ const AssignMemberModal = ({ open, onClose, onSuccess }) => {
 
       if (response.ok) {
         // Handle successful assignment
-        const successMessage = data.message || 'Member assigned to class successfully';
-        const memberName = data.memberName || 'Member';
+        const successMessage = data.message || 'Trainer assigned to class successfully';
+        const trainerName = data.trainerName || 'Trainer';
         
-        setSuccess(`${memberName} assigned successfully!`);
+        setSuccess(`${trainerName} assigned successfully!`);
         toast.success(successMessage);
         
-        // Refresh classes data
+        // Refresh data
         await dispatch(fetchAdminClasses(accessToken));
+        await dispatch(fetchAdminTrainers(accessToken));
         
         if (onSuccess) onSuccess();
         
@@ -145,13 +133,13 @@ const AssignMemberModal = ({ open, onClose, onSuccess }) => {
         }, 1500);
       } else {
         // Handle assignment errors
-        const errorMessage = data.error || data.message || 'Failed to assign member to class';
+        const errorMessage = data.error || data.message || 'Failed to assign trainer to class';
         setError(errorMessage);
         toast.error(errorMessage);
       }
     } catch (err) {
       console.error('Assignment error:', err);
-      const errorMessage = 'Network error: Failed to assign member to class';
+      const errorMessage = 'Network error: Failed to assign trainer to class';
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -160,28 +148,17 @@ const AssignMemberModal = ({ open, onClose, onSuccess }) => {
   };
 
   const handleClose = () => {
-    setSelectedMember("");
+    setSelectedTrainer("");
     setSelectedClass("");
-    setMemberClasses([]);
     setError("");
     setSuccess("");
     if (onClose) onClose();
   };
 
-  const handleMemberChange = (memberId) => {
-    setSelectedMember(memberId);
-    setSelectedClass(""); // Reset class selection
-    if (memberId) {
-      fetchMemberClasses(memberId);
-    } else {
-      setMemberClasses([]);
-    }
-  };
-
   if (!open) return null;
 
   return (
-    <Modal open={open} onClose={onClose} title="Assign Member to Class">
+    <Modal open={open} onClose={onClose} title="Assign Trainer to Class">
       {loading || adminLoading ? (
         <div className="text-white flex items-center justify-center py-8">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500"></div>
@@ -190,38 +167,32 @@ const AssignMemberModal = ({ open, onClose, onSuccess }) => {
       ) : (
         <form onSubmit={handleAssign} className="space-y-5">
           <div>
-            <label className="block mb-2 font-medium text-white">Select Member</label>
+            <label className="block mb-2 font-medium text-white">Select Trainer</label>
             <select
               className="w-full border border-white/10 rounded-lg px-4 py-3 bg-black/60 text-white focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"
-              value={selectedMember}
-              onChange={e => handleMemberChange(e.target.value)}
+              value={selectedTrainer}
+              onChange={e => setSelectedTrainer(e.target.value)}
               required
               disabled={loading}
             >
-              <option value="">-- Select Member --</option>
-              {members.map(m => (
-                <option key={m.userId} value={m.userId}>
-                  {m.fName} {m.lName} ({m.email})
-                </option>
-              ))}
+              <option value="">-- Select Trainer --</option>
+              {eligibleTrainers.map(trainer => {
+                const classCount = classes.filter(c => c.trainerId === trainer.userId).length;
+                return (
+                  <option key={trainer.userId} value={trainer.userId}>
+                    {trainer.fName} {trainer.lName} ({trainer.specialization || 'General'}) - {classCount} classes
+                  </option>
+                );
+              })}
             </select>
             
-            {selectedMember && memberClasses.length > 0 && (
-              <div className="mt-2 text-sm text-gray-200 bg-black/40 rounded p-3 border border-white/10">
-                <span className="font-semibold text-blue-400">Current Classes:</span>
-                <ul className="list-disc ml-5 mt-1">
-                  {memberClasses.map(c => (
-                    <li key={c.classId}>{c.className} (Trainer: {c.trainerName || c.trainerId})</li>
-                  ))}
-                </ul>
+            {trainers.length > 0 && eligibleTrainers.length === 0 && (
+              <div className="mt-2 text-sm text-yellow-400">
+                All trainers are at maximum capacity (3 classes each).
               </div>
             )}
-            
-            {selectedMember && memberClasses.length === 0 && (
-              <div className="mt-2 text-sm text-gray-400">This member is not enrolled in any classes yet.</div>
-            )}
           </div>
-          
+
           <div>
             <label className="block mb-2 font-medium text-white">Select Class</label>
             <select
@@ -229,29 +200,32 @@ const AssignMemberModal = ({ open, onClose, onSuccess }) => {
               value={selectedClass}
               onChange={e => setSelectedClass(e.target.value)}
               required
-              disabled={!selectedMember || loading}
+              disabled={loading}
             >
               <option value="">-- Select Class --</option>
-              {eligibleClasses.map(c => (
-                <option key={c.classId} value={c.classId}>
-                  {c.className} (Trainer: {c.trainerName || 'TBD'}, {c.enrolledCount || 0}/{c.seats} seats, {c.genderSpecific || "Mixed"})
-                </option>
-              ))}
+              {eligibleClasses.map(classObj => {
+                const currentTrainer = trainers.find(t => t.userId === classObj.trainerId);
+                return (
+                  <option key={classObj.classId} value={classObj.classId}>
+                    {classObj.className}
+                    {currentTrainer ? 
+                      ` (Currently: ${currentTrainer.fName} ${currentTrainer.lName})` : 
+                      ' (No trainer assigned)'
+                    }
+                  </option>
+                );
+              })}
             </select>
-            
-            {selectedMember && eligibleClasses.length === 0 && (
-              <div className="mt-2 text-sm text-yellow-400">This member is already enrolled in all available classes.</div>
-            )}
           </div>
 
           {success && (
-            <div className="text-green-400 text-sm p-3 bg-green-900/20 rounded-lg border border-green-500/30">
+            <div className="text-green-400 mb-4 p-3 bg-green-900/20 rounded-lg border border-green-500/30">
               {success}
             </div>
           )}
-          
+
           {error && (
-            <div className="text-red-400 text-sm p-3 bg-red-900/20 rounded-lg border border-red-500/30">
+            <div className="text-red-400 mb-4 p-3 bg-red-900/20 rounded-lg border border-red-500/30">
               {error}
             </div>
           )}
@@ -259,10 +233,10 @@ const AssignMemberModal = ({ open, onClose, onSuccess }) => {
           <div className="flex gap-4 pt-4">
             <Button
               type="submit"
-              disabled={loading || !selectedMember || !selectedClass}
+              disabled={loading || !selectedTrainer || !selectedClass}
               className="flex-1"
             >
-              {loading ? 'Assigning...' : 'Assign Member'}
+              {loading ? 'Assigning...' : 'Assign Trainer'}
             </Button>
             <Button
               type="button"
@@ -280,4 +254,4 @@ const AssignMemberModal = ({ open, onClose, onSuccess }) => {
   );
 };
 
-export default AssignMemberModal; 
+export default AssignTrainerModal; 

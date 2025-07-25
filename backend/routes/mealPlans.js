@@ -1,8 +1,7 @@
 const express = require('express');
-const sql = require('mssql');
 const router = express.Router();
 const { authenticateToken, requireRole } = require('../middleware/auth');
-const pool = require('../db');
+const { executeQuery, executeSingleQuery, sql } = require('../utils/database');
 
 // Get meal plan by membership type
 router.get('/:membershipType', authenticateToken, async (req, res) => {

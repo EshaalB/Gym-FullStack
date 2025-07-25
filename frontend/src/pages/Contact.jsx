@@ -89,7 +89,7 @@ const Contact = () => {
       });
       setErrors({});
       
-    } catch (error) {
+    } catch {
       toast.error("Failed to send message. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -293,7 +293,7 @@ const Contact = () => {
                 <Button 
                   title={isSubmitting ? "Sending..." : "Send Message"} 
                   onClick={handleSubmit}
-                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg border-2 border-red-400/50 hover:border-red-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={isSubmitting}
                 />
               </form>
@@ -357,28 +357,7 @@ const Contact = () => {
                   </div>
                 </div>
               </div>
-
-              {/* Quick Actions */}
-              <div className="bg-black/40 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
-                <h3 className="text-2xl font-bold text-white mb-6">Quick Actions</h3>
-                <div className="space-y-4">
-                  <Button 
-                    title="Book a Free Trial" 
-                    link="/signup"
-                    className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
-                  />
-                  <Button 
-                    title="View Membership Plans" 
-                    link="/plans"
-                    className="w-full bg-black/30 backdrop-blur-sm border border-white/20 text-white hover:bg-white/10 py-3 rounded-xl font-semibold transition-all duration-300"
-                  />
-                  <Button 
-                    title="Schedule a Tour" 
-                    link="#"
-                    className="w-full bg-black/30 backdrop-blur-sm border border-white/20 text-white hover:bg-white/10 py-3 rounded-xl font-semibold transition-all duration-300"
-                  />
-                </div>
-              </div>
+ 
             </div>
           </div>
         </div>

@@ -93,7 +93,7 @@ const App = () => {
     const pathnames = location.pathname.split("/").filter((x) => x);
     const showBreadcrumb = pathnames.length > 0 && location.pathname !== "/";
     
-    const paddingTop = showBreadcrumb ? "pt-32" : "pt-20";
+    const paddingTop = showBreadcrumb ? "" : "pt-20";
 
     return (
       <main className={paddingTop}>

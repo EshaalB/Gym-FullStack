@@ -300,7 +300,7 @@ const Trainers = () => {
                 <Button 
                   title="Book Session" 
                   onClick={() => handleTrainerSelect(trainer)}
-                  className="w-full bg-red-500/20 backdrop-blur-xl border border-red-400/30 text-white hover:bg-red-500/30 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
+                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-3 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 border-2 border-red-400/50 hover:border-red-300"
                 />
               </div>
             </motion.div>
@@ -368,12 +368,12 @@ const Trainers = () => {
               <Button 
                 title="Book Your Session" 
                 link="/contact"
-                className="bg-red-500/20 backdrop-blur-xl border border-red-400/30 text-white hover:bg-red-500/30 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg border-2 border-red-400/50 hover:border-red-300"
               />
               <Button 
                 title="View All Plans" 
                 link="/plans"
-                className="bg-black/30 backdrop-blur-xl border border-white/20 text-white hover:bg-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300"
+                className="bg-black/30 backdrop-blur-xl border-2 border-white/20 text-white hover:bg-white/10 hover:border-white/30 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300"
               />
             </div>
           </div>
@@ -411,12 +411,12 @@ const Trainers = () => {
               <Button 
                 title="Confirm Booking" 
                 onClick={handleBooking}
-                className="flex-1 bg-red-500/20 backdrop-blur-xl border border-red-400/30 text-white hover:bg-red-500/30 py-3 rounded-xl font-semibold transition-all duration-300"
+                className="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-3 rounded-xl font-bold text-lg transition-all duration-300 border-2 border-red-400/50 hover:border-red-300"
               />
               <Button 
                 title="Cancel" 
                 onClick={() => setIsBookingModalOpen(false)}
-                className="flex-1 bg-black/30 backdrop-blur-xl border border-white/20 text-white hover:bg-white/10 py-3 rounded-xl font-semibold transition-all duration-300"
+                className="flex-1 bg-black/30 backdrop-blur-xl border-2 border-white/20 text-white hover:bg-white/10 hover:border-white/30 py-3 rounded-xl font-bold text-lg transition-all duration-300"
               />
             </div>
           </motion.div>

@@ -1,184 +1,332 @@
-# Gym Management System - Full Stack
+# 🏋️ Gym Management System
 
-A secure, scalable full-stack Gym Management System with a modern React/Redux frontend and Node.js/Express backend. Features JWT authentication, role-based access, dashboards, booking, payments, and more.
+A comprehensive full-stack gym management application built with React, Node.js, and SQL Server.
 
----
+## ✨ Features
 
-## 🚀 Features (Full Stack)
+### 🔐 Authentication & Authorization
 
-- Modern, responsive frontend (React + Redux + Tailwind CSS)
-- Secure backend API (Node.js + Express + SQL Server)
-- JWT authentication & role-based access (Admin, Trainer, Member)
-- Modular, scalable codebase
-- Accessible UI (ARIA, keyboard, color contrast)
-- Real-time feedback (toasts, loaders)
-- Booking, payments, attendance, plans, and more
+- **JWT-based authentication** with bcrypt password hashing
+- **Role-based access control** (Admin, Trainer, Member)
+- **Protected routes** with middleware authentication
 
----
+### 👥 User Management
 
-## 📦 Project Structure
+- **Member registration** and profile management
+- **Trainer profiles** with specializations
+- **Admin dashboard** with comprehensive user analytics
 
-```
-gym-management-system/
-├── backend/           # Node.js/Express API
-├── frontend/          # React/Redux client
-├── README.md          # This file
-└── ...
-```
+### 🏃‍♂️ Class Management
 
----
+- **Class scheduling** and capacity management
+- **Trainer assignment** to classes with workload constraints
+- **Member enrollment** with automatic conflict checking
+- **Attendance tracking** with digital marking system
 
-## 🖥️ Frontend (React/Redux)
+### 📊 Analytics & Reporting
 
-### Stack
+- **Real-time dashboard** with member analytics
+- **Attendance reports** and participation tracking
+- **Revenue analytics** and payment processing
+- **Class performance** metrics
 
-- React 19+
-- Redux Toolkit
-- React Router v7
-- Tailwind CSS
-- Framer Motion (animations)
-- React Hot Toast (notifications)
-- Chart.js (dashboard stats)
+### 💰 Membership & Payments
 
-### Structure
+- **Flexible membership plans** with different durations
+- **Payment processing** and transaction history
+- **Automated renewals** and expiration notifications
 
-```
-frontend/src/
-  components/
-    admin/      # Admin dashboard UI
-    trainer/    # Trainer dashboard UI
-    user/       # User dashboard UI
-    common/     # Shared UI (Navbar, Footer, Button, etc.)
-    modals/     # All modal dialogs
-  pages/        # Main site pages (Landing, Home, About, etc.)
-  store/        # Redux slices, thunks, selectors
-  assets/       # Images, icons
-  utils/        # Utility functions
-  theme.js      # Theme config
-  App.jsx       # Main app entry
-  main.jsx      # React root
-```
+### 🍽️ Additional Features
 
-### Main Features
+- **Meal plan management** for nutritional guidance
+- **Support system** with ticketing
+- **Message center** for communication
+- **BMI calculator** for health tracking
 
-- **Landing Page:** Multi-section, scrollable, animated, accessible
-- **Dashboards:** Role-based (Admin, Trainer, Member)
-- **Booking:** Class booking, trainer assignment
-- **Payments:** Membership, class, and plan payments
-- **Attendance:** Marking and viewing attendance
-- **Workout Plans:** Assignment and tracking
-- **Profile:** Edit, view, and support
-- **Accessibility:** ARIA roles, keyboard nav, color contrast
-- **Feedback:** Toasts, loaders, error messages
+## 🚀 Recent Updates
 
-### How to Run (Frontend)
+### New Features Added:
 
-```bash
-cd frontend
+1. **✅ Trainer Assignment to Classes**
+
+   - Admin can assign trainers to classes with workload management
+   - Automatic validation of trainer availability
+   - Real-time updates in class listings
+
+2. **✅ Enhanced JWT Authentication**
+
+   - Proper password hashing with bcrypt
+   - Secure token-based authentication
+   - Session management with expiration
+
+3. **✅ Comprehensive Logging System**
+
+   - Structured logging with file output
+   - API request/response tracking
+   - Error monitoring and debugging
+   - Performance metrics
+
+4. **✅ Improved UI/UX Consistency**
+   - Full-screen dashboards with consistent layouts
+   - Standardized button sizes and interactions
+   - Neutral footer colors for better balance
+   - Mobile-responsive design improvements
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- **React 18** with Hooks and Context API
+- **Redux Toolkit** for state management
+- **Tailwind CSS** for styling
+- **React Router** for navigation
+- **React Hot Toast** for notifications
+
+### Backend
+
+- **Node.js** with Express framework
+- **SQL Server** with stored procedures
+- **JWT** for authentication
+- **bcryptjs** for password hashing
+- **CORS** for cross-origin requests
+
+## 📋 Prerequisites
+
+- **Node.js** (v16 or higher)
+- **SQL Server** (2019 or higher)
+- **npm** or **yarn**
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the Repository
+
+\`\`\`bash
+git clone <repository-url>
+cd gym-management-system
+\`\`\`
+
+### 2. Backend Setup
+
+\`\`\`bash
+cd backend
 npm install
+\`\`\`
+
+### 3. Database Configuration
+
+Create a \`.env\` file in the backend directory:
+
+\`\`\`env
+
+# Database Configuration
+
+DB_SERVER=localhost
+DB_DATABASE=GymManagement
+DB_USER=your_username
+DB_PASSWORD=your_password
+DB_PORT=1433
+DB_INSTANCE=
+
+# JWT Configuration
+
+JWT_SECRET=your_super_secret_jwt_key_here_make_it_long_and_complex
+JWT_EXPIRES_IN=7d
+
+# Server Configuration
+
+PORT=3500
+NODE_ENV=development
+LOG_LEVEL=INFO
+
+# CORS Configuration
+
+FRONTEND_URL=http://localhost:5173
+\`\`\`
+
+### 4. Database Setup
+
+\`\`\`bash
+
+# Run the schema creation script
+
+sqlcmd -S localhost -d GymManagement -i schema.sql
+
+# Run the stored procedures
+
+sqlcmd -S localhost -d GymManagement -i schemaQueries.sql
+
+# Populate with sample data
+
+node populateData.js
+
+# Hash existing passwords for security
+
+node updatePasswords.js
+\`\`\`
+
+### 5. Frontend Setup
+
+\`\`\`bash
+cd ../frontend
+npm install
+\`\`\`
+
+## 🚀 Running the Application
+
+### Start Backend Server
+
+\`\`\`bash
+cd backend
+npm start
+\`\`\`
+Server will run on: \`http://localhost:3500\`
+
+### Start Frontend Development Server
+
+\`\`\`bash
+cd frontend
 npm run dev
-# Visit http://localhost:5173
-```
+\`\`\`
+Frontend will run on: \`http://localhost:5173\`
+
+## 👤 Default Login Credentials
+
+### Admin Account
+
+- **Email:** admin@gym.com
+- **Password:** adminpass
+
+### Trainer Accounts
+
+- **Email:** trainer1@gym.com | **Password:** trainerpass1
+- **Email:** trainer2@gym.com | **Password:** trainerpass2
+
+### Member Accounts
+
+- Multiple member accounts are available with emails following the pattern: \`member{X}@gym.com\`
+- **Password:** memberpass{X} (where X is the member number)
+
+## 📁 Project Structure
+
+\`\`\`
+gym-management-system/
+├── backend/ # Node.js backend
+│ ├── controllers/ # Business logic controllers
+│ ├── middleware/ # Authentication & logging middleware
+│ ├── routes/ # API route definitions  
+│ ├── utils/ # Database & utility functions
+│ ├── logs/ # Application logs (auto-generated)
+│ ├── schema.sql # Database schema
+│ ├── schemaQueries.sql # Stored procedures
+│ └── server.js # Main server file
+├── frontend/ # React frontend
+│ ├── src/
+│ │ ├── components/ # Reusable React components
+│ │ ├── pages/ # Page components
+│ │ ├── store/ # Redux store configuration
+│ │ └── utils/ # Frontend utilities
+│ └── public/ # Static assets
+└── README.md # Project documentation
+\`\`\`
+
+## 🔧 API Endpoints
+
+### Authentication
+
+- \`POST /api/auth/login\` - User login
+- \`POST /api/auth/signup\` - User registration
+
+### Users
+
+- \`GET /api/users\` - Get all users (Admin only)
+- \`GET /api/users/dashboard-analytics\` - Dashboard analytics
+
+### Classes
+
+- \`GET /api/classes\` - Get all classes
+- \`POST /api/classes\` - Create new class (Admin only)
+- \`POST /api/classes/assign-member\` - Assign member to class
+- \`POST /api/classes/assign-trainer\` - Assign trainer to class (Admin only)
+
+### Attendance
+
+- \`POST /api/attendance/mark\` - Mark attendance
+- \`GET /api/attendance/calendar/:userId\` - Get attendance calendar
+
+## 🔒 Security Features
+
+- **Password Hashing:** bcrypt with salt rounds
+- **JWT Tokens:** Secure authentication with expiration
+- **Role-based Access:** Different permissions for Admin/Trainer/Member
+- **Request Validation:** Input sanitization and validation
+- **Rate Limiting:** Protection against brute force attacks
+- **CORS Configuration:** Controlled cross-origin requests
+
+## 📊 Logging & Monitoring
+
+The application includes comprehensive logging:
+
+- **API Requests/Responses:** All HTTP traffic logged
+- **Authentication Events:** Login/logout tracking
+- **Database Operations:** Query performance monitoring
+- **Error Tracking:** Detailed error logs with stack traces
+- **Business Logic:** Important business operations logged
+
+Logs are stored in \`backend/logs/\` directory:
+
+- \`error.log\` - Error-level messages
+- \`general.log\` - All application logs
+- \`debug.log\` - Debug-level information
+
+## 🧪 Testing
+
+\`\`\`bash
+
+# Run frontend tests
+
+cd frontend
+npm test
+
+# Run backend tests
+
+cd backend
+npm test
+\`\`\`
+
+## 🚀 Deployment
+
+### Production Environment Variables
+
+Ensure these are set in production:
+
+- \`NODE_ENV=production\`
+- \`LOG_LEVEL=WARN\`
+- Strong \`JWT_SECRET\`
+- Proper database credentials
 
 ### Build for Production
 
-```bash
+\`\`\`bash
+cd frontend
 npm run build
-npm run preview
-```
+\`\`\`
 
-### Connecting to Backend
+## 🤝 Contributing
 
-- The frontend expects the backend API at `http://localhost:3500` (configurable in `.env`)
-- All API calls use JWT tokens for authentication
-- Redux thunks handle async API logic
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
-### Redux Usage
+## 📝 License
 
-- Slices for auth, bookings, dashboard, etc.
-- Thunks for async actions (fetch, update, etc.)
-- Selectors for efficient state access
-- All dashboard data is Redux-driven
+This project is licensed under the MIT License.
 
-### Accessibility
+## 🆘 Support
 
-- Navbar, sidebars, tables, and modals use ARIA roles/labels
-- Keyboard navigation supported
-- Color contrast and focus states
-- Toasts and loaders are screen-reader friendly
+For support and questions, please contact the development team or create an issue in the repository.
 
 ---
 
-## 🛠️ Backend (Node.js/Express)
-
-(Keep all existing backend content here)
-
----
-
-## 🏗️ System Architecture
-
-- **Frontend:** SPA (React) served by Vite, communicates with backend via REST API
-- **Backend:** Express API, SQL Server DB, JWT auth, role-based access
-- **Auth Flow:**
-  - User logs in/signup → receives JWT
-  - JWT sent with each API request
-  - Role-based routes (Admin, Trainer, Member)
-- **Dashboards:**
-  - Admin: Users, trainers, plans, classes, payments, stats
-  - Trainer: Assigned classes, attendance, members, plans
-  - Member: Book classes, view plans, payments, attendance
-- **Booking Flow:**
-  - Member books class → Trainer assigned → Attendance tracked
-- **Payments:**
-  - Membership, class, and plan payments tracked and managed
-- **Error Handling:**
-  - Consistent error format, toasts in frontend, error middleware in backend
-
----
-
-## 🧭 How Everything Works (User Journey)
-
-### 1. **Landing & Signup**
-
-- User visits landing page, scrolls through sections
-- Can sign up as Member (default), or login as Trainer/Admin
-
-### 2. **Authentication**
-
-- JWT-based login/signup
-- Role-based dashboard redirect
-
-### 3. **Member Dashboard**
-
-- Book classes, view assigned classes
-- View/renew membership, make payments
-- Track attendance, workout plans
-- Edit profile, contact support
-
-### 4. **Trainer Dashboard**
-
-- View assigned classes, mark attendance
-- Assign workout plans
-- Track member progress
-
-### 5. **Admin Dashboard**
-
-- Manage users, trainers, plans, classes
-- View system stats, revenue, reports
-- Assign trainers, manage payments
-
-### 6. **Accessibility & Feedback**
-
-- All actions provide real-time feedback (toasts, loaders)
-- Accessible navigation and forms
-
----
-
-## 📞 Support & Contribution
-
-- For issues, open a GitHub issue or contact the maintainer
-- PRs welcome! Please follow code style and add tests if possible
-
----
-
-(Backend API details continue below)
+**Built with ❤️ by the Gym Management System Team**

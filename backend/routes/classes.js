@@ -11,4 +11,7 @@ router.post('/', authenticateToken, requireRole(['Admin']), classController.crea
 // Assign a member to a class
 router.post('/assign-member', authenticateToken, classController.assignMemberToClass);
 
+// Assign a trainer to a class
+router.post('/assign-trainer', authenticateToken, requireRole(['Admin']), classController.assignTrainerToClass);
+
 module.exports = router; 

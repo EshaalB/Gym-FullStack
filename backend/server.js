@@ -4,6 +4,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { initializeDatabase } = require('./utils/database');
+const logger = require('./utils/logger');
+const { requestLogger, errorLogger } = require('./middleware/logging');
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -13,8 +15,13 @@ const paymentRoutes = require('./routes/payments');
 const trainersRoutes = require('./routes/trainers');
 const plansRoutes = require('./routes/plans');
 const classesRoutes = require('./routes/classes');
+const membershipRoutes = require('./routes/memberships');
+const mealPlanRoutes = require('./routes/mealPlans');
+const supportRoutes = require('./routes/support');
+const messageRoutes = require('./routes/messages');
 
 const app = express();
+const PORT = process.env.PORT || 3500;
 
 // Security middleware
 app.use(helmet({
@@ -60,18 +67,17 @@ app.options('*', cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Request logging middleware
-app.use((req, res, next) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
-    next();
-});
+// Add request logging middleware
+app.use(requestLogger);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
+    logger.info('Health check requested');
     res.json({ 
         status: 'OK', 
         timestamp: new Date().toISOString(),
-        uptime: process.uptime()
+        uptime: process.uptime(),
+        version: require('./package.json').version || '1.0.0'
     });
 });
 
@@ -83,6 +89,10 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/trainers', trainersRoutes);
 app.use('/api/plans', plansRoutes);
 app.use('/api/classes', classesRoutes);
+app.use('/api/memberships', membershipRoutes);
+app.use('/api/meal-plans', mealPlanRoutes);
+app.use('/api/support', supportRoutes);
+app.use('/api/messages', messageRoutes);
 
 
 // Legacy routes (for backward compatibility)
@@ -99,7 +109,7 @@ app.get('/api/active-inactive-members', async (req, res) => {
         const result = await executeQuery(query);
         res.json(result);
     } catch (error) {
-        console.error('Active/inactive members error:', error);
+        logger.error('Active/inactive members error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -120,7 +130,7 @@ app.get('/api/non-attendees-last-month', async (req, res) => {
         const result = await executeQuery(query);
         res.json(result);
     } catch (error) {
-        console.error('Non-attendees error:', error);
+        logger.error('Non-attendees error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -132,7 +142,7 @@ app.get('/api/active-members', async (req, res) => {
         const result = await executeQuery(query);
         res.json(result);
     } catch (error) {
-        console.error('Active members error:', error);
+        logger.error('Active members error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -152,7 +162,7 @@ app.get('/api/class-attendance-rate', async (req, res) => {
         const result = await executeQuery(query);
         res.json(result);
     } catch (error) {
-        console.error('Class attendance rate error:', error);
+        logger.error('Class attendance rate error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -173,7 +183,7 @@ app.get('/api/frequent-attendees', async (req, res) => {
         const result = await executeQuery(query);
         res.json(result);
     } catch (error) {
-        console.error('Frequent attendees error:', error);
+        logger.error('Frequent attendees error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -185,65 +195,81 @@ app.get('/api/regular-absentees', async (req, res) => {
         const result = await executeQuery(query);
         res.json(result);
     } catch (error) {
-        console.error('Regular absentees error:', error);
+        logger.error('Regular absentees error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
 
+// Add error logging middleware
+app.use(errorLogger);
+
 // 404 handler
 app.use('*', (req, res) => {
+    logger.warn(`404 Not Found: ${req.method} ${req.originalUrl}`, {
+        method: req.method,
+        path: req.originalUrl,
+        ip: req.ip
+    });
     res.status(404).json({ error: 'Route not found' });
 });
 
 // Global error handler
 app.use((error, req, res, next) => {
-    console.error('Global error handler:', error);
-    const isDev = process.env.NODE_ENV === 'development';
-    let message = 'Internal server error';
-    let details = undefined;
-    if (error.name === 'ValidationError') {
-        message = 'Validation error';
-        details = error.message;
-    } else if (error.name === 'UnauthorizedError') {
-        message = 'Unauthorized';
-    } else if (error.message) {
-        message = error.message;
-        if (isDev && error.stack) {
-            details = error.stack;
-        }
-    } else if (isDev && error.stack) {
-        details = error.stack;
-    }
-    res.status(error.status || 500).json({ error: message, ...(details && { details }) });
+    logger.error('Global error handler triggered', error, {
+        method: req.method,
+        path: req.path,
+        userId: req.user ? req.user.userId : null
+    });
+
+    // Don't leak error details in production
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    
+    res.status(error.status || 500).json({
+        error: isDevelopment ? error.message : 'Internal server error',
+        ...(isDevelopment && { stack: error.stack })
+    });
 });
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
-    console.log('SIGTERM received, shutting down gracefully');
+    logger.info('SIGTERM received, shutting down gracefully');
     process.exit(0);
 });
 
 process.on('SIGINT', () => {
-    console.log('SIGINT received, shutting down gracefully');
+    logger.info('SIGINT received, shutting down gracefully');
     process.exit(0);
 });
 
-// Initialize database and start server
-const PORT = process.env.PORT || 3500;
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+    logger.error('Uncaught Exception', error);
+    process.exit(1);
+});
 
+process.on('unhandledRejection', (reason, promise) => {
+    logger.error('Unhandled Rejection', new Error(reason), {
+        promise: promise.toString()
+    });
+    process.exit(1);
+});
+
+// Initialize database and start server
 const startServer = async () => {
     try {
         // Initialize database connection
-        const pool = await initializeDatabase();
-        app.locals.pool = pool; // Attach pool to app.locals
+        await initializeDatabase();
+        logger.info('Database initialized successfully');
         // Start server
         app.listen(PORT, () => {
-            console.log(`🚀 Server running on port ${PORT}`);
-            console.log(`📊 Health check: http://localhost:${PORT}/health`);
-            console.log(`🔐 API Documentation: http://localhost:${PORT}/api`);
+            logger.info(`🚀 Server running on port ${PORT}`, {
+                port: PORT,
+                environment: process.env.NODE_ENV || 'development',
+                logLevel: process.env.LOG_LEVEL || 'INFO'
+            });
         });
     } catch (error) {
-        console.error('Failed to start server:', error);
+        logger.error('Failed to start server', error);
         process.exit(1);
     }
 };

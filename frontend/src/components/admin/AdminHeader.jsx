@@ -4,7 +4,7 @@ import Button from "../common/Button";
 
 const AdminHeader = ({ userName, onLogout }) => {
   return (
-    <header className="bg-black/50 backdrop-blur-lg border-b border-red-500/20 px-8 py-4 mt-0 pt-0">
+    <header className="bg-black/50 backdrop-blur-lg border-b border-red-500/20 px-8 py-4 m-0">
       <div className="flex justify-between items-center">
         {/* Left side - Welcome message */}
         <div className="flex items-center space-x-4">
@@ -13,7 +13,7 @@ const AdminHeader = ({ userName, onLogout }) => {
               <FaUser />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">Welcome back, {userName}!</h1>
+              <h1 className="text-xl font-bold text-white">Welcome back, {userName || 'Admin'}!</h1>
               <p className="text-sm text-gray-400">Admin Dashboard</p>
             </div>
           </div>
@@ -32,7 +32,7 @@ const AdminHeader = ({ userName, onLogout }) => {
           {/* User menu */}
           <div className="flex items-center space-x-3">
             <div className="text-right">
-              <p className="text-sm font-medium text-white">{userName}</p>
+              <p className="text-sm font-medium text-white">{userName || 'Admin'}</p>
               <p className="text-xs text-gray-400">Administrator</p>
             </div>
             

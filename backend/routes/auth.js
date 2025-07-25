@@ -28,13 +28,29 @@ router.post('/login', loginValidation, handleValidationErrors, async (req, res) 
             return res.status(401).json({ error: 'Invalid email or password' });
         }
 
-        // Compare password
-        // TEMPORARY: Allow plain text password comparison for development
-        // const isValidPassword = await bcrypt.compare(password, user.password);
-        // if (!isValidPassword) {
-        //     return res.status(401).json({ error: 'Invalid email or password' });
-        // }
-        if (password !== user.password) {
+        // Compare password with proper hashing
+        let isValidPassword = false;
+        try {
+            isValidPassword = await bcrypt.compare(password, user.password);
+        } catch (e) {
+            isValidPassword = false;
+        }
+        // If bcrypt fails, try plain text (legacy data)
+        if (!isValidPassword) {
+            if (password === user.password) {
+                // Password matches in plain text, upgrade to hash
+                const newHashed = await bcrypt.hash(password, 12);
+                await executeQuery(
+                    'UPDATE gymUser SET password = @Password WHERE userId = @UserId',
+                    [
+                        { name: 'Password', type: sql.VarChar(255), value: newHashed },
+                        { name: 'UserId', type: sql.Int, value: user.userId }
+                    ]
+                );
+                isValidPassword = true;
+            }
+        }
+        if (!isValidPassword) {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
 

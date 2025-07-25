@@ -874,29 +874,6 @@ export const deleteAdminPlan = createAsyncThunk(
   }
 );
 
-// --- CLASS ASSIGNMENT THUNK ---
-export const assignMemberToClass = createAsyncThunk(
-  'dashboard/assignMemberToClass',
-  async ({ accessToken, memberId, classId }, { rejectWithValue }) => {
-    try {
-      const response = await fetch('http://localhost:3500/api/classes/assign-member', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-        },
-        credentials: 'include',
-        body: JSON.stringify({ memberId, classId }),
-      });
-      const data = await response.json();
-      if (!response.ok) return rejectWithValue(data.error || 'Failed to assign member to class');
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message || 'Failed to assign member to class');
-    }
-  }
-);
-
 // Trainer members thunk
 export const fetchTrainerMembers = createAsyncThunk(
   'dashboard/fetchTrainerMembers',
@@ -1191,19 +1168,6 @@ const dashboardSlice = createSlice({
       .addCase(assignTrainerWorkoutPlan.rejected, (state, action) => {
         state.trainer.planAssignLoading = false;
         state.trainer.planAssignError = action.payload || action.error.message;
-      })
-      // Assign member to class
-      .addCase(assignMemberToClass.pending, (state) => {
-        state.admin.loading = true;
-        state.admin.error = null;
-      })
-      .addCase(assignMemberToClass.fulfilled, (state) => {
-        state.admin.loading = false;
-        state.admin.error = null;
-      })
-      .addCase(assignMemberToClass.rejected, (state, action) => {
-        state.admin.loading = false;
-        state.admin.error = action.payload || action.error.message;
       })
       // User stats
       .addCase(fetchUserStats.pending, (state) => {

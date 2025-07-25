@@ -110,7 +110,7 @@ const TrainerDash = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-red-900 to-black flex flex-col">
+    <div className="min-h-screen h-screen bg-gradient-to-br from-gray-900 via-red-900 to-black flex flex-col m-0 p-0">
       {/* Header */}
       <TrainerHeader userName={user ? `${user.fName} ${user.lName}` : ""} onLogout={() => { localStorage.clear(); navigate("/login"); }} />
       <div className="flex flex-1 min-h-0">
@@ -131,7 +131,7 @@ const TrainerDash = () => {
         </div>
         {/* Mobile Sidebar Drawer */}
         {showSidebar && (
-          <div className="fixed inset-0 z-50 flex">
+          <div className="fixed inset-0 z-50 flex md:hidden">
             <div className="w-64 bg-black/90 backdrop-blur-lg border-r border-red-500/20 min-h-screen">
               <TrainerSidebar currentView={currentView} setCurrentView={setCurrentView} />
             </div>
@@ -143,11 +143,11 @@ const TrainerDash = () => {
           </div>
         )}
         {/* Main Content */}
-        <main className="flex-1 min-h-0 w-full p-0 sm:p-0 overflow-y-auto" role="main">
-          <div className="w-full h-full min-h-screen p-0 m-0">
-          {renderContent()}
+        <div className="flex-1 h-full min-h-0 flex flex-col overflow-hidden">
+          <div className="flex-1 min-h-0 overflow-y-auto p-0 m-0">
+            {renderContent()}
           </div>
-        </main>
+        </div>
       </div>
     </div>
   );

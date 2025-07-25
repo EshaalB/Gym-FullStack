@@ -218,15 +218,17 @@ const Plans = () => {
                 ))}
               </ul>
 
-              <Button 
-                title={plan.popular ? "Get Started" : "Choose Plan"}
-                link="/signup"
-                className={`w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 ${
-                  plan.popular
-                    ? "bg-red-500/20 backdrop-blur-xl border border-red-400/30 text-white hover:bg-red-500/30 shadow-lg"
-                    : "bg-black/30 backdrop-blur-xl border border-white/20 text-white hover:bg-white/10"
-                }`}
-              />
+              <div className="flex justify-center mt-6">
+                <Button 
+                  title={plan.popular ? "Get Started" : "Choose Plan"}
+                  link="/signup"
+                  className={`w-full max-w-xs py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 ${
+                    plan.popular
+                      ? "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white border-2 border-red-400/50 hover:border-red-300 shadow-lg"
+                      : "bg-black/30 backdrop-blur-xl border-2 border-white/20 text-white hover:bg-white/10 hover:border-white/30"
+                  }`}
+                />
+              </div>
             </div>
           ))}
         </div>

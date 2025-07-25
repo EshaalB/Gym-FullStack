@@ -68,18 +68,16 @@ const Home = () => {
             <Button 
               title="Start Your Journey" 
               link="/signup"
-              className="group bg-black/80 border-2 border-red-400 text-red-400 hover:bg-red-500/20 px-8 py-4 rounded-xl font-digital text-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg focus:ring-4 focus:ring-red-500/40 tracking-widest"
+              className="group bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white border-2 border-red-400/50 hover:border-red-300 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:ring-4 focus:ring-red-500/40 tracking-wide"
               aria-label="Start Your Journey"
             />
-            <button 
-              className="group bg-black/40 backdrop-blur-xl border border-white/20 text-white hover:bg-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 flex items-center gap-2"
+            <Button 
+              title="Book a Class"
+              link="/plans"
+              className="group bg-black/40 backdrop-blur-xl border-2 border-white/20 text-white hover:bg-white/10 hover:border-white/30 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center gap-2 justify-center"
             >
- 
-              <span className="w-6 h-6 inline-block">
-                <FaRunning className="text-lg text-red-400 animate-bounce" />
-              </span>
-              Book a Class
-            </button>
+              <FaRunning className="text-lg text-red-400 animate-bounce" />
+            </Button>
           </div>
          
         </div>

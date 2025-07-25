@@ -5,6 +5,9 @@ const userController = require('../controllers/userController');
 
 const router = express.Router();
 
+// Get admin dashboard analytics (Admin only) - MUST be first to avoid conflicts
+router.get('/dashboard-analytics', authenticateToken, requireRole(['Admin']), userController.getDashboardAnalytics);
+
 // Create a new user (Admin only)
 router.post('/', authenticateToken, requireRole(['Admin']), userController.createUser);
 
@@ -19,9 +22,6 @@ router.get('/:userId', authenticateToken, requireOwnershipOrAdmin, userIdValidat
 
 // Update user profile (Admin or own profile)
 router.put('/:userId', authenticateToken, requireOwnershipOrAdmin, userIdValidation, handleValidationErrors, userController.updateUser);
-
-// PUT /api/users/:userId
-router.put('/:userId', authenticateToken, userController.updateUser);
 
 // Deactivate/Activate user (Admin only)
 router.patch('/:userId/status', authenticateToken, requireRole(['Admin']), userIdValidation, handleValidationErrors, userController.updateUserStatus);
@@ -43,8 +43,5 @@ router.get('/user-stats', userController.getUserStats);
 
 // Add route for user to see their assigned classes
 router.get('/:userId/classes', authenticateToken, requireOwnershipOrAdmin, userController.getUserClasses);
-
-// Get admin dashboard analytics (Admin only)
-router.get('/dashboard-analytics', authenticateToken, requireRole(['Admin']), userController.getDashboardAnalytics);
 
 module.exports = router; 

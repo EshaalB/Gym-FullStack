@@ -72,11 +72,41 @@ const AdminDash = () => {
       const res = await fetch("http://localhost:3500/api/users/dashboard-analytics", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (!res.ok) throw new Error("Failed to fetch analytics");
+      
+      if (!res.ok) {
+        if (res.status === 400) {
+          throw new Error("Bad request. Please check your request and try again.");
+        } else if (res.status === 401) {
+          throw new Error("Session expired. Please log in again.");
+        } else if (res.status === 403) {
+          throw new Error("Access denied. You don't have permission to view analytics.");
+        } else if (res.status === 404) {
+          throw new Error("Analytics endpoint not found. Please contact support.");
+        } else if (res.status >= 500) {
+          throw new Error("Server error. Please try again later.");
+        } else {
+          throw new Error(`Failed to fetch analytics (Error ${res.status})`);
+        }
+      }
+      
       const data = await res.json();
       setAnalytics(data);
     } catch (err) {
-      setAnalyticsError(err.message || "Failed to fetch analytics");
+      let message = err.message || "Failed to fetch analytics";
+      
+      // Handle different types of network errors
+      if (message === "Failed to fetch" || message.includes("fetch")) {
+        message = "Unable to connect to the server. Please check your internet connection and try again.";
+      } else if (message.includes("NetworkError") || message.includes("network")) {
+        message = "Network error occurred. Please check your connection and try again.";
+      } else if (message.includes("timeout") || message.includes("Timeout")) {
+        message = "Request timed out. Please try again.";
+      } else if (message.includes("CORS")) {
+        message = "Connection blocked. Please contact support.";
+      }
+      
+      console.error('Analytics fetch error:', err);
+      setAnalyticsError(message);
     } finally {
       setAnalyticsLoading(false);
     }
@@ -260,7 +290,7 @@ const AdminDash = () => {
   const renderContent = () => {
     switch (currentView) {
       case "dashboard":
-        return <DashboardOverview analytics={analytics} loading={analyticsLoading} error={analyticsError} />;
+        return <DashboardOverview analytics={analytics} loading={analyticsLoading} error={analyticsError} onRetry={fetchDashboardAnalytics} />;
       case "users":
         return <UsersTable users={users} loading={loading} error={error} pagination={usersPagination} onPageChange={setUsersPage} onAddUser={handleAddUser} onEditUser={handleEditUser} onDeleteUser={handleDeleteUser} />;
       case "trainers":
@@ -291,9 +321,9 @@ const AdminDash = () => {
   };
 
   return (
-    <div className="min-h-screen h-screen bg-gradient-to-br from-gray-900 via-red-900 to-black flex flex-col">
+    <div className="min-h-screen h-screen bg-gradient-to-br from-gray-900 via-red-900 to-black flex flex-col m-0 p-0">
       {/* Header */}
-      <AdminHeader onLogout={() => { localStorage.clear(); navigate("/login"); }} />
+      <AdminHeader userName="Admin" onLogout={() => { localStorage.clear(); navigate("/login"); }} />
       <div className="flex flex-1 min-h-0">
         {/* Sidebar */}
         <div className="hidden md:block h-full">
@@ -312,7 +342,7 @@ const AdminDash = () => {
         </div>
         {/* Mobile Sidebar Drawer */}
         {showSidebar && (
-          <div className="fixed inset-0 z-50 flex">
+          <div className="fixed inset-0 z-50 flex md:hidden">
             <div className="w-64 bg-black/90 backdrop-blur-lg border-r border-red-500/20 min-h-screen">
               <AdminSidebar currentView={currentView} setCurrentView={setCurrentView} />
             </div>
@@ -324,8 +354,10 @@ const AdminDash = () => {
           </div>
         )}
         {/* Main Content */}
-        <div className="flex-1 h-full min-h-0 flex flex-col">
-          {renderContent()}
+        <div className="flex-1 h-full min-h-0 flex flex-col overflow-hidden">
+          <div className="flex-1 min-h-0 overflow-y-auto">
+            {renderContent()}
+          </div>
         </div>
       </div>
     </div>

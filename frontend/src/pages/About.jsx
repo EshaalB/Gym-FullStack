@@ -196,12 +196,12 @@ const About = () => {
                 <Button 
                   title="Join Our Community" 
                   link="/signup"
-                  className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl"
+                  className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg border-2 border-red-400/50 hover:border-red-300"
                 />
                 <Button 
                   title="View Our Plans" 
                   link="/plans"
-                  className="bg-black/30 backdrop-blur-sm border border-white/20 text-white hover:bg-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300"
+                  className="bg-black/30 backdrop-blur-xl border-2 border-white/20 text-white hover:bg-white/10 hover:border-white/30 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300"
                 />
               </div>
             </div>

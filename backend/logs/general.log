@@ -1,0 +1,633 @@
+{"timestamp":"2025-07-25T13:43:29.117Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:43:29.125Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:43:31.208Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:43:31.212Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:43:39.178Z","level":"ERROR","message":"POST /login - 401 (123ms)","category":"api","method":"POST","path":"/login","statusCode":401,"duration":123,"userId":null,"error":{"message":"Invalid email or password"}}
+{"timestamp":"2025-07-25T13:44:33.953Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:44:33.958Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:44:40.931Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:44:40.935Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:45:12.397Z","level":"INFO","message":"POST /login - 200 (562ms)","category":"api","method":"POST","path":"/login","statusCode":200,"duration":562,"userId":null}
+{"timestamp":"2025-07-25T13:45:12.500Z","level":"INFO","message":"GET /verify - 200 (11ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":11,"userId":1}
+{"timestamp":"2025-07-25T13:45:12.512Z","level":"INFO","message":"GET /verify - 200 (6ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":6,"userId":1}
+{"timestamp":"2025-07-25T13:45:13.651Z","level":"INFO","message":"GET /verify - 200 (10ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":10,"userId":1}
+{"timestamp":"2025-07-25T13:45:13.670Z","level":"INFO","message":"GET /verify - 200 (7ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":7,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.010Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:45:14.024Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:45:14.047Z","level":"INFO","message":"GET /verify - 200 (50ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":50,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.134Z","level":"INFO","message":"GET / - 200 (135ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":135,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.168Z","level":"INFO","message":"GET / - 200 (164ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":164,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.184Z","level":"INFO","message":"GET / - 200 (178ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":178,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.187Z","level":"INFO","message":"GET /stats/overview - 200 (198ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":198,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.194Z","level":"INFO","message":"GET / - 200 (178ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":178,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.200Z","level":"INFO","message":"GET / - 200 (50ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":50,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.203Z","level":"INFO","message":"GET /pending - 200 (185ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":185,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.227Z","level":"INFO","message":"GET / - 200 (38ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":38,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.234Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.238Z","level":"INFO","message":"GET / - 200 (21ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":21,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.241Z","level":"INFO","message":"GET /pending - 200 (22ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":22,"userId":1}
+{"timestamp":"2025-07-25T13:45:14.248Z","level":"INFO","message":"GET /stats/overview - 200 (33ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T13:45:16.309Z","level":"INFO","message":"GET / - 200 (45ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":45,"userId":1}
+{"timestamp":"2025-07-25T13:45:16.314Z","level":"INFO","message":"GET / - 200 (46ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":46,"userId":1}
+{"timestamp":"2025-07-25T13:45:16.319Z","level":"INFO","message":"GET / - 200 (49ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":49,"userId":1}
+{"timestamp":"2025-07-25T13:45:16.322Z","level":"INFO","message":"GET / - 200 (50ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":50,"userId":1}
+{"timestamp":"2025-07-25T13:45:16.336Z","level":"INFO","message":"GET /pending - 200 (63ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":63,"userId":1}
+{"timestamp":"2025-07-25T13:45:16.342Z","level":"INFO","message":"GET /stats/overview - 200 (80ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":80,"userId":1}
+{"timestamp":"2025-07-25T13:45:17.939Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:45:17.955Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T13:45:17.966Z","level":"INFO","message":"GET / - 200 (35ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":35,"userId":1}
+{"timestamp":"2025-07-25T13:45:17.969Z","level":"INFO","message":"GET / - 200 (35ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":35,"userId":1}
+{"timestamp":"2025-07-25T13:45:17.972Z","level":"INFO","message":"GET / - 200 (37ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T13:45:17.976Z","level":"INFO","message":"GET /pending - 200 (40ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":40,"userId":1}
+{"timestamp":"2025-07-25T13:45:17.978Z","level":"INFO","message":"GET /stats/overview - 200 (53ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":53,"userId":1}
+{"timestamp":"2025-07-25T13:45:18.737Z","level":"INFO","message":"GET / - 200 (19ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":19,"userId":1}
+{"timestamp":"2025-07-25T13:45:18.740Z","level":"INFO","message":"GET / - 200 (20ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":20,"userId":1}
+{"timestamp":"2025-07-25T13:45:18.742Z","level":"INFO","message":"GET / - 200 (21ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":21,"userId":1}
+{"timestamp":"2025-07-25T13:45:18.756Z","level":"INFO","message":"GET / - 200 (33ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T13:45:18.763Z","level":"INFO","message":"GET /pending - 200 (39ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":39,"userId":1}
+{"timestamp":"2025-07-25T13:45:18.770Z","level":"INFO","message":"GET /stats/overview - 200 (55ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":55,"userId":1}
+{"timestamp":"2025-07-25T13:45:20.016Z","level":"INFO","message":"GET / - 200 (4ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":4,"userId":1}
+{"timestamp":"2025-07-25T13:45:20.025Z","level":"INFO","message":"GET / - 200 (6ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":6,"userId":1}
+{"timestamp":"2025-07-25T13:45:20.037Z","level":"INFO","message":"GET / - 200 (8ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":8,"userId":1}
+{"timestamp":"2025-07-25T13:45:20.049Z","level":"INFO","message":"GET / - 200 (7ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":7,"userId":1}
+{"timestamp":"2025-07-25T13:45:29.505Z","level":"ERROR","message":"POST /assign-trainer - 500 (49ms)","category":"api","method":"POST","path":"/assign-trainer","statusCode":500,"duration":49,"userId":1,"error":{"message":"Internal server error"}}
+{"timestamp":"2025-07-25T13:45:35.598Z","level":"ERROR","message":"GET / - 400 (5ms)","category":"api","method":"GET","path":"/","statusCode":400,"duration":5,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:45:35.642Z","level":"ERROR","message":"GET / - 400 (1ms)","category":"api","method":"GET","path":"/","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:45:35.658Z","level":"INFO","message":"GET / - 200 (23ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":23,"userId":1}
+{"timestamp":"2025-07-25T13:45:35.669Z","level":"INFO","message":"GET / - 200 (7ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":7,"userId":1}
+{"timestamp":"2025-07-25T13:48:07.298Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:48:07.302Z","level":"ERROR","message":"Uncaught Exception","error":{"name":"Error","message":"listen EADDRINUSE: address already in use :::3500","stack":"Error: listen EADDRINUSE: address already in use :::3500\n    at Server.setupListenHandle [as _listen2] (node:net:1937:16)\n    at listenInCluster (node:net:1994:12)\n    at Server.listen (node:net:2099:7)\n    at Function.listen (C:\\Coding\\gym4thSem\\gym-management-system\\backend\\node_modules\\express\\lib\\application.js:635:24)\n    at startServer (C:\\Coding\\gym4thSem\\gym-management-system\\backend\\server.js:264:13)"}}
+{"timestamp":"2025-07-25T13:48:12.719Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:48:12.724Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:48:58.990Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:48:58.994Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:49:31.318Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:49:31.322Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:49:42.988Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:49:42.995Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:49:47.604Z","level":"INFO","message":"GET / - 200 (170ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":170,"userId":1}
+{"timestamp":"2025-07-25T13:49:47.626Z","level":"INFO","message":"GET / - 200 (15ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":15,"userId":1}
+{"timestamp":"2025-07-25T13:49:47.641Z","level":"INFO","message":"GET / - 200 (21ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":21,"userId":1}
+{"timestamp":"2025-07-25T13:49:47.663Z","level":"INFO","message":"GET / - 200 (13ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":13,"userId":1}
+{"timestamp":"2025-07-25T13:49:55.070Z","level":"ERROR","message":"POST /assign-trainer - 500 (36ms)","category":"api","method":"POST","path":"/assign-trainer","statusCode":500,"duration":36,"userId":1,"error":{"message":"Internal server error"}}
+{"timestamp":"2025-07-25T13:50:10.183Z","level":"ERROR","message":"GET / - 400 (9ms)","category":"api","method":"GET","path":"/","statusCode":400,"duration":9,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:50:10.204Z","level":"ERROR","message":"GET / - 400 (8ms)","category":"api","method":"GET","path":"/","statusCode":400,"duration":8,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:50:10.224Z","level":"INFO","message":"GET / - 200 (33ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T13:50:10.242Z","level":"INFO","message":"GET / - 200 (13ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":13,"userId":1}
+{"timestamp":"2025-07-25T13:50:14.863Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:50:14.867Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:50:19.029Z","level":"INFO","message":"GET / - 200 (210ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":210,"userId":1}
+{"timestamp":"2025-07-25T13:50:19.034Z","level":"INFO","message":"GET / - 200 (227ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":227,"userId":1}
+{"timestamp":"2025-07-25T13:50:19.036Z","level":"INFO","message":"GET /pending - 200 (213ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":213,"userId":1}
+{"timestamp":"2025-07-25T13:50:19.040Z","level":"INFO","message":"GET / - 200 (223ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":223,"userId":1}
+{"timestamp":"2025-07-25T13:50:19.042Z","level":"INFO","message":"GET / - 200 (221ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":221,"userId":1}
+{"timestamp":"2025-07-25T13:50:19.049Z","level":"INFO","message":"GET /stats/overview - 200 (254ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":254,"userId":1}
+{"timestamp":"2025-07-25T13:50:20.326Z","level":"INFO","message":"GET / - 200 (30ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":30,"userId":1}
+{"timestamp":"2025-07-25T13:50:20.330Z","level":"INFO","message":"GET / - 200 (31ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":31,"userId":1}
+{"timestamp":"2025-07-25T13:50:20.336Z","level":"INFO","message":"GET / - 200 (35ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":35,"userId":1}
+{"timestamp":"2025-07-25T13:50:20.339Z","level":"INFO","message":"GET / - 200 (36ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":36,"userId":1}
+{"timestamp":"2025-07-25T13:50:20.342Z","level":"INFO","message":"GET /pending - 200 (38ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":38,"userId":1}
+{"timestamp":"2025-07-25T13:50:20.351Z","level":"INFO","message":"GET /stats/overview - 200 (57ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":57,"userId":1}
+{"timestamp":"2025-07-25T13:50:21.055Z","level":"INFO","message":"GET / - 200 (24ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":24,"userId":1}
+{"timestamp":"2025-07-25T13:50:21.059Z","level":"INFO","message":"GET / - 200 (25ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":25,"userId":1}
+{"timestamp":"2025-07-25T13:50:21.063Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T13:50:21.068Z","level":"INFO","message":"GET / - 200 (30ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":30,"userId":1}
+{"timestamp":"2025-07-25T13:50:21.071Z","level":"INFO","message":"GET /pending - 200 (30ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":30,"userId":1}
+{"timestamp":"2025-07-25T13:50:21.077Z","level":"INFO","message":"GET /stats/overview - 200 (48ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":48,"userId":1}
+{"timestamp":"2025-07-25T13:50:22.900Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T13:50:22.903Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T13:50:22.915Z","level":"INFO","message":"GET / - 200 (37ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T13:50:22.932Z","level":"INFO","message":"GET /pending - 200 (51ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":51,"userId":1}
+{"timestamp":"2025-07-25T13:50:22.945Z","level":"INFO","message":"GET / - 200 (65ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":65,"userId":1}
+{"timestamp":"2025-07-25T13:50:22.954Z","level":"INFO","message":"GET /stats/overview - 200 (82ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":82,"userId":1}
+{"timestamp":"2025-07-25T13:50:37.243Z","level":"INFO","message":"GET / - 200 (35ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":35,"userId":1}
+{"timestamp":"2025-07-25T13:50:37.259Z","level":"INFO","message":"GET / - 200 (46ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":46,"userId":1}
+{"timestamp":"2025-07-25T13:50:37.265Z","level":"INFO","message":"GET / - 200 (52ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":52,"userId":1}
+{"timestamp":"2025-07-25T13:50:37.271Z","level":"INFO","message":"GET / - 200 (57ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":57,"userId":1}
+{"timestamp":"2025-07-25T13:50:37.273Z","level":"INFO","message":"GET /pending - 200 (58ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":58,"userId":1}
+{"timestamp":"2025-07-25T13:50:37.277Z","level":"INFO","message":"GET /stats/overview - 200 (72ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":72,"userId":1}
+{"timestamp":"2025-07-25T13:50:44.166Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:50:44.202Z","level":"INFO","message":"GET / - 200 (43ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":43,"userId":1}
+{"timestamp":"2025-07-25T13:50:44.205Z","level":"INFO","message":"GET / - 200 (43ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":43,"userId":1}
+{"timestamp":"2025-07-25T13:50:44.208Z","level":"INFO","message":"GET /pending - 200 (38ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":38,"userId":1}
+{"timestamp":"2025-07-25T13:50:44.217Z","level":"INFO","message":"GET / - 200 (54ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":54,"userId":1}
+{"timestamp":"2025-07-25T13:50:44.221Z","level":"INFO","message":"GET / - 200 (51ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":51,"userId":1}
+{"timestamp":"2025-07-25T13:50:44.229Z","level":"INFO","message":"GET /stats/overview - 200 (72ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":72,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.267Z","level":"INFO","message":"GET /verify - 200 (8ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":8,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.276Z","level":"INFO","message":"GET /verify - 200 (5ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":5,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.606Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:50:48.625Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:50:48.629Z","level":"INFO","message":"GET / - 200 (35ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":35,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.632Z","level":"INFO","message":"GET / - 200 (36ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":36,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.635Z","level":"INFO","message":"GET / - 200 (38ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":38,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.640Z","level":"INFO","message":"GET / - 200 (42ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":42,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.642Z","level":"INFO","message":"GET /pending - 200 (42ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":42,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.659Z","level":"INFO","message":"GET /verify - 200 (48ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":48,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.667Z","level":"INFO","message":"GET /stats/overview - 200 (76ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":76,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.672Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.676Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.680Z","level":"INFO","message":"GET / - 200 (29ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":29,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.685Z","level":"INFO","message":"GET / - 200 (29ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":29,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.688Z","level":"INFO","message":"GET /pending - 200 (30ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":30,"userId":1}
+{"timestamp":"2025-07-25T13:50:48.694Z","level":"INFO","message":"GET /stats/overview - 200 (12ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":12,"userId":1}
+{"timestamp":"2025-07-25T13:51:03.429Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:51:03.433Z","level":"ERROR","message":"Uncaught Exception","error":{"name":"Error","message":"listen EADDRINUSE: address already in use :::3500","stack":"Error: listen EADDRINUSE: address already in use :::3500\n    at Server.setupListenHandle [as _listen2] (node:net:1937:16)\n    at listenInCluster (node:net:1994:12)\n    at Server.listen (node:net:2099:7)\n    at Function.listen (C:\\Coding\\gym4thSem\\gym-management-system\\backend\\node_modules\\express\\lib\\application.js:635:24)\n    at startServer (C:\\Coding\\gym4thSem\\gym-management-system\\backend\\server.js:264:13)"}}
+{"timestamp":"2025-07-25T13:51:49.243Z","level":"ERROR","message":"GET /dashboard-analytics - 401 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":401,"duration":1,"userId":null,"error":{"message":"Access token required"}}
+{"timestamp":"2025-07-25T13:51:51.335Z","level":"ERROR","message":"GET / - 401 (1ms)","category":"api","method":"GET","path":"/","statusCode":401,"duration":1,"userId":null,"error":{"message":"Access token required"}}
+{"timestamp":"2025-07-25T13:52:04.882Z","level":"WARN","message":"404 Not Found: GET /","method":"GET","path":"/","ip":"::1"}
+{"timestamp":"2025-07-25T13:52:04.884Z","level":"ERROR","message":"GET / - 404 (2ms)","category":"api","method":"GET","path":"/","statusCode":404,"duration":2,"userId":null,"error":{"message":"Route not found"}}
+{"timestamp":"2025-07-25T13:52:26.740Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:52:26.747Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:52:38.434Z","level":"INFO","message":"GET /verify - 200 (133ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":133,"userId":1}
+{"timestamp":"2025-07-25T13:52:38.450Z","level":"INFO","message":"GET /verify - 200 (9ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":9,"userId":1}
+{"timestamp":"2025-07-25T13:52:38.803Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:52:38.828Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:52:38.920Z","level":"INFO","message":"GET / - 200 (136ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":136,"userId":1}
+{"timestamp":"2025-07-25T13:52:38.959Z","level":"INFO","message":"GET /verify - 200 (159ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":159,"userId":1}
+{"timestamp":"2025-07-25T13:52:38.965Z","level":"INFO","message":"GET / - 200 (174ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":174,"userId":1}
+{"timestamp":"2025-07-25T13:52:38.975Z","level":"INFO","message":"GET / - 200 (164ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":164,"userId":1}
+{"timestamp":"2025-07-25T13:52:38.983Z","level":"INFO","message":"GET / - 200 (167ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":167,"userId":1}
+{"timestamp":"2025-07-25T13:52:38.986Z","level":"INFO","message":"GET /stats/overview - 200 (214ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":214,"userId":1}
+{"timestamp":"2025-07-25T13:52:38.989Z","level":"INFO","message":"GET / - 200 (51ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":51,"userId":1}
+{"timestamp":"2025-07-25T13:52:38.994Z","level":"INFO","message":"GET /pending - 200 (175ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":175,"userId":1}
+{"timestamp":"2025-07-25T13:52:39.017Z","level":"INFO","message":"GET / - 200 (39ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":39,"userId":1}
+{"timestamp":"2025-07-25T13:52:39.024Z","level":"INFO","message":"GET / - 200 (24ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":24,"userId":1}
+{"timestamp":"2025-07-25T13:52:39.046Z","level":"INFO","message":"GET / - 200 (44ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":44,"userId":1}
+{"timestamp":"2025-07-25T13:52:39.068Z","level":"INFO","message":"GET /stats/overview - 200 (64ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":64,"userId":1}
+{"timestamp":"2025-07-25T13:52:39.078Z","level":"INFO","message":"GET /pending - 200 (67ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":67,"userId":1}
+{"timestamp":"2025-07-25T13:52:41.452Z","level":"INFO","message":"GET / - 200 (25ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":25,"userId":1}
+{"timestamp":"2025-07-25T13:52:41.459Z","level":"INFO","message":"GET / - 200 (28ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":28,"userId":1}
+{"timestamp":"2025-07-25T13:52:41.482Z","level":"INFO","message":"GET / - 200 (45ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":45,"userId":1}
+{"timestamp":"2025-07-25T13:52:41.487Z","level":"INFO","message":"GET /pending - 200 (47ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":47,"userId":1}
+{"timestamp":"2025-07-25T13:52:41.490Z","level":"INFO","message":"GET / - 200 (51ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":51,"userId":1}
+{"timestamp":"2025-07-25T13:52:41.494Z","level":"INFO","message":"GET /stats/overview - 200 (70ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":70,"userId":1}
+{"timestamp":"2025-07-25T13:52:42.456Z","level":"INFO","message":"GET / - 200 (28ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":28,"userId":1}
+{"timestamp":"2025-07-25T13:52:42.460Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T13:52:42.471Z","level":"INFO","message":"GET / - 200 (33ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T13:52:42.477Z","level":"INFO","message":"GET / - 200 (43ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":43,"userId":1}
+{"timestamp":"2025-07-25T13:52:42.479Z","level":"INFO","message":"GET /pending - 200 (41ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":41,"userId":1}
+{"timestamp":"2025-07-25T13:52:42.484Z","level":"INFO","message":"GET /stats/overview - 200 (58ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":58,"userId":1}
+{"timestamp":"2025-07-25T13:52:43.401Z","level":"INFO","message":"GET / - 200 (18ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":18,"userId":1}
+{"timestamp":"2025-07-25T13:52:43.412Z","level":"INFO","message":"GET / - 200 (25ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":25,"userId":1}
+{"timestamp":"2025-07-25T13:52:43.419Z","level":"INFO","message":"GET / - 200 (28ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":28,"userId":1}
+{"timestamp":"2025-07-25T13:52:43.422Z","level":"INFO","message":"GET / - 200 (28ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":28,"userId":1}
+{"timestamp":"2025-07-25T13:52:43.426Z","level":"INFO","message":"GET /pending - 200 (32ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":32,"userId":1}
+{"timestamp":"2025-07-25T13:52:43.430Z","level":"INFO","message":"GET /stats/overview - 200 (49ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":49,"userId":1}
+{"timestamp":"2025-07-25T13:52:45.055Z","level":"ERROR","message":"GET / - 400 (3ms)","category":"api","method":"GET","path":"/","statusCode":400,"duration":3,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:52:45.069Z","level":"ERROR","message":"GET / - 400 (3ms)","category":"api","method":"GET","path":"/","statusCode":400,"duration":3,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:52:45.083Z","level":"INFO","message":"GET / - 200 (24ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":24,"userId":1}
+{"timestamp":"2025-07-25T13:52:45.117Z","level":"INFO","message":"GET / - 200 (16ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":16,"userId":1}
+{"timestamp":"2025-07-25T13:52:49.194Z","level":"INFO","message":"GET / - 200 (19ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":19,"userId":1}
+{"timestamp":"2025-07-25T13:52:49.209Z","level":"INFO","message":"GET / - 200 (31ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":31,"userId":1}
+{"timestamp":"2025-07-25T13:52:49.221Z","level":"INFO","message":"GET / - 200 (37ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T13:52:49.228Z","level":"INFO","message":"GET / - 200 (42ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":42,"userId":1}
+{"timestamp":"2025-07-25T13:52:49.231Z","level":"INFO","message":"GET /pending - 200 (41ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":41,"userId":1}
+{"timestamp":"2025-07-25T13:52:49.236Z","level":"INFO","message":"GET /stats/overview - 200 (64ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":64,"userId":1}
+{"timestamp":"2025-07-25T13:52:50.334Z","level":"INFO","message":"GET / - 200 (17ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":17,"userId":1}
+{"timestamp":"2025-07-25T13:52:50.353Z","level":"INFO","message":"GET / - 200 (33ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T13:52:50.356Z","level":"INFO","message":"GET / - 200 (32ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":32,"userId":1}
+{"timestamp":"2025-07-25T13:52:50.360Z","level":"INFO","message":"GET / - 200 (35ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":35,"userId":1}
+{"timestamp":"2025-07-25T13:52:50.366Z","level":"INFO","message":"GET /pending - 200 (40ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":40,"userId":1}
+{"timestamp":"2025-07-25T13:52:50.372Z","level":"INFO","message":"GET /stats/overview - 200 (58ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":58,"userId":1}
+{"timestamp":"2025-07-25T13:52:51.176Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:52:51.181Z","level":"INFO","message":"GET / - 200 (33ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T13:52:51.190Z","level":"INFO","message":"GET / - 200 (40ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":40,"userId":1}
+{"timestamp":"2025-07-25T13:52:51.196Z","level":"INFO","message":"GET / - 200 (45ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":45,"userId":1}
+{"timestamp":"2025-07-25T13:52:51.205Z","level":"INFO","message":"GET / - 200 (51ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":51,"userId":1}
+{"timestamp":"2025-07-25T13:52:51.211Z","level":"INFO","message":"GET /pending - 200 (55ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":55,"userId":1}
+{"timestamp":"2025-07-25T13:52:51.214Z","level":"INFO","message":"GET /stats/overview - 200 (72ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":72,"userId":1}
+{"timestamp":"2025-07-25T13:54:50.148Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:54:50.153Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:55:05.350Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:55:05.354Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:55:11.809Z","level":"INFO","message":"GET / - 200 (249ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":249,"userId":1}
+{"timestamp":"2025-07-25T13:55:11.818Z","level":"INFO","message":"GET / - 200 (243ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":243,"userId":1}
+{"timestamp":"2025-07-25T13:55:11.823Z","level":"INFO","message":"GET /pending - 200 (241ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":241,"userId":1}
+{"timestamp":"2025-07-25T13:55:11.828Z","level":"INFO","message":"GET / - 200 (257ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":257,"userId":1}
+{"timestamp":"2025-07-25T13:55:11.833Z","level":"INFO","message":"GET / - 200 (255ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":255,"userId":1}
+{"timestamp":"2025-07-25T13:55:11.836Z","level":"INFO","message":"GET /stats/overview - 200 (283ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":283,"userId":1}
+{"timestamp":"2025-07-25T13:55:12.434Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (4ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":4,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:55:12.439Z","level":"INFO","message":"GET / - 200 (33ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T13:55:12.443Z","level":"INFO","message":"GET / - 200 (35ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":35,"userId":1}
+{"timestamp":"2025-07-25T13:55:12.447Z","level":"INFO","message":"GET / - 200 (38ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":38,"userId":1}
+{"timestamp":"2025-07-25T13:55:12.452Z","level":"INFO","message":"GET /pending - 200 (42ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":42,"userId":1}
+{"timestamp":"2025-07-25T13:55:12.454Z","level":"INFO","message":"GET / - 200 (51ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":51,"userId":1}
+{"timestamp":"2025-07-25T13:55:12.458Z","level":"INFO","message":"GET /stats/overview - 200 (57ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":57,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.507Z","level":"INFO","message":"GET /verify - 200 (28ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":28,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.515Z","level":"INFO","message":"GET /verify - 200 (4ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":4,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.858Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:55:25.879Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T13:55:25.883Z","level":"INFO","message":"GET / - 200 (35ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":35,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.888Z","level":"INFO","message":"GET / - 200 (43ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":43,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.895Z","level":"INFO","message":"GET /verify - 200 (46ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":46,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.908Z","level":"INFO","message":"GET / - 200 (43ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":43,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.913Z","level":"INFO","message":"GET /stats/overview - 200 (72ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":72,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.915Z","level":"INFO","message":"GET / - 200 (61ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":61,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.917Z","level":"INFO","message":"GET /pending - 200 (50ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":50,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.932Z","level":"INFO","message":"GET / - 200 (31ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":31,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.941Z","level":"INFO","message":"GET / - 200 (38ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":38,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.948Z","level":"INFO","message":"GET / - 200 (28ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":28,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.951Z","level":"INFO","message":"GET / - 200 (23ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":23,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.953Z","level":"INFO","message":"GET /pending - 200 (24ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":24,"userId":1}
+{"timestamp":"2025-07-25T13:55:25.960Z","level":"INFO","message":"GET /stats/overview - 200 (33ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T13:55:35.960Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:55:35.965Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:56:08.966Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:56:08.973Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T13:56:48.026Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T13:56:48.031Z","level":"ERROR","message":"Uncaught Exception","error":{"name":"Error","message":"listen EADDRINUSE: address already in use :::3500","stack":"Error: listen EADDRINUSE: address already in use :::3500\n    at Server.setupListenHandle [as _listen2] (node:net:1937:16)\n    at listenInCluster (node:net:1994:12)\n    at Server.listen (node:net:2099:7)\n    at Function.listen (C:\\Coding\\gym4thSem\\gym-management-system\\backend\\node_modules\\express\\lib\\application.js:635:24)\n    at startServer (C:\\Coding\\gym4thSem\\gym-management-system\\backend\\server.js:264:13)"}}
+{"timestamp":"2025-07-25T14:00:36.387Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T14:00:36.393Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T14:01:22.506Z","level":"INFO","message":"SIGINT received, shutting down gracefully"}
+{"timestamp":"2025-07-25T14:01:27.684Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T14:01:27.688Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T14:01:30.271Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T14:01:30.275Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T14:01:47.366Z","level":"INFO","message":"POST /login - 200 (551ms)","category":"api","method":"POST","path":"/login","statusCode":200,"duration":551,"userId":null}
+{"timestamp":"2025-07-25T14:01:47.474Z","level":"INFO","message":"GET /verify - 200 (26ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T14:01:47.484Z","level":"INFO","message":"GET /verify - 200 (5ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":5,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.617Z","level":"INFO","message":"GET /verify - 200 (9ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":9,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.632Z","level":"INFO","message":"GET /verify - 200 (10ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":10,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.691Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (4ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":4,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:01:48.708Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:01:48.798Z","level":"INFO","message":"GET / - 200 (122ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":122,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.834Z","level":"INFO","message":"GET / - 200 (155ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":155,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.843Z","level":"INFO","message":"GET / - 200 (161ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":161,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.854Z","level":"INFO","message":"GET / - 200 (157ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":157,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.860Z","level":"INFO","message":"GET /pending - 200 (160ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":160,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.863Z","level":"INFO","message":"GET /stats/overview - 200 (194ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":194,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.869Z","level":"INFO","message":"GET / - 200 (53ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":53,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.887Z","level":"INFO","message":"GET / - 200 (36ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":36,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.897Z","level":"INFO","message":"GET / - 200 (32ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":32,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.899Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.902Z","level":"INFO","message":"GET /pending - 200 (24ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":24,"userId":1}
+{"timestamp":"2025-07-25T14:01:48.907Z","level":"INFO","message":"GET /stats/overview - 200 (27ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:01:50.988Z","level":"INFO","message":"GET / - 200 (33ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T14:01:50.992Z","level":"INFO","message":"GET / - 200 (35ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":35,"userId":1}
+{"timestamp":"2025-07-25T14:01:51.000Z","level":"INFO","message":"GET / - 200 (41ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":41,"userId":1}
+{"timestamp":"2025-07-25T14:01:51.004Z","level":"INFO","message":"GET / - 200 (43ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":43,"userId":1}
+{"timestamp":"2025-07-25T14:01:51.006Z","level":"INFO","message":"GET /pending - 200 (44ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":44,"userId":1}
+{"timestamp":"2025-07-25T14:01:51.016Z","level":"INFO","message":"GET /stats/overview - 200 (63ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":63,"userId":1}
+{"timestamp":"2025-07-25T14:01:52.914Z","level":"INFO","message":"GET / - 200 (28ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":28,"userId":1}
+{"timestamp":"2025-07-25T14:01:52.918Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:01:52.921Z","level":"INFO","message":"GET / - 200 (29ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":29,"userId":1}
+{"timestamp":"2025-07-25T14:01:52.925Z","level":"INFO","message":"GET /pending - 200 (31ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":31,"userId":1}
+{"timestamp":"2025-07-25T14:01:52.927Z","level":"INFO","message":"GET / - 200 (34ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":34,"userId":1}
+{"timestamp":"2025-07-25T14:01:52.932Z","level":"INFO","message":"GET /stats/overview - 200 (52ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":52,"userId":1}
+{"timestamp":"2025-07-25T14:01:53.918Z","level":"INFO","message":"GET / - 200 (42ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":42,"userId":1}
+{"timestamp":"2025-07-25T14:01:53.923Z","level":"INFO","message":"GET / - 200 (44ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":44,"userId":1}
+{"timestamp":"2025-07-25T14:01:53.925Z","level":"INFO","message":"GET / - 200 (45ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":45,"userId":1}
+{"timestamp":"2025-07-25T14:01:53.929Z","level":"INFO","message":"GET / - 200 (47ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":47,"userId":1}
+{"timestamp":"2025-07-25T14:01:53.931Z","level":"INFO","message":"GET /pending - 200 (47ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":47,"userId":1}
+{"timestamp":"2025-07-25T14:01:53.941Z","level":"INFO","message":"GET /stats/overview - 200 (68ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":68,"userId":1}
+{"timestamp":"2025-07-25T14:01:56.816Z","level":"ERROR","message":"GET / - 400 (2ms)","category":"api","method":"GET","path":"/","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:01:56.824Z","level":"ERROR","message":"GET / - 400 (1ms)","category":"api","method":"GET","path":"/","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:01:56.843Z","level":"INFO","message":"GET / - 200 (23ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":23,"userId":1}
+{"timestamp":"2025-07-25T14:01:56.859Z","level":"INFO","message":"GET / - 200 (13ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":13,"userId":1}
+{"timestamp":"2025-07-25T14:01:58.422Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:01:58.453Z","level":"INFO","message":"GET / - 200 (37ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T14:01:58.463Z","level":"INFO","message":"GET / - 200 (55ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":55,"userId":1}
+{"timestamp":"2025-07-25T14:01:58.469Z","level":"INFO","message":"GET / - 200 (55ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":55,"userId":1}
+{"timestamp":"2025-07-25T14:01:58.471Z","level":"INFO","message":"GET / - 200 (54ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":54,"userId":1}
+{"timestamp":"2025-07-25T14:01:58.474Z","level":"INFO","message":"GET /stats/overview - 200 (68ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":68,"userId":1}
+{"timestamp":"2025-07-25T14:01:58.487Z","level":"INFO","message":"GET /pending - 200 (68ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":68,"userId":1}
+{"timestamp":"2025-07-25T14:04:27.547Z","level":"INFO","message":"GET /verify - 200 (99ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":99,"userId":1}
+{"timestamp":"2025-07-25T14:04:27.555Z","level":"INFO","message":"GET /verify - 200 (3ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":3,"userId":1}
+{"timestamp":"2025-07-25T14:04:27.917Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:04:27.926Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:04:27.940Z","level":"INFO","message":"GET /verify - 200 (37ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T14:04:28.059Z","level":"INFO","message":"GET / - 200 (153ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":153,"userId":1}
+{"timestamp":"2025-07-25T14:04:28.076Z","level":"INFO","message":"GET / - 200 (167ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":167,"userId":1}
+{"timestamp":"2025-07-25T14:04:28.080Z","level":"INFO","message":"GET / - 200 (11ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":11,"userId":1}
+{"timestamp":"2025-07-25T14:04:28.083Z","level":"INFO","message":"GET /pending - 200 (163ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":163,"userId":1}
+{"timestamp":"2025-07-25T14:04:28.086Z","level":"INFO","message":"GET / - 200 (175ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":175,"userId":1}
+{"timestamp":"2025-07-25T14:04:28.089Z","level":"INFO","message":"GET /stats/overview - 200 (190ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":190,"userId":1}
+{"timestamp":"2025-07-25T14:04:28.092Z","level":"INFO","message":"GET / - 200 (182ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":182,"userId":1}
+{"timestamp":"2025-07-25T14:04:28.110Z","level":"INFO","message":"GET / - 200 (16ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":16,"userId":1}
+{"timestamp":"2025-07-25T14:04:28.117Z","level":"INFO","message":"GET /pending - 200 (21ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":21,"userId":1}
+{"timestamp":"2025-07-25T14:04:28.122Z","level":"INFO","message":"GET / - 200 (21ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":21,"userId":1}
+{"timestamp":"2025-07-25T14:04:28.127Z","level":"INFO","message":"GET / - 200 (23ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":23,"userId":1}
+{"timestamp":"2025-07-25T14:04:28.136Z","level":"INFO","message":"GET /stats/overview - 200 (32ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":32,"userId":1}
+{"timestamp":"2025-07-25T14:07:18.230Z","level":"INFO","message":"GET /verify - 200 (90ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":90,"userId":1}
+{"timestamp":"2025-07-25T14:07:18.237Z","level":"INFO","message":"GET /verify - 200 (4ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":4,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.154Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:07:19.161Z","level":"INFO","message":"GET /verify - 200 (21ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":21,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.171Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:07:19.257Z","level":"INFO","message":"GET / - 200 (112ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":112,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.282Z","level":"INFO","message":"GET / - 200 (132ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":132,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.297Z","level":"INFO","message":"GET /stats/overview - 200 (153ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":153,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.304Z","level":"INFO","message":"GET / - 200 (34ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":34,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.314Z","level":"INFO","message":"GET /pending - 200 (163ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":163,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.324Z","level":"INFO","message":"GET / - 200 (33ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.327Z","level":"INFO","message":"GET / - 200 (177ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":177,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.336Z","level":"INFO","message":"GET / - 200 (179ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":179,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.353Z","level":"INFO","message":"GET /pending - 200 (12ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":12,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.358Z","level":"INFO","message":"GET / - 200 (15ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":15,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.362Z","level":"INFO","message":"GET / - 200 (15ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":15,"userId":1}
+{"timestamp":"2025-07-25T14:07:19.365Z","level":"INFO","message":"GET /stats/overview - 200 (54ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":54,"userId":1}
+{"timestamp":"2025-07-25T14:07:33.155Z","level":"INFO","message":"GET /verify - 200 (9ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":9,"userId":1}
+{"timestamp":"2025-07-25T14:07:33.163Z","level":"INFO","message":"GET /verify - 200 (4ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":4,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.149Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:07:34.162Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:07:34.174Z","level":"INFO","message":"GET / - 200 (34ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":34,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.176Z","level":"INFO","message":"GET /verify - 200 (32ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":32,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.178Z","level":"INFO","message":"GET /stats/overview - 200 (41ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":41,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.186Z","level":"INFO","message":"GET / - 200 (40ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":40,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.189Z","level":"INFO","message":"GET / - 200 (44ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":44,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.198Z","level":"INFO","message":"GET / - 200 (46ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":46,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.203Z","level":"INFO","message":"GET /pending - 200 (49ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":49,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.206Z","level":"INFO","message":"GET / - 200 (24ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":24,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.223Z","level":"INFO","message":"GET / - 200 (29ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":29,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.230Z","level":"INFO","message":"GET / - 200 (35ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":35,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.233Z","level":"INFO","message":"GET /stats/overview - 200 (48ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":48,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.237Z","level":"INFO","message":"GET / - 200 (29ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":29,"userId":1}
+{"timestamp":"2025-07-25T14:07:34.239Z","level":"INFO","message":"GET /pending - 200 (20ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":20,"userId":1}
+{"timestamp":"2025-07-25T14:07:39.296Z","level":"INFO","message":"GET / - 200 (46ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":46,"userId":1}
+{"timestamp":"2025-07-25T14:07:39.299Z","level":"INFO","message":"GET /pending - 200 (44ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":44,"userId":1}
+{"timestamp":"2025-07-25T14:07:39.302Z","level":"INFO","message":"GET / - 200 (54ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":54,"userId":1}
+{"timestamp":"2025-07-25T14:07:39.305Z","level":"INFO","message":"GET / - 200 (54ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":54,"userId":1}
+{"timestamp":"2025-07-25T14:07:39.310Z","level":"INFO","message":"GET / - 200 (58ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":58,"userId":1}
+{"timestamp":"2025-07-25T14:07:39.315Z","level":"INFO","message":"GET /stats/overview - 200 (69ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":69,"userId":1}
+{"timestamp":"2025-07-25T14:07:40.170Z","level":"INFO","message":"GET / - 200 (20ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":20,"userId":1}
+{"timestamp":"2025-07-25T14:07:40.176Z","level":"INFO","message":"GET / - 200 (23ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":23,"userId":1}
+{"timestamp":"2025-07-25T14:07:40.180Z","level":"INFO","message":"GET / - 200 (25ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":25,"userId":1}
+{"timestamp":"2025-07-25T14:07:40.183Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T14:07:40.185Z","level":"INFO","message":"GET /pending - 200 (25ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":25,"userId":1}
+{"timestamp":"2025-07-25T14:07:40.188Z","level":"INFO","message":"GET /stats/overview - 200 (41ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":41,"userId":1}
+{"timestamp":"2025-07-25T14:07:41.064Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:07:41.080Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T14:07:41.083Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:07:41.085Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:07:41.089Z","level":"INFO","message":"GET /pending - 200 (27ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:07:41.093Z","level":"INFO","message":"GET / - 200 (33ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T14:07:41.101Z","level":"INFO","message":"GET /stats/overview - 200 (49ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":49,"userId":1}
+{"timestamp":"2025-07-25T14:07:42.636Z","level":"INFO","message":"GET / - 200 (34ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":34,"userId":1}
+{"timestamp":"2025-07-25T14:07:42.640Z","level":"INFO","message":"GET / - 200 (40ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":40,"userId":1}
+{"timestamp":"2025-07-25T14:07:42.650Z","level":"INFO","message":"GET / - 200 (44ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":44,"userId":1}
+{"timestamp":"2025-07-25T14:07:42.652Z","level":"INFO","message":"GET /pending - 200 (43ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":43,"userId":1}
+{"timestamp":"2025-07-25T14:07:42.654Z","level":"INFO","message":"GET / - 200 (46ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":46,"userId":1}
+{"timestamp":"2025-07-25T14:07:42.657Z","level":"INFO","message":"GET /stats/overview - 200 (59ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":59,"userId":1}
+{"timestamp":"2025-07-25T14:07:43.719Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:07:43.739Z","level":"INFO","message":"GET / - 200 (37ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T14:07:43.741Z","level":"INFO","message":"GET / - 200 (32ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":32,"userId":1}
+{"timestamp":"2025-07-25T14:07:43.744Z","level":"INFO","message":"GET / - 200 (33ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T14:07:43.747Z","level":"INFO","message":"GET / - 200 (34ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":34,"userId":1}
+{"timestamp":"2025-07-25T14:07:43.752Z","level":"INFO","message":"GET /pending - 200 (37ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T14:07:43.754Z","level":"INFO","message":"GET /stats/overview - 200 (54ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":54,"userId":1}
+{"timestamp":"2025-07-25T14:08:17.290Z","level":"INFO","message":"POST /login - 200 (521ms)","category":"api","method":"POST","path":"/login","statusCode":200,"duration":521,"userId":null}
+{"timestamp":"2025-07-25T14:08:17.367Z","level":"INFO","message":"GET /verify - 200 (10ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":10,"userId":1}
+{"timestamp":"2025-07-25T14:08:17.375Z","level":"INFO","message":"GET /verify - 200 (4ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":4,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.554Z","level":"INFO","message":"GET /verify - 200 (10ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":10,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.564Z","level":"INFO","message":"GET /verify - 200 (6ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":6,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.608Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:08:18.624Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:08:18.648Z","level":"INFO","message":"GET / - 200 (46ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":46,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.695Z","level":"INFO","message":"GET /stats/overview - 200 (103ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":103,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.732Z","level":"INFO","message":"GET / - 200 (122ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":122,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.738Z","level":"INFO","message":"GET / - 200 (131ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":131,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.740Z","level":"INFO","message":"GET / - 200 (48ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":48,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.746Z","level":"INFO","message":"GET /pending - 200 (131ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":131,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.751Z","level":"INFO","message":"GET / - 200 (139ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":139,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.765Z","level":"INFO","message":"GET /stats/overview - 200 (57ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":57,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.770Z","level":"INFO","message":"GET / - 200 (28ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":28,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.775Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.777Z","level":"INFO","message":"GET /pending - 200 (17ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":17,"userId":1}
+{"timestamp":"2025-07-25T14:08:18.780Z","level":"INFO","message":"GET / - 200 (18ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":18,"userId":1}
+{"timestamp":"2025-07-25T14:08:19.554Z","level":"INFO","message":"GET / - 200 (19ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":19,"userId":1}
+{"timestamp":"2025-07-25T14:08:19.563Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T14:08:19.567Z","level":"INFO","message":"GET / - 200 (28ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":28,"userId":1}
+{"timestamp":"2025-07-25T14:08:19.572Z","level":"INFO","message":"GET / - 200 (31ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":31,"userId":1}
+{"timestamp":"2025-07-25T14:08:19.574Z","level":"INFO","message":"GET /pending - 200 (31ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":31,"userId":1}
+{"timestamp":"2025-07-25T14:08:19.578Z","level":"INFO","message":"GET /stats/overview - 200 (44ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":44,"userId":1}
+{"timestamp":"2025-07-25T14:08:21.643Z","level":"INFO","message":"GET / - 200 (24ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":24,"userId":1}
+{"timestamp":"2025-07-25T14:08:21.646Z","level":"INFO","message":"GET / - 200 (25ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":25,"userId":1}
+{"timestamp":"2025-07-25T14:08:21.649Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T14:08:21.653Z","level":"INFO","message":"GET / - 200 (28ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":28,"userId":1}
+{"timestamp":"2025-07-25T14:08:21.658Z","level":"INFO","message":"GET /pending - 200 (32ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":32,"userId":1}
+{"timestamp":"2025-07-25T14:08:21.662Z","level":"INFO","message":"GET /stats/overview - 200 (46ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":46,"userId":1}
+{"timestamp":"2025-07-25T14:08:34.360Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:08:34.382Z","level":"INFO","message":"GET / - 200 (45ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":45,"userId":1}
+{"timestamp":"2025-07-25T14:08:34.385Z","level":"INFO","message":"GET /stats/overview - 200 (54ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":54,"userId":1}
+{"timestamp":"2025-07-25T14:08:34.392Z","level":"INFO","message":"GET / - 200 (56ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":56,"userId":1}
+{"timestamp":"2025-07-25T14:08:34.401Z","level":"INFO","message":"GET /pending - 200 (49ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":49,"userId":1}
+{"timestamp":"2025-07-25T14:08:34.407Z","level":"INFO","message":"GET / - 200 (56ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":56,"userId":1}
+{"timestamp":"2025-07-25T14:11:11.300Z","level":"INFO","message":"GET / - 200 (151ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":151,"userId":1}
+{"timestamp":"2025-07-25T14:11:11.307Z","level":"INFO","message":"GET / - 200 (160ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":160,"userId":1}
+{"timestamp":"2025-07-25T14:11:11.313Z","level":"INFO","message":"GET /stats/overview - 200 (169ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":169,"userId":1}
+{"timestamp":"2025-07-25T14:11:11.316Z","level":"INFO","message":"GET /pending - 200 (163ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":163,"userId":1}
+{"timestamp":"2025-07-25T14:11:11.318Z","level":"INFO","message":"GET / - 200 (170ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":170,"userId":1}
+{"timestamp":"2025-07-25T14:11:11.320Z","level":"INFO","message":"GET / - 200 (168ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":168,"userId":1}
+{"timestamp":"2025-07-25T14:11:20.187Z","level":"INFO","message":"GET / - 200 (25ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":25,"userId":1}
+{"timestamp":"2025-07-25T14:11:20.193Z","level":"INFO","message":"GET / - 200 (24ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":24,"userId":1}
+{"timestamp":"2025-07-25T14:11:20.197Z","level":"INFO","message":"GET / - 200 (37ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T14:11:20.200Z","level":"INFO","message":"GET /stats/overview - 200 (45ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":45,"userId":1}
+{"timestamp":"2025-07-25T14:11:20.202Z","level":"INFO","message":"GET / - 200 (30ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":30,"userId":1}
+{"timestamp":"2025-07-25T14:11:20.205Z","level":"INFO","message":"GET /pending - 200 (30ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":30,"userId":1}
+{"timestamp":"2025-07-25T14:12:48.261Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:12:48.466Z","level":"INFO","message":"GET / - 200 (207ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":207,"userId":1}
+{"timestamp":"2025-07-25T14:12:48.469Z","level":"INFO","message":"GET / - 200 (212ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":212,"userId":1}
+{"timestamp":"2025-07-25T14:12:48.477Z","level":"INFO","message":"GET /stats/overview - 200 (222ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":222,"userId":1}
+{"timestamp":"2025-07-25T14:12:48.480Z","level":"INFO","message":"GET / - 200 (217ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":217,"userId":1}
+{"timestamp":"2025-07-25T14:12:48.484Z","level":"INFO","message":"GET / - 200 (226ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":226,"userId":1}
+{"timestamp":"2025-07-25T14:12:48.492Z","level":"INFO","message":"GET /pending - 200 (227ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":227,"userId":1}
+{"timestamp":"2025-07-25T14:13:15.582Z","level":"INFO","message":"GET / - 200 (29ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":29,"userId":1}
+{"timestamp":"2025-07-25T14:13:15.594Z","level":"INFO","message":"GET / - 200 (35ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":35,"userId":1}
+{"timestamp":"2025-07-25T14:13:15.598Z","level":"INFO","message":"GET / - 200 (41ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":41,"userId":1}
+{"timestamp":"2025-07-25T14:13:15.607Z","level":"INFO","message":"GET /stats/overview - 200 (57ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":57,"userId":1}
+{"timestamp":"2025-07-25T14:13:15.612Z","level":"INFO","message":"GET /pending - 200 (51ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":51,"userId":1}
+{"timestamp":"2025-07-25T14:13:15.614Z","level":"INFO","message":"GET / - 200 (54ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":54,"userId":1}
+{"timestamp":"2025-07-25T14:13:19.148Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:13:19.159Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:13:19.165Z","level":"INFO","message":"GET / - 200 (31ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":31,"userId":1}
+{"timestamp":"2025-07-25T14:13:19.169Z","level":"INFO","message":"GET / - 200 (34ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":34,"userId":1}
+{"timestamp":"2025-07-25T14:13:19.171Z","level":"INFO","message":"GET /pending - 200 (33ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T14:13:19.174Z","level":"INFO","message":"GET / - 200 (37ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T14:13:19.181Z","level":"INFO","message":"GET /stats/overview - 200 (51ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":51,"userId":1}
+{"timestamp":"2025-07-25T14:16:13.762Z","level":"INFO","message":"GET / - 200 (170ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":170,"userId":1}
+{"timestamp":"2025-07-25T14:16:13.768Z","level":"INFO","message":"GET / - 200 (179ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":179,"userId":1}
+{"timestamp":"2025-07-25T14:16:13.780Z","level":"INFO","message":"GET /stats/overview - 200 (194ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":194,"userId":1}
+{"timestamp":"2025-07-25T14:16:13.789Z","level":"INFO","message":"GET /pending - 200 (193ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":193,"userId":1}
+{"timestamp":"2025-07-25T14:16:13.790Z","level":"INFO","message":"GET / - 200 (199ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":199,"userId":1}
+{"timestamp":"2025-07-25T14:16:13.792Z","level":"INFO","message":"GET / - 200 (198ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":198,"userId":1}
+{"timestamp":"2025-07-25T14:16:14.543Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:16:14.561Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T14:16:14.569Z","level":"INFO","message":"GET / - 200 (39ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":39,"userId":1}
+{"timestamp":"2025-07-25T14:16:14.572Z","level":"INFO","message":"GET /stats/overview - 200 (44ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":44,"userId":1}
+{"timestamp":"2025-07-25T14:16:14.574Z","level":"INFO","message":"GET /pending - 200 (36ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":36,"userId":1}
+{"timestamp":"2025-07-25T14:16:14.577Z","level":"INFO","message":"GET / - 200 (44ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":44,"userId":1}
+{"timestamp":"2025-07-25T14:16:14.579Z","level":"INFO","message":"GET / - 200 (42ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":42,"userId":1}
+{"timestamp":"2025-07-25T14:16:17.790Z","level":"INFO","message":"GET /verify - 200 (9ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":9,"userId":1}
+{"timestamp":"2025-07-25T14:16:17.798Z","level":"INFO","message":"GET /verify - 200 (3ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":3,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.146Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (3ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":3,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:16:18.184Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (7ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":7,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:16:18.232Z","level":"INFO","message":"GET / - 200 (105ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":105,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.241Z","level":"INFO","message":"GET / - 200 (107ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":107,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.255Z","level":"INFO","message":"GET /pending - 200 (117ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":117,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.264Z","level":"INFO","message":"GET / - 200 (128ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":128,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.289Z","level":"INFO","message":"GET / - 200 (157ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":157,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.331Z","level":"INFO","message":"GET /verify - 200 (160ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":160,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.347Z","level":"INFO","message":"GET /stats/overview - 200 (227ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":227,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.403Z","level":"INFO","message":"GET / - 200 (130ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":130,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.436Z","level":"INFO","message":"GET / - 200 (134ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":134,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.446Z","level":"INFO","message":"GET / - 200 (83ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":83,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.458Z","level":"INFO","message":"GET /pending - 200 (103ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":103,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.476Z","level":"INFO","message":"GET / - 200 (106ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":106,"userId":1}
+{"timestamp":"2025-07-25T14:16:18.501Z","level":"INFO","message":"GET /stats/overview - 200 (107ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":107,"userId":1}
+{"timestamp":"2025-07-25T14:17:08.155Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:17:08.332Z","level":"INFO","message":"GET / - 200 (174ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":174,"userId":1}
+{"timestamp":"2025-07-25T14:17:08.337Z","level":"INFO","message":"GET / - 200 (180ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":180,"userId":1}
+{"timestamp":"2025-07-25T14:17:08.341Z","level":"INFO","message":"GET / - 200 (189ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":189,"userId":1}
+{"timestamp":"2025-07-25T14:17:08.345Z","level":"INFO","message":"GET / - 200 (185ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":185,"userId":1}
+{"timestamp":"2025-07-25T14:17:08.348Z","level":"INFO","message":"GET /pending - 200 (186ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":186,"userId":1}
+{"timestamp":"2025-07-25T14:17:08.351Z","level":"INFO","message":"GET /stats/overview - 200 (203ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":203,"userId":1}
+{"timestamp":"2025-07-25T14:17:19.281Z","level":"INFO","message":"GET / - 200 (31ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":31,"userId":1}
+{"timestamp":"2025-07-25T14:17:19.302Z","level":"INFO","message":"GET / - 200 (47ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":47,"userId":1}
+{"timestamp":"2025-07-25T14:17:19.312Z","level":"INFO","message":"GET /stats/overview - 200 (65ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":65,"userId":1}
+{"timestamp":"2025-07-25T14:17:19.318Z","level":"INFO","message":"GET / - 200 (64ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":64,"userId":1}
+{"timestamp":"2025-07-25T14:17:19.321Z","level":"INFO","message":"GET /pending - 200 (62ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":62,"userId":1}
+{"timestamp":"2025-07-25T14:17:19.336Z","level":"INFO","message":"GET / - 200 (79ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":79,"userId":1}
+{"timestamp":"2025-07-25T14:17:20.159Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:17:20.167Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:17:20.171Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:17:20.190Z","level":"INFO","message":"GET /stats/overview - 200 (52ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":52,"userId":1}
+{"timestamp":"2025-07-25T14:17:20.194Z","level":"INFO","message":"GET / - 200 (43ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":43,"userId":1}
+{"timestamp":"2025-07-25T14:17:20.197Z","level":"INFO","message":"GET / - 200 (55ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":55,"userId":1}
+{"timestamp":"2025-07-25T14:17:20.201Z","level":"INFO","message":"GET /pending - 200 (48ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":48,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.498Z","level":"INFO","message":"GET /verify - 200 (12ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":12,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.510Z","level":"INFO","message":"GET /verify - 200 (5ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":5,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.841Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:17:23.857Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:17:23.862Z","level":"INFO","message":"GET / - 200 (40ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":40,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.873Z","level":"INFO","message":"GET / - 200 (48ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":48,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.880Z","level":"INFO","message":"GET / - 200 (51ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":51,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.883Z","level":"INFO","message":"GET /verify - 200 (38ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":38,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.886Z","level":"INFO","message":"GET / - 200 (56ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":56,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.890Z","level":"INFO","message":"GET /pending - 200 (56ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":56,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.911Z","level":"INFO","message":"GET /stats/overview - 200 (93ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":93,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.925Z","level":"INFO","message":"GET / - 200 (49ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":49,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.933Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.938Z","level":"INFO","message":"GET / - 200 (25ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":25,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.942Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.944Z","level":"INFO","message":"GET /pending - 200 (27ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:17:23.950Z","level":"INFO","message":"GET /stats/overview - 200 (24ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":24,"userId":1}
+{"timestamp":"2025-07-25T14:17:42.746Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:17:42.757Z","level":"INFO","message":"GET / - 200 (25ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":25,"userId":1}
+{"timestamp":"2025-07-25T14:17:42.760Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:17:42.765Z","level":"INFO","message":"GET / - 200 (29ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":29,"userId":1}
+{"timestamp":"2025-07-25T14:17:42.771Z","level":"INFO","message":"GET / - 200 (29ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":29,"userId":1}
+{"timestamp":"2025-07-25T14:17:42.775Z","level":"INFO","message":"GET /pending - 200 (23ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":23,"userId":1}
+{"timestamp":"2025-07-25T14:17:42.777Z","level":"INFO","message":"GET /stats/overview - 200 (47ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":47,"userId":1}
+{"timestamp":"2025-07-25T14:18:40.471Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:18:40.578Z","level":"INFO","message":"GET / - 200 (99ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":99,"userId":1}
+{"timestamp":"2025-07-25T14:18:40.584Z","level":"INFO","message":"GET / - 200 (109ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":109,"userId":1}
+{"timestamp":"2025-07-25T14:18:40.589Z","level":"INFO","message":"GET /pending - 200 (107ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":107,"userId":1}
+{"timestamp":"2025-07-25T14:18:40.592Z","level":"INFO","message":"GET / - 200 (115ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":115,"userId":1}
+{"timestamp":"2025-07-25T14:18:40.595Z","level":"INFO","message":"GET / - 200 (114ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":114,"userId":1}
+{"timestamp":"2025-07-25T14:18:40.598Z","level":"INFO","message":"GET /stats/overview - 200 (135ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":135,"userId":1}
+{"timestamp":"2025-07-25T14:20:16.492Z","level":"INFO","message":"SIGINT received, shutting down gracefully"}
+{"timestamp":"2025-07-25T14:20:22.138Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T14:20:22.142Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T14:20:26.246Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (9ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":9,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:20:26.979Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:20:37.168Z","level":"INFO","message":"POST /login - 200 (637ms)","category":"api","method":"POST","path":"/login","statusCode":200,"duration":637,"userId":null}
+{"timestamp":"2025-07-25T14:20:37.225Z","level":"INFO","message":"GET /verify - 200 (13ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":13,"userId":1}
+{"timestamp":"2025-07-25T14:20:37.242Z","level":"INFO","message":"GET /verify - 200 (11ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":11,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.441Z","level":"INFO","message":"GET /verify - 200 (9ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":9,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.453Z","level":"INFO","message":"GET /verify - 200 (5ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":5,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.514Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (3ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":3,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:20:38.535Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:20:38.556Z","level":"INFO","message":"GET / - 200 (73ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":73,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.623Z","level":"INFO","message":"GET /stats/overview - 200 (152ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":152,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.678Z","level":"INFO","message":"GET / - 200 (180ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":180,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.686Z","level":"INFO","message":"GET / - 200 (185ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":185,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.690Z","level":"INFO","message":"GET / - 200 (173ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":173,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.698Z","level":"INFO","message":"GET / - 200 (99ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":99,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.704Z","level":"INFO","message":"GET /pending - 200 (185ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":185,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.733Z","level":"INFO","message":"GET /stats/overview - 200 (92ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":92,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.737Z","level":"INFO","message":"GET / - 200 (35ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":35,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.740Z","level":"INFO","message":"GET / - 200 (31ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":31,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.744Z","level":"INFO","message":"GET /pending - 200 (29ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":29,"userId":1}
+{"timestamp":"2025-07-25T14:20:38.749Z","level":"INFO","message":"GET / - 200 (37ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T14:20:40.065Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:20:40.931Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:22:57.479Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T14:22:57.484Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T14:23:57.337Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T14:23:57.341Z","level":"ERROR","message":"Uncaught Exception","error":{"name":"Error","message":"listen EADDRINUSE: address already in use :::3500","stack":"Error: listen EADDRINUSE: address already in use :::3500\n    at Server.setupListenHandle [as _listen2] (node:net:1937:16)\n    at listenInCluster (node:net:1994:12)\n    at Server.listen (node:net:2099:7)\n    at Function.listen (C:\\Coding\\gym4thSem\\gym-management-system\\backend\\node_modules\\express\\lib\\application.js:635:24)\n    at startServer (C:\\Coding\\gym4thSem\\gym-management-system\\backend\\server.js:264:13)"}}
+{"timestamp":"2025-07-25T14:24:04.936Z","level":"INFO","message":"Health check requested"}
+{"timestamp":"2025-07-25T14:24:04.939Z","level":"INFO","message":"GET /health - 200 (3ms)","category":"api","method":"GET","path":"/health","statusCode":200,"duration":3,"userId":null}
+{"timestamp":"2025-07-25T14:24:15.396Z","level":"ERROR","message":"GET /dashboard-analytics - 403 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":403,"duration":1,"userId":null,"error":{"message":"Invalid or expired token"}}
+{"timestamp":"2025-07-25T14:24:33.167Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (5ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":5,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:24:33.382Z","level":"INFO","message":"GET / - 200 (212ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":212,"userId":1}
+{"timestamp":"2025-07-25T14:24:33.389Z","level":"INFO","message":"GET / - 200 (205ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":205,"userId":1}
+{"timestamp":"2025-07-25T14:24:33.393Z","level":"INFO","message":"GET / - 200 (215ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":215,"userId":1}
+{"timestamp":"2025-07-25T14:24:33.397Z","level":"INFO","message":"GET /pending - 200 (210ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":210,"userId":1}
+{"timestamp":"2025-07-25T14:24:33.402Z","level":"INFO","message":"GET / - 200 (227ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":227,"userId":1}
+{"timestamp":"2025-07-25T14:24:33.410Z","level":"INFO","message":"GET /stats/overview - 200 (255ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":255,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.079Z","level":"INFO","message":"GET /verify - 200 (10ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":10,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.089Z","level":"INFO","message":"GET /verify - 200 (6ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":6,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.436Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:24:40.457Z","level":"INFO","message":"GET /stats/overview - 200 (47ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":47,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.463Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (3ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":3,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:24:40.479Z","level":"INFO","message":"GET / - 200 (59ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":59,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.482Z","level":"INFO","message":"GET / - 200 (59ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":59,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.489Z","level":"INFO","message":"GET / - 200 (60ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":60,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.493Z","level":"INFO","message":"GET /verify - 200 (61ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":61,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.497Z","level":"INFO","message":"GET /pending - 200 (54ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":54,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.500Z","level":"INFO","message":"GET / - 200 (60ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":60,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.530Z","level":"INFO","message":"GET / - 200 (26ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":26,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.533Z","level":"INFO","message":"GET / - 200 (27ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":27,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.544Z","level":"INFO","message":"GET / - 200 (37ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.549Z","level":"INFO","message":"GET /pending - 200 (37ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.551Z","level":"INFO","message":"GET / - 200 (38ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":38,"userId":1}
+{"timestamp":"2025-07-25T14:24:40.554Z","level":"INFO","message":"GET /stats/overview - 200 (69ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":69,"userId":1}
+{"timestamp":"2025-07-25T14:24:50.180Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T14:24:50.185Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T14:24:59.414Z","level":"INFO","message":"POST /login - 200 (568ms)","category":"api","method":"POST","path":"/login","statusCode":200,"duration":568,"userId":null}
+{"timestamp":"2025-07-25T14:24:59.522Z","level":"INFO","message":"GET /verify - 200 (16ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":16,"userId":1}
+{"timestamp":"2025-07-25T14:24:59.533Z","level":"INFO","message":"GET /verify - 200 (6ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":6,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.683Z","level":"INFO","message":"GET /verify - 200 (12ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":12,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.699Z","level":"INFO","message":"GET /verify - 200 (12ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":12,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.767Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (4ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":4,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:25:00.787Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:25:00.874Z","level":"INFO","message":"GET / - 200 (143ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":143,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.920Z","level":"INFO","message":"GET / - 200 (174ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":174,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.925Z","level":"INFO","message":"GET / - 200 (174ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":174,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.939Z","level":"INFO","message":"GET / - 200 (170ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":170,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.942Z","level":"INFO","message":"GET / - 200 (52ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":52,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.945Z","level":"INFO","message":"GET /stats/overview - 200 (222ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":222,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.949Z","level":"INFO","message":"GET /pending - 200 (177ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":177,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.972Z","level":"INFO","message":"GET / - 200 (37ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":37,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.982Z","level":"INFO","message":"GET / - 200 (28ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":28,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.993Z","level":"INFO","message":"GET / - 200 (33ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T14:25:00.996Z","level":"INFO","message":"GET /pending - 200 (33ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":33,"userId":1}
+{"timestamp":"2025-07-25T14:25:01.004Z","level":"INFO","message":"GET /stats/overview - 200 (43ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":43,"userId":1}
+{"timestamp":"2025-07-25T14:25:18.437Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:26:35.291Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:26:36.038Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:27:11.601Z","level":"INFO","message":"POST /login - 200 (566ms)","category":"api","method":"POST","path":"/login","statusCode":200,"duration":566,"userId":null}
+{"timestamp":"2025-07-25T14:27:11.660Z","level":"INFO","message":"GET /verify - 200 (9ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":9,"userId":1}
+{"timestamp":"2025-07-25T14:27:11.672Z","level":"INFO","message":"GET /verify - 200 (7ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":7,"userId":1}
+{"timestamp":"2025-07-25T14:27:12.855Z","level":"INFO","message":"GET /verify - 200 (7ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":7,"userId":1}
+{"timestamp":"2025-07-25T14:27:12.867Z","level":"INFO","message":"GET /verify - 200 (8ms)","category":"api","method":"GET","path":"/verify","statusCode":200,"duration":8,"userId":1}
+{"timestamp":"2025-07-25T14:27:12.911Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (1ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":1,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:27:12.925Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:27:12.992Z","level":"INFO","message":"GET / - 200 (87ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":87,"userId":1}
+{"timestamp":"2025-07-25T14:27:13.058Z","level":"INFO","message":"GET / - 200 (149ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":149,"userId":1}
+{"timestamp":"2025-07-25T14:27:13.062Z","level":"INFO","message":"GET / - 200 (44ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":44,"userId":1}
+{"timestamp":"2025-07-25T14:27:13.071Z","level":"INFO","message":"GET /stats/overview - 200 (174ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":174,"userId":1}
+{"timestamp":"2025-07-25T14:27:13.074Z","level":"INFO","message":"GET / - 200 (166ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":166,"userId":1}
+{"timestamp":"2025-07-25T14:27:13.077Z","level":"INFO","message":"GET / - 200 (163ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":163,"userId":1}
+{"timestamp":"2025-07-25T14:27:13.083Z","level":"INFO","message":"GET /pending - 200 (166ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":166,"userId":1}
+{"timestamp":"2025-07-25T14:27:13.095Z","level":"INFO","message":"GET / - 200 (29ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":29,"userId":1}
+{"timestamp":"2025-07-25T14:27:13.113Z","level":"INFO","message":"GET / - 200 (25ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":25,"userId":1}
+{"timestamp":"2025-07-25T14:27:13.118Z","level":"INFO","message":"GET / - 200 (25ms)","category":"api","method":"GET","path":"/","statusCode":200,"duration":25,"userId":1}
+{"timestamp":"2025-07-25T14:27:13.122Z","level":"INFO","message":"GET /pending - 200 (24ms)","category":"api","method":"GET","path":"/pending","statusCode":200,"duration":24,"userId":1}
+{"timestamp":"2025-07-25T14:27:13.124Z","level":"INFO","message":"GET /stats/overview - 200 (38ms)","category":"api","method":"GET","path":"/stats/overview","statusCode":200,"duration":38,"userId":1}
+{"timestamp":"2025-07-25T14:27:15.507Z","level":"ERROR","message":"GET /dashboard-analytics - 400 (2ms)","category":"api","method":"GET","path":"/dashboard-analytics","statusCode":400,"duration":2,"userId":1,"error":{"message":"Validation failed"}}
+{"timestamp":"2025-07-25T14:27:21.475Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T14:27:21.480Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T14:27:50.863Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T14:27:50.868Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}
+{"timestamp":"2025-07-25T14:29:57.396Z","level":"INFO","message":"Database initialized successfully"}
+{"timestamp":"2025-07-25T14:29:57.401Z","level":"INFO","message":"🚀 Server running on port 3500","port":"3500","environment":"development","logLevel":"INFO"}

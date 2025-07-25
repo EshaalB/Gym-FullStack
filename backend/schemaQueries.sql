@@ -249,6 +249,15 @@ BEGIN
     SET NOCOUNT ON;
 
     DECLARE @enrollmentId INT;
+    DECLARE @result INT = 0; -- 0 = success, 1 = not enrolled, 2 = already marked, 3 = invalid status, 4 = user not found
+
+    -- Check if user exists
+    IF NOT EXISTS (SELECT 1 FROM gymUser WHERE userId = @memberId AND userRole = 'Member')
+    BEGIN
+        SELECT @result = 4;
+        SELECT @result AS Result, 'User does not exist or is not a Member!' AS Message;
+        RETURN;
+    END
 
     -- Check if member is enrolled in the class
     SELECT @enrollmentId = enrollmentId
@@ -257,14 +266,8 @@ BEGIN
 
     IF @enrollmentId IS NULL
     BEGIN
-        RAISERROR ('FAILED: Member not enrolled in given class!', 16, 1);
-        RETURN;
-    END
-
-    -- Check if user exists
-    IF NOT EXISTS (SELECT 1 FROM gymUser WHERE userId = @memberId AND userRole = 'Member')
-    BEGIN
-        RAISERROR ('FAILED: User does not exist or is not a Member!', 16, 1);
+        SELECT @result = 1;
+        SELECT @result AS Result, 'Member not enrolled in given class!' AS Message;
         RETURN;
     END
 
@@ -276,14 +279,16 @@ BEGIN
             AND currDate = @currDate
     )
     BEGIN
-        RAISERROR ('FAILED: Attendance already marked for this day!', 16, 1);
+        SELECT @result = 2;
+        SELECT @result AS Result, 'Attendance already marked for this day!' AS Message;
         RETURN;
     END
 
     -- Validate attendance status
     IF @attendanceStatus NOT IN ('P', 'A', 'L')
     BEGIN
-        RAISERROR ('FAILED: Invalid attendance status! Use ''P'' for Present, ''A'' for Absent, or ''L'' for Late.', 16, 1);
+        SELECT @result = 3;
+        SELECT @result AS Result, 'Invalid attendance status! Use P for Present, A for Absent, or L for Late.' AS Message;
         RETURN;
     END
 
@@ -291,7 +296,7 @@ BEGIN
     INSERT INTO Attendance (enrollmentId, currDate, attendanceStatus)
     VALUES (@enrollmentId, @currDate, @attendanceStatus);
 
-    PRINT 'Attendance marked successfully!';
+    SELECT @result AS Result, 'Attendance marked successfully!' AS Message;
 END;
 
 -- Example Execution
@@ -343,17 +348,8 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Check if class already has a trainer
-    IF EXISTS (
-        SELECT 1 
-        FROM Class 
-        WHERE classId = @classId AND trainerId IS NOT NULL
-    )
-    BEGIN
-        RAISERROR ('FAILED: Class already has a trainer assigned.', 16, 1);
-        RETURN;
-    END
-    
+    DECLARE @result INT = 0; -- 0 = success, 1 = class has trainer, 2 = trainer not found, 3 = trainer overloaded
+
     -- Check if trainer exists
     IF NOT EXISTS (
         SELECT 1 
@@ -361,27 +357,37 @@ BEGIN
         WHERE userId = @trainerId
     )
     BEGIN
-        RAISERROR ('FAILED: Trainer does not exist.', 16, 1);
+        SELECT @result = 2;
+        SELECT @result AS Result, 'Trainer does not exist.' AS Message;
         RETURN;
     END
     
-    -- Check trainer's workload
+    -- Check trainer's workload (allow reassignment, just warn if overloaded)
     IF (
         SELECT COUNT(*) 
         FROM Class 
         WHERE trainerId = @trainerId
     ) >= 3
     BEGIN
-        RAISERROR ('FAILED: Trainer already has 3 or more classes assigned.', 16, 1);
-        RETURN;
+        SELECT @result = 3;
+        SELECT @result AS Result, 'Warning: Trainer already has 3 or more classes assigned.' AS Message;
+        -- Don't return, just warn but allow assignment
     END
     
-    -- Assign trainer to class
+    -- Assign trainer to class (this will update if trainer already exists)
     UPDATE Class 
     SET trainerId = @trainerId 
     WHERE classId = @classId;
 
-    PRINT 'Trainer assigned to class successfully!';
+    -- Check if update was successful
+    IF @@ROWCOUNT = 0
+    BEGIN
+        SELECT @result = 4;
+        SELECT @result AS Result, 'Class does not exist.' AS Message;
+        RETURN;
+    END
+
+    SELECT @result AS Result, 'Trainer assigned to class successfully!' AS Message;
 END;
 
 -- Example Execution
@@ -395,12 +401,15 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
+    DECLARE @result INT = 0; -- 0 = success, 1 = already enrolled, 2 = class full, 3 = member not found, 4 = class not found
+
     -- Check if member is already enrolled in the class
     IF EXISTS (
         SELECT 1 FROM Class_Enrollment WHERE memberId = @memberId AND classId = @classId
     )
     BEGIN
-        RAISERROR ('FAILED: Member is already enrolled in this class.', 16, 1);
+        SELECT @result = 1;
+        SELECT @result AS Result, 'Member is already enrolled in this class.' AS Message;
         RETURN;
     END
 
@@ -409,13 +418,16 @@ BEGIN
     SELECT @seats = seats FROM Class WHERE classId = @classId;
     IF @seats IS NULL
     BEGIN
-        RAISERROR ('FAILED: Class does not exist.', 16, 1);
+        SELECT @result = 4;
+        SELECT @result AS Result, 'Class does not exist.' AS Message;
         RETURN;
     END
+    
     SELECT @enrolled = COUNT(*) FROM Class_Enrollment WHERE classId = @classId;
     IF @enrolled >= @seats
     BEGIN
-        RAISERROR ('FAILED: Class is already full.', 16, 1);
+        SELECT @result = 2;
+        SELECT @result AS Result, 'Class is already full.' AS Message;
         RETURN;
     END
 
@@ -424,15 +436,15 @@ BEGIN
         SELECT 1 FROM MembershipDetails WHERE userId = @memberId AND membershipStatus = 'Active'
     )
     BEGIN
-        RAISERROR ('FAILED: Member does not exist or is not active.', 16, 1);
+        SELECT @result = 3;
+        SELECT @result AS Result, 'Member does not exist or is not active.' AS Message;
         RETURN;
     END
 
     -- Insert enrollment
     INSERT INTO Class_Enrollment (memberId, classId) VALUES (@memberId, @classId);
-    PRINT 'Member assigned to class successfully!';
+    SELECT @result AS Result, 'Member assigned to class successfully!' AS Message;
 END;
-GO
 
 -- Example Execution
 -- EXEC AssignMemberToClass @memberId = 2, @classId = 1;
@@ -515,7 +527,6 @@ BEGIN
 
     PRINT 'Workout plan assigned successfully!';
 END;
-GO
 
 -- Example Execution
 EXEC AssignWorkoutPlan @memberId = 3,
@@ -607,7 +618,6 @@ BEGIN
 
     PRINT 'Payment processed successfully!';
 END;
-GO
 
 -- Example Execution
 EXEC ProcessPayment @memberId = 2,
@@ -634,7 +644,6 @@ BEGIN
     FROM gymUser
     WHERE userId = @userId;
 END;
-GO
 
 -- Stored Procedure to Fetch User Classes
 CREATE PROCEDURE GetUserClasses
@@ -647,7 +656,6 @@ BEGIN
     JOIN gymUser t ON c.trainerId = t.userId
     WHERE ce.memberId = @userId;
 END;
-GO
 
 -- Stored Procedure to Fetch Membership Status
 CREATE PROCEDURE GetMembershipStatus
@@ -658,7 +666,6 @@ BEGIN
     FROM MembershipDetails
     WHERE userId = @userId;
 END;
-GO
 
 -- Stored Procedure to Fetch Workout Plan
 CREATE PROCEDURE GetWorkoutPlan

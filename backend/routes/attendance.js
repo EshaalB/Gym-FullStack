@@ -44,14 +44,37 @@ router.post('/mark', authenticateToken, requireRole(['Trainer', 'Admin']), atten
         }
 
         // Mark attendance using stored procedure, passing the date
-        await executeProcedure('markAttendance', [
+        const result = await executeProcedure('markAttendance', [
             { name: 'memberId', type: sql.Int, value: memberId },
             { name: 'classId', type: sql.Int, value: classId },
             { name: 'attendanceStatus', type: sql.VarChar(2), value: attendanceStatus },
             { name: 'currDate', type: sql.Date, value: dateParam }
         ]);
 
-        res.json({ message: 'Attendance marked successfully' });
+        // Check the result from the stored procedure
+        if (result && result.recordset && result.recordset[0]) {
+            const procResult = result.recordset[0];
+            
+            if (procResult.Result === 0) {
+                res.json({ message: procResult.Message || 'Attendance marked successfully' });
+            } else {
+                // Handle different error cases
+                let statusCode = 400;
+                if (procResult.Result === 1) {
+                    statusCode = 400; // Not enrolled
+                } else if (procResult.Result === 2) {
+                    statusCode = 409; // Already marked (conflict)
+                } else if (procResult.Result === 3) {
+                    statusCode = 400; // Invalid status
+                } else if (procResult.Result === 4) {
+                    statusCode = 404; // User not found
+                }
+                
+                return res.status(statusCode).json({ error: procResult.Message });
+            }
+        } else {
+            res.json({ message: 'Attendance marked successfully' });
+        }
     } catch (error) {
         console.error('Mark attendance error:', error);
         res.status(500).json({ error: 'Internal server error' });

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import SkeletonLoader from "../common/SkeletonLoader"; 
 import Button from "../common/Button";
-import { FaEdit, FaTrash, FaUserPlus, FaPlus } from "react-icons/fa";
+import { FaEdit, FaTrash, FaUserPlus, FaPlus, FaUserTie } from "react-icons/fa";
 import AssignMemberModal from "./modals/AssignMemberModal";
+import AssignTrainerModal from "./modals/AssignTrainerModal";
 import { showConfirmAlert, showSuccessAlert, showErrorAlert } from "../../utils/sweetAlert";
 import ClassModal from "./modals/ClassModal";
 
 const ClassesTable = ({ classes, trainers, loading, error, onAddClass, onEditClass, onDeleteClass }) => {
-  const [assignModalOpen, setAssignModalOpen] = useState(false);
+  const [assignMemberModalOpen, setAssignMemberModalOpen] = useState(false);
+  const [assignTrainerModalOpen, setAssignTrainerModalOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState("add");
   const [selectedClass, setSelectedClass] = useState({});
@@ -63,8 +65,15 @@ const ClassesTable = ({ classes, trainers, loading, error, onAddClass, onEditCla
         <h2 className="text-2xl font-bold text-white">Classes</h2>
         <div className="flex gap-2">
           <Button
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+            onClick={() => setAssignTrainerModalOpen(true)}
+            aria-label="Assign Trainer to Class"
+          >
+            <FaUserTie /> Assign Trainer
+          </Button>
+          <Button
             className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
-            onClick={() => setAssignModalOpen(true)}
+            onClick={() => setAssignMemberModalOpen(true)}
             aria-label="Assign Member to Class"
           >
             <FaUserPlus /> Assign Member
@@ -92,18 +101,40 @@ const ClassesTable = ({ classes, trainers, loading, error, onAddClass, onEditCla
           </thead>
           <tbody>
             {classes && classes.length > 0 ? (
-              classes.map((classObj) => (
-                <tr key={classObj.classId} className="border-b border-gray-700/30">
-                  <td className="px-4 py-2">{classObj.className}</td>
-                  <td className="px-4 py-2">{(trainers.find(t => t.userId === classObj.trainerId)?.fName || "") + " " + (trainers.find(t => t.userId === classObj.trainerId)?.lName || "")}</td>
-                  <td className="px-4 py-2">{classObj.genderSpecific}</td>
-                  <td className="px-4 py-2">{classObj.seats}</td>
-                  <td className="px-4 py-2">
-                    <Button aria-label="Edit" onClick={() => handleEdit(classObj)} className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-xs mr-2 flex items-center gap-1"><FaEdit /></Button>
-                    <Button aria-label="Delete" onClick={() => handleDelete(classObj)} className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-xs flex items-center gap-1"><FaTrash /></Button>
-                  </td>
-                </tr>
-              ))
+              classes.map((classObj) => {
+                const trainer = trainers.find(t => t.userId === classObj.trainerId);
+                return (
+                  <tr key={classObj.classId} className="border-b border-gray-700/30">
+                    <td className="px-4 py-2">{classObj.className}</td>
+                    <td className="px-4 py-2">
+                      {trainer ? 
+                        `${trainer.fName} ${trainer.lName}` : 
+                        <span className="text-yellow-400">No trainer assigned</span>
+                      }
+                    </td>
+                    <td className="px-4 py-2">{classObj.genderSpecific}</td>
+                    <td className="px-4 py-2">{classObj.seats}</td>
+                    <td className="px-4 py-2">
+                      <div className="flex gap-2">
+                        <Button 
+                          aria-label="Edit" 
+                          onClick={() => handleEdit(classObj)} 
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-xs flex items-center gap-1"
+                        >
+                          <FaEdit />
+                        </Button>
+                        <Button 
+                          aria-label="Delete" 
+                          onClick={() => handleDelete(classObj)} 
+                          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-xs flex items-center gap-1"
+                        >
+                          <FaTrash />
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
             ) : (
               <tr>
                 <td colSpan={5} className="text-center text-gray-400 py-6">No classes found.</td>
@@ -112,13 +143,26 @@ const ClassesTable = ({ classes, trainers, loading, error, onAddClass, onEditCla
           </tbody>
         </table>
       </div>
-      {assignModalOpen && (
+      
+      {/* Member Assignment Modal */}
+      {assignMemberModalOpen && (
         <AssignMemberModal
-          open={assignModalOpen}
-          onClose={() => setAssignModalOpen(false)}
-          onSuccess={() => setAssignModalOpen(false)}
+          open={assignMemberModalOpen}
+          onClose={() => setAssignMemberModalOpen(false)}
+          onSuccess={() => setAssignMemberModalOpen(false)}
         />
       )}
+
+      {/* Trainer Assignment Modal */}
+      {assignTrainerModalOpen && (
+        <AssignTrainerModal
+          open={assignTrainerModalOpen}
+          onClose={() => setAssignTrainerModalOpen(false)}
+          onSuccess={() => setAssignTrainerModalOpen(false)}
+        />
+      )}
+
+      {/* Class Creation/Edit Modal */}
       <ClassModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
